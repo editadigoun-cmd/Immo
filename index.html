@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestion des loyers</title>
+<style>
+  :root {
+    --bg: #f4f5f7;
+    --card: #ffffff;
+    --border: #e2e4e9;
+    --text: #1b1f27;
+    --text-muted: #6b7280;
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --danger: #dc2626;
+    --danger-bg: #fef2f2;
+    --ok: #16a34a;
+    --ok-bg: #f0fdf4;
+    --warn: #d97706;
+    --warn-bg: #fffbeb;
+    --radius: 10px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    padding: 16px;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+  h1 { font-size: 1.4rem; margin: 0 0 4px; }
+  .subtitle { color: var(--text-muted); font-size: 0.85rem; margin: 0 0 20px; }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .stat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+  }
+  .stat .label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .03em; }
+  .stat .value { font-size: 1.3rem; font-weight: 600; margin-top: 4px; }
+  .stat.danger .value { color: var(--danger); }
+  .stat.ok .value { color: var(--ok); }
+
+  .toolbar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; align-items: center; }
+  .toolbar .spacer { flex: 1; }
+  input, select {
+    font: inherit;
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--card);
+    color: var(--text);
+  }
+  button {
+    font: inherit;
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+    cursor: pointer;
+  }
+  button:hover { background: #f0f1f3; }
+  button.primary { background: var(--primary); color: #fff; border-color: var(--primary); }
+  button.primary:hover { background: var(--primary-hover); }
+  button.danger { color: var(--danger); }
+  button.danger:hover { background: var(--danger-bg); }
+  button.small { padding: 4px 9px; font-size: 0.8rem; }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  th { background: #fafbfc; font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: .03em; }
+  tr:last-child td { border-bottom: none; }
+  .table-scroll { overflow-x: auto; }
+
+  .badge { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 0.76rem; font-weight: 600; }
+  .badge.ok { background: var(--ok-bg); color: var(--ok); }
+  .badge.danger { background: var(--danger-bg); color: var(--danger); }
+  .badge.warn { background: var(--warn-bg); color: var(--warn); }
+
+  .row-actions { display: flex; gap: 6px; }
+
+  .detail-row td { background: #fafbfc; white-space: normal; }
+  .detail-inner { padding: 6px 4px 14px; }
+  .detail-inner h4 { margin: 0 0 8px; font-size: 0.85rem; }
+  .pay-form { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; align-items: end; }
+  .pay-form label { display: flex; flex-direction: column; font-size: 0.72rem; color: var(--text-muted); gap: 3px; }
+  .empty { color: var(--text-muted); font-style: italic; padding: 20px; text-align: center; }
+
+  .modal-backdrop {
+    position: fixed; inset: 0; background: rgba(0,0,0,.4);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 50; padding: 16px;
+  }
+  .modal {
+    background: var(--card); border-radius: var(--radius); padding: 20px;
+    width: 100%; max-width: 420px; max-height: 90vh; overflow-y: auto;
+  }
+  .modal h3 { margin-top: 0; }
+  .field { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; }
+  .field label { font-size: 0.78rem; color: var(--text-muted); }
+  .field input, .field select { width: 100%; }
+  .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
+
+  [hidden] { display: none !important; }
+  footer { text-align: center; color: var(--text-muted); font-size: 0.75rem; margin-top: 24px; }
+  .amount-due { color: var(--danger); font-weight: 600; }
+  .amount-ok { color: var(--ok); font-weight: 600; }
+  .amount-credit { color: var(--primary); font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Gestion des loyers</h1>
+  <p class="subtitle">Suivi automatique des loyers dus et des paiements par locataire</p>
+
+  <div class="stats" id="stats"></div>
+
+  <div class="toolbar">
+    <input type="text" id="search" placeholder="Rechercher un locataire ou un bien...">
+    <select id="filterStatus">
+      <option value="all">Tous les statuts</option>
+      <option value="late">En retard</option>
+      <option value="ok">À jour</option>
+      <option value="credit">Payé d'avance</option>
+    </select>
+    <div class="spacer"></div>
+    <button id="btnExport" title="Sauvegarder toutes les données dans un fichier">Exporter (backup)</button>
+    <button id="btnImport" title="Recharger un fichier de sauvegarde">Importer</button>
+    <input type="file" id="fileImport" accept="application/json" hidden>
+    <button class="primary" id="btnNewTenant">+ Nouveau locataire</button>
+  </div>
+
+  <div class="card">
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Locataire</th>
+            <th>Bien</th>
+            <th>Loyer mensuel</th>
+            <th>Depuis le</th>
+            <th>Mois échus</th>
+            <th>Total dû</th>
+            <th>Total payé</th>
+            <th>Solde</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+      <div class="empty" id="emptyMsg" hidden>Aucun locataire pour le moment. Cliquez sur « + Nouveau locataire » pour commencer.</div>
+    </div>
+  </div>
+
+  <footer>Toutes les données restent stockées uniquement dans ce navigateur (localStorage). Pensez à exporter régulièrement une sauvegarde.</footer>
+</div>
+
+<div class="modal-backdrop" id="tenantModal" hidden>
+  <div class="modal">
+    <h3 id="tenantModalTitle">Nouveau locataire</h3>
+    <input type="hidden" id="tenantId">
+    <div class="field">
+      <label>Nom du locataire *</label>
+      <input type="text" id="tenantName" placeholder="Ex: Jean Dupont">
+    </div>
+    <div class="field">
+      <label>Bien / logement</label>
+      <input type="text" id="tenantProperty" placeholder="Ex: Appartement 3B">
+    </div>
+    <div class="field">
+      <label>Loyer mensuel (charges comprises) *</label>
+      <input type="number" id="tenantRent" min="0" step="0.01" placeholder="Ex: 650">
+    </div>
+    <div class="field">
+      <label>Locataire depuis le (date d'entrée / 1er loyer dû) *</label>
+      <input type="date" id="tenantStart">
+    </div>
+    <div class="field">
+      <label>Note (optionnel)</label>
+      <input type="text" id="tenantNote" placeholder="Téléphone, remarque...">
+    </div>
+    <div class="modal-actions">
+      <button id="tenantCancel">Annuler</button>
+      <button class="primary" id="tenantSave">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var LS_TENANTS = "immo_tenants";
+  var LS_PAYMENTS = "immo_payments";
+
+  function load(key) {
+    try {
+      var raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : [];
+    } catch (e) {
+      return [];
+    }
+  }
+  function save(key, data) {
+    localStorage.setItem(key, JSON.stringify(data));
+  }
+
+  var tenants = load(LS_TENANTS);
+  var payments = load(LS_PAYMENTS);
+  var expandedId = null;
+
+  function uid() {
+    return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+  }
+
+  function fmtMoney(n) {
+    return (Math.round(n * 100) / 100).toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
+  }
+  function fmtDate(iso) {
+    if (!iso) return "";
+    var d = new Date(iso + "T00:00:00");
+    return d.toLocaleDateString("fr-FR");
+  }
+  function todayISO() {
+    var d = new Date();
+    return d.toISOString().slice(0, 10);
+  }
+
+  // Number of rent periods due between the tenant's start date and "today",
+  // using the day-of-month of the start date as the recurring due day.
+  function monthsDue(startISO, asOfISO) {
+    var start = new Date(startISO + "T00:00:00");
+    var asOf = new Date(asOfISO + "T00:00:00");
+    if (asOf < start) return 0;
+    var months = (asOf.getFullYear() - start.getFullYear()) * 12 + (asOf.getMonth() - start.getMonth());
+    if (asOf.getDate() >= start.getDate()) months += 1;
+    return Math.max(0, months);
+  }
+
+  function paymentsForTenant(tenantId) {
+    return payments.filter(function (p) { return p.tenantId === tenantId; })
+      .sort(function (a, b) { return b.date.localeCompare(a.date); });
+  }
+  function totalPaid(tenantId) {
+    return paymentsForTenant(tenantId).reduce(function (sum, p) { return sum + p.amount; }, 0);
+  }
+
+  function computeTenant(t) {
+    var months = monthsDue(t.start, todayISO());
+    var due = months * t.rent;
+    var paid = totalPaid(t.id);
+    var balance = due - paid;
+    var status = balance > 0.005 ? "late" : (balance < -0.005 ? "credit" : "ok");
+    return { months: months, due: due, paid: paid, balance: balance, status: status };
+  }
+
+  function renderStats() {
+    var totalDue = 0, totalPaid_ = 0, lateCount = 0;
+    tenants.forEach(function (t) {
+      var c = computeTenant(t);
+      totalDue += c.due;
+      totalPaid_ += c.paid;
+      if (c.status === "late") lateCount++;
+    });
+    var totalOutstanding = totalDue - totalPaid_;
+    var el = document.getElementById("stats");
+    el.innerHTML =
+      '<div class="stat"><div class="label">Locataires</div><div class="value">' + tenants.length + '</div></div>' +
+      '<div class="stat danger"><div class="label">En retard</div><div class="value">' + lateCount + '</div></div>' +
+      '<div class="stat"><div class="label">Total encaissé</div><div class="value">' + fmtMoney(totalPaid_) + '</div></div>' +
+      '<div class="stat ' + (totalOutstanding > 0.005 ? "danger" : "ok") + '"><div class="label">Reste dû (global)</div><div class="value">' + fmtMoney(totalOutstanding) + '</div></div>';
+  }
+
+  function badge(status, balance) {
+    if (status === "late") return '<span class="badge danger">En retard</span>';
+    if (status === "credit") return '<span class="badge warn">Avance</span>';
+    return '<span class="badge ok">À jour</span>';
+  }
+
+  function amountClass(status) {
+    if (status === "late") return "amount-due";
+    if (status === "credit") return "amount-credit";
+    return "amount-ok";
+  }
+
+  function matchesFilters(t, c) {
+    var q = document.getElementById("search").value.trim().toLowerCase();
+    var st = document.getElementById("filterStatus").value;
+    if (st !== "all" && c.status !== st) return false;
+    if (q) {
+      var hay = (t.name + " " + (t.property || "")).toLowerCase();
+      if (hay.indexOf(q) === -1) return false;
+    }
+    return true;
+  }
+
+  function render() {
+    renderStats();
+    var tbody = document.getElementById("tbody");
+    tbody.innerHTML = "";
+    var visible = 0;
+
+    tenants
+      .slice()
+      .sort(function (a, b) { return a.name.localeCompare(b.name, "fr"); })
+      .forEach(function (t) {
+        var c = computeTenant(t);
+        if (!matchesFilters(t, c)) return;
+        visible++;
+
+        var tr = document.createElement("tr");
+        var isOpen = expandedId === t.id;
+        var balanceLabel = c.status === "credit" ? fmtMoney(Math.abs(c.balance)) + " d'avance" : fmtMoney(c.balance);
+
+        tr.innerHTML =
+          '<td><button class="small" data-toggle="' + t.id + '">' + (isOpen ? "▾" : "▸") + '</button></td>' +
+          '<td>' + escapeHtml(t.name) + '</td>' +
+          '<td>' + escapeHtml(t.property || "—") + '</td>' +
+          '<td>' + fmtMoney(t.rent) + '</td>' +
+          '<td>' + fmtDate(t.start) + '</td>' +
+          '<td>' + c.months + '</td>' +
+          '<td>' + fmtMoney(c.due) + '</td>' +
+          '<td>' + fmtMoney(c.paid) + '</td>' +
+          '<td class="' + amountClass(c.status) + '">' + balanceLabel + '</td>' +
+          '<td>' + badge(c.status) + '</td>' +
+          '<td class="row-actions">' +
+            '<button class="small" data-pay="' + t.id + '">+ Paiement</button>' +
+            '<button class="small" data-edit="' + t.id + '">Modifier</button>' +
+            '<button class="small danger" data-del="' + t.id + '">Suppr.</button>' +
+          '</td>';
+        tbody.appendChild(tr);
+
+        if (isOpen) {
+          var detailTr = document.createElement("tr");
+          detailTr.className = "detail-row";
+          var td = document.createElement("td");
+          td.colSpan = 11;
+          td.innerHTML = renderDetail(t);
+          detailTr.appendChild(td);
+          tbody.appendChild(detailTr);
+        }
+      });
+
+    document.getElementById("emptyMsg").hidden = tenants.length > 0;
+    if (tenants.length > 0 && visible === 0) {
+      var tr = document.createElement("tr");
+      tr.innerHTML = '<td colspan="11" class="empty">Aucun résultat pour ce filtre.</td>';
+      tbody.appendChild(tr);
+    }
+
+    bindRowEvents();
+  }
+
+  function renderDetail(t) {
+    var list = paymentsForTenant(t.id);
+    var rows = list.map(function (p) {
+      return '<tr>' +
+        '<td>' + fmtDate(p.date) + '</td>' +
+        '<td>' + fmtMoney(p.amount) + '</td>' +
+        '<td>' + escapeHtml(p.method || "—") + '</td>' +
+        '<td>' + escapeHtml(p.note || "") + '</td>' +
+        '<td><button class="small danger" data-delpay="' + p.id + '" data-tenant="' + t.id + '">Suppr.</button></td>' +
+        '</tr>';
+    }).join("");
+
+    return '<div class="detail-inner">' +
+      '<h4>Enregistrer un paiement pour ' + escapeHtml(t.name) + '</h4>' +
+      '<div class="pay-form">' +
+        '<label>Date<input type="date" data-pf-date="' + t.id + '" value="' + todayISO() + '"></label>' +
+        '<label>Montant (€)<input type="number" min="0" step="0.01" data-pf-amount="' + t.id + '" placeholder="' + t.rent + '"></label>' +
+        '<label>Moyen<select data-pf-method="' + t.id + '">' +
+          '<option value="Virement">Virement</option>' +
+          '<option value="Espèces">Espèces</option>' +
+          '<option value="Chèque">Chèque</option>' +
+          '<option value="Autre">Autre</option>' +
+        '</select></label>' +
+        '<label>Note<input type="text" data-pf-note="' + t.id + '" placeholder="optionnel"></label>' +
+        '<button class="primary" data-pf-submit="' + t.id + '">Ajouter</button>' +
+      '</div>' +
+      '<h4>Historique des paiements</h4>' +
+      (list.length
+        ? '<table><thead><tr><th>Date</th><th>Montant</th><th>Moyen</th><th>Note</th><th></th></tr></thead><tbody>' + rows + '</tbody></table>'
+        : '<p class="empty">Aucun paiement enregistré.</p>') +
+      '</div>';
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function bindRowEvents() {
+    document.querySelectorAll("[data-toggle]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var id = btn.getAttribute("data-toggle");
+        expandedId = expandedId === id ? null : id;
+        render();
+      });
+    });
+    document.querySelectorAll("[data-edit]").forEach(function (btn) {
+      btn.addEventListener("click", function () { openTenantModal(btn.getAttribute("data-edit")); });
+    });
+    document.querySelectorAll("[data-del]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var id = btn.getAttribute("data-del");
+        var t = tenants.find(function (x) { return x.id === id; });
+        if (t && confirm('Supprimer "' + t.name + '" et tout son historique de paiements ?')) {
+          tenants = tenants.filter(function (x) { return x.id !== id; });
+          payments = payments.filter(function (x) { return x.tenantId !== id; });
+          save(LS_TENANTS, tenants);
+          save(LS_PAYMENTS, payments);
+          if (expandedId === id) expandedId = null;
+          render();
+        }
+      });
+    });
+    document.querySelectorAll("[data-pay]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        expandedId = btn.getAttribute("data-pay");
+        render();
+      });
+    });
+    document.querySelectorAll("[data-pf-submit]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var id = btn.getAttribute("data-pf-submit");
+        var dateEl = document.querySelector('[data-pf-date="' + id + '"]');
+        var amountEl = document.querySelector('[data-pf-amount="' + id + '"]');
+        var methodEl = document.querySelector('[data-pf-method="' + id + '"]');
+        var noteEl = document.querySelector('[data-pf-note="' + id + '"]');
+        var amount = parseFloat(amountEl.value);
+        if (!amount || amount <= 0) {
+          alert("Merci de saisir un montant valide.");
+          return;
+        }
+        if (!dateEl.value) {
+          alert("Merci de saisir une date.");
+          return;
+        }
+        payments.push({
+          id: uid(),
+          tenantId: id,
+          date: dateEl.value,
+          amount: amount,
+          method: methodEl.value,
+          note: noteEl.value.trim()
+        });
+        save(LS_PAYMENTS, payments);
+        render();
+      });
+    });
+    document.querySelectorAll("[data-delpay]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var pid = btn.getAttribute("data-delpay");
+        if (confirm("Supprimer ce paiement ?")) {
+          payments = payments.filter(function (p) { return p.id !== pid; });
+          save(LS_PAYMENTS, payments);
+          render();
+        }
+      });
+    });
+  }
+
+  // Tenant modal
+  var modal = document.getElementById("tenantModal");
+  function openTenantModal(id) {
+    var t = id ? tenants.find(function (x) { return x.id === id; }) : null;
+    document.getElementById("tenantModalTitle").textContent = t ? "Modifier le locataire" : "Nouveau locataire";
+    document.getElementById("tenantId").value = t ? t.id : "";
+    document.getElementById("tenantName").value = t ? t.name : "";
+    document.getElementById("tenantProperty").value = t ? (t.property || "") : "";
+    document.getElementById("tenantRent").value = t ? t.rent : "";
+    document.getElementById("tenantStart").value = t ? t.start : todayISO();
+    document.getElementById("tenantNote").value = t ? (t.note || "") : "";
+    modal.hidden = false;
+    document.getElementById("tenantName").focus();
+  }
+  function closeTenantModal() { modal.hidden = true; }
+
+  document.getElementById("btnNewTenant").addEventListener("click", function () { openTenantModal(null); });
+  document.getElementById("tenantCancel").addEventListener("click", closeTenantModal);
+  modal.addEventListener("click", function (e) { if (e.target === modal) closeTenantModal(); });
+
+  document.getElementById("tenantSave").addEventListener("click", function () {
+    var id = document.getElementById("tenantId").value;
+    var name = document.getElementById("tenantName").value.trim();
+    var property = document.getElementById("tenantProperty").value.trim();
+    var rent = parseFloat(document.getElementById("tenantRent").value);
+    var start = document.getElementById("tenantStart").value;
+    var note = document.getElementById("tenantNote").value.trim();
+
+    if (!name) { alert("Le nom du locataire est obligatoire."); return; }
+    if (!rent || rent <= 0) { alert("Merci de saisir un loyer mensuel valide."); return; }
+    if (!start) { alert("Merci de saisir la date d'entrée."); return; }
+
+    if (id) {
+      var t = tenants.find(function (x) { return x.id === id; });
+      t.name = name; t.property = property; t.rent = rent; t.start = start; t.note = note;
+    } else {
+      tenants.push({ id: uid(), name: name, property: property, rent: rent, start: start, note: note });
+    }
+    save(LS_TENANTS, tenants);
+    closeTenantModal();
+    render();
+  });
+
+  document.getElementById("search").addEventListener("input", render);
+  document.getElementById("filterStatus").addEventListener("change", render);
+
+  // Export / Import
+  document.getElementById("btnExport").addEventListener("click", function () {
+    var data = { tenants: tenants, payments: payments, exportedAt: new Date().toISOString() };
+    var blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = "loyers-sauvegarde-" + todayISO() + ".json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  document.getElementById("btnImport").addEventListener("click", function () {
+    document.getElementById("fileImport").click();
+  });
+  document.getElementById("fileImport").addEventListener("change", function (e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function () {
+      try {
+        var data = JSON.parse(reader.result);
+        if (!Array.isArray(data.tenants) || !Array.isArray(data.payments)) throw new Error("format invalide");
+        if (confirm("Importer ce fichier va remplacer toutes les données actuelles. Continuer ?")) {
+          tenants = data.tenants;
+          payments = data.payments;
+          save(LS_TENANTS, tenants);
+          save(LS_PAYMENTS, payments);
+          expandedId = null;
+          render();
+        }
+      } catch (err) {
+        alert("Fichier de sauvegarde invalide.");
+      }
+      e.target.value = "";
+    };
+    reader.readAsText(file);
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
