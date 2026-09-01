@@ -16,9 +16,13 @@ self.addEventListener("activate", (event) => {
 });
 
 // Cache-first so the app opens instantly offline; refresh the cache
-// in the background from the network when available.
+// in the background from the network when available. Only the app
+// shell itself is handled here — API calls (to the Worker backend,
+// a different origin) must always hit the network live and are never
+// cached, or the app would show stale tenant/payment data.
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
+  if (new URL(event.request.url).origin !== self.location.origin) return;
   event.respondWith(
     caches.match(event.request).then((cached) => {
       const network = fetch(event.request)

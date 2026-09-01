@@ -40,6 +40,13 @@
   h1 { font-size: 1.4rem; margin: 0 0 4px; }
   .subtitle { color: var(--text-muted); font-size: 0.85rem; margin: 0 0 20px; }
 
+  .banner {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    padding: 10px 14px; border-radius: var(--radius); margin-bottom: 16px;
+    background: var(--danger-bg); color: var(--danger); font-size: 0.85rem;
+  }
+  .banner button { margin-left: auto; }
+
   .stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -77,6 +84,7 @@
     cursor: pointer;
   }
   button:hover { background: #f0f1f3; }
+  button:disabled { opacity: 0.6; cursor: default; }
   button.primary { background: var(--primary); color: #fff; border-color: var(--primary); }
   button.primary:hover { background: var(--primary-hover); }
   button.danger { color: var(--danger); }
@@ -120,6 +128,7 @@
     width: 100%; max-width: 420px; max-height: 90vh; overflow-y: auto;
   }
   .modal h3 { margin-top: 0; }
+  .modal p.hint { font-size: 0.8rem; color: var(--text-muted); margin-top: -6px; }
   .field { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; }
   .field label { font-size: 0.78rem; color: var(--text-muted); }
   .field input, .field select { width: 100%; }
@@ -137,6 +146,12 @@
   <h1>Gestion des loyers</h1>
   <p class="subtitle">Suivi automatique des loyers dus et des paiements par locataire</p>
 
+  <div class="banner" id="banner" hidden>
+    <span id="bannerText"></span>
+    <button class="small" id="btnBannerRetry">Réessayer</button>
+    <button class="small" id="btnBannerSettings">Paramètres</button>
+  </div>
+
   <div class="stats" id="stats"></div>
 
   <div class="toolbar">
@@ -148,9 +163,7 @@
       <option value="credit">Payé d'avance</option>
     </select>
     <div class="spacer"></div>
-    <button id="btnExport" title="Sauvegarder toutes les données dans un fichier">Exporter (backup)</button>
-    <button id="btnImport" title="Recharger un fichier de sauvegarde">Importer</button>
-    <input type="file" id="fileImport" accept="application/json" hidden>
+    <button id="btnSettings" title="Configurer la connexion à la base de données">⚙ Paramètres</button>
     <button class="primary" id="btnNewTenant">+ Nouveau locataire</button>
   </div>
 
@@ -178,7 +191,7 @@
     </div>
   </div>
 
-  <footer>Toutes les données restent stockées uniquement dans ce navigateur (localStorage). Pensez à exporter régulièrement une sauvegarde.</footer>
+  <footer>Les données sont stockées dans ta base Cloudflare D1, partagées entre tous les appareils qui utilisent ce lien.</footer>
 </div>
 
 <div class="modal-backdrop" id="tenantModal" hidden>
@@ -212,28 +225,48 @@
   </div>
 </div>
 
+<div class="modal-backdrop" id="settingsModal" hidden>
+  <div class="modal">
+    <h3>Connexion à la base de données</h3>
+    <p class="hint">Adresse de l'API Cloudflare Worker déployée devant ta base D1 (ex : https://immo-loyers-api.ton-compte.workers.dev).</p>
+    <div class="field">
+      <label>URL de l'API *</label>
+      <input type="text" id="cfgUrl" placeholder="https://immo-loyers-api.xxx.workers.dev">
+    </div>
+    <div class="field">
+      <label>Clé API (optionnel, si tu en as défini une côté Worker)</label>
+      <input type="text" id="cfgKey" placeholder="laisser vide si aucune">
+    </div>
+    <div class="modal-actions">
+      <button id="settingsCancel">Annuler</button>
+      <button class="primary" id="settingsSave">Enregistrer et connecter</button>
+    </div>
+  </div>
+</div>
+
 <script>
 (function () {
   "use strict";
 
-  var LS_TENANTS = "immo_tenants";
-  var LS_PAYMENTS = "immo_payments";
+  var LS_CONFIG = "immo_api_config";
 
-  function load(key) {
+  function loadConfig() {
     try {
-      var raw = localStorage.getItem(key);
-      return raw ? JSON.parse(raw) : [];
+      var raw = localStorage.getItem(LS_CONFIG);
+      return raw ? JSON.parse(raw) : null;
     } catch (e) {
-      return [];
+      return null;
     }
   }
-  function save(key, data) {
-    localStorage.setItem(key, JSON.stringify(data));
+  function saveConfig(cfg) {
+    localStorage.setItem(LS_CONFIG, JSON.stringify(cfg));
   }
 
-  var tenants = load(LS_TENANTS);
-  var payments = load(LS_PAYMENTS);
+  var config = loadConfig();
+  var tenants = [];
+  var payments = [];
   var expandedId = null;
+  var loaded = false;
 
   function uid() {
     return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
@@ -261,6 +294,59 @@
     var months = (asOf.getFullYear() - start.getFullYear()) * 12 + (asOf.getMonth() - start.getMonth());
     if (asOf.getDate() >= start.getDate()) months += 1;
     return Math.max(0, months);
+  }
+
+  // ---- API layer ----
+  function apiUrl(path) {
+    return config.url.replace(/\/+$/, "") + path;
+  }
+  async function api(path, options) {
+    options = options || {};
+    var headers = { "Content-Type": "application/json" };
+    if (config.key) headers["X-Api-Key"] = config.key;
+    var res;
+    try {
+      res = await fetch(apiUrl(path), {
+        method: options.method || "GET",
+        headers: headers,
+        body: options.body ? JSON.stringify(options.body) : undefined,
+        cache: "no-store",
+      });
+    } catch (e) {
+      throw new Error("Impossible de contacter le serveur. Vérifie ta connexion et l'URL configurée.");
+    }
+    var data = null;
+    try { data = await res.json(); } catch (e) {}
+    if (!res.ok) {
+      throw new Error((data && data.error) || ("Erreur serveur (" + res.status + ")"));
+    }
+    return data;
+  }
+
+  function showBanner(message) {
+    document.getElementById("bannerText").textContent = message;
+    document.getElementById("banner").hidden = false;
+  }
+  function hideBanner() {
+    document.getElementById("banner").hidden = true;
+  }
+
+  async function loadData() {
+    if (!config || !config.url) {
+      openSettingsModal();
+      showBanner("Configure d'abord l'adresse de ton API pour charger les données.");
+      return;
+    }
+    try {
+      var data = await api("/api/data");
+      tenants = data.tenants || [];
+      payments = data.payments || [];
+      loaded = true;
+      hideBanner();
+      render();
+    } catch (e) {
+      showBanner(e.message);
+    }
   }
 
   function paymentsForTenant(tenantId) {
@@ -297,7 +383,7 @@
       '<div class="stat ' + (totalOutstanding > 0.005 ? "danger" : "ok") + '"><div class="label">Reste dû (global)</div><div class="value">' + fmtMoney(totalOutstanding) + '</div></div>';
   }
 
-  function badge(status, balance) {
+  function badge(status) {
     if (status === "late") return '<span class="badge danger">En retard</span>';
     if (status === "credit") return '<span class="badge warn">Avance</span>';
     return '<span class="badge ok">À jour</span>';
@@ -367,7 +453,7 @@
         }
       });
 
-    document.getElementById("emptyMsg").hidden = tenants.length > 0;
+    document.getElementById("emptyMsg").hidden = !loaded || tenants.length > 0;
     if (tenants.length > 0 && visible === 0) {
       var tr = document.createElement("tr");
       tr.innerHTML = '<td colspan="11" class="empty">Aucun résultat pour ce filtre.</td>';
@@ -428,16 +514,20 @@
       btn.addEventListener("click", function () { openTenantModal(btn.getAttribute("data-edit")); });
     });
     document.querySelectorAll("[data-del]").forEach(function (btn) {
-      btn.addEventListener("click", function () {
+      btn.addEventListener("click", async function () {
         var id = btn.getAttribute("data-del");
         var t = tenants.find(function (x) { return x.id === id; });
-        if (t && confirm('Supprimer "' + t.name + '" et tout son historique de paiements ?')) {
+        if (!t || !confirm('Supprimer "' + t.name + '" et tout son historique de paiements ?')) return;
+        btn.disabled = true;
+        try {
+          await api("/api/tenants/" + id, { method: "DELETE" });
           tenants = tenants.filter(function (x) { return x.id !== id; });
           payments = payments.filter(function (x) { return x.tenantId !== id; });
-          save(LS_TENANTS, tenants);
-          save(LS_PAYMENTS, payments);
           if (expandedId === id) expandedId = null;
           render();
+        } catch (e) {
+          showBanner(e.message);
+          btn.disabled = false;
         }
       });
     });
@@ -448,40 +538,47 @@
       });
     });
     document.querySelectorAll("[data-pf-submit]").forEach(function (btn) {
-      btn.addEventListener("click", function () {
+      btn.addEventListener("click", async function () {
         var id = btn.getAttribute("data-pf-submit");
         var dateEl = document.querySelector('[data-pf-date="' + id + '"]');
         var amountEl = document.querySelector('[data-pf-amount="' + id + '"]');
         var methodEl = document.querySelector('[data-pf-method="' + id + '"]');
         var noteEl = document.querySelector('[data-pf-note="' + id + '"]');
         var amount = parseFloat(amountEl.value);
-        if (!amount || amount <= 0) {
-          alert("Merci de saisir un montant valide.");
-          return;
+        if (!amount || amount <= 0) { alert("Merci de saisir un montant valide."); return; }
+        if (!dateEl.value) { alert("Merci de saisir une date."); return; }
+        btn.disabled = true;
+        try {
+          var created = await api("/api/payments", {
+            method: "POST",
+            body: {
+              tenantId: id,
+              date: dateEl.value,
+              amount: amount,
+              method: methodEl.value,
+              note: noteEl.value.trim(),
+            },
+          });
+          payments.push(created);
+          render();
+        } catch (e) {
+          showBanner(e.message);
+          btn.disabled = false;
         }
-        if (!dateEl.value) {
-          alert("Merci de saisir une date.");
-          return;
-        }
-        payments.push({
-          id: uid(),
-          tenantId: id,
-          date: dateEl.value,
-          amount: amount,
-          method: methodEl.value,
-          note: noteEl.value.trim()
-        });
-        save(LS_PAYMENTS, payments);
-        render();
       });
     });
     document.querySelectorAll("[data-delpay]").forEach(function (btn) {
-      btn.addEventListener("click", function () {
+      btn.addEventListener("click", async function () {
         var pid = btn.getAttribute("data-delpay");
-        if (confirm("Supprimer ce paiement ?")) {
+        if (!confirm("Supprimer ce paiement ?")) return;
+        btn.disabled = true;
+        try {
+          await api("/api/payments/" + pid, { method: "DELETE" });
           payments = payments.filter(function (p) { return p.id !== pid; });
-          save(LS_PAYMENTS, payments);
           render();
+        } catch (e) {
+          showBanner(e.message);
+          btn.disabled = false;
         }
       });
     });
@@ -503,11 +600,14 @@
   }
   function closeTenantModal() { modal.hidden = true; }
 
-  document.getElementById("btnNewTenant").addEventListener("click", function () { openTenantModal(null); });
+  document.getElementById("btnNewTenant").addEventListener("click", function () {
+    if (!config || !config.url) { openSettingsModal(); return; }
+    openTenantModal(null);
+  });
   document.getElementById("tenantCancel").addEventListener("click", closeTenantModal);
   modal.addEventListener("click", function (e) { if (e.target === modal) closeTenantModal(); });
 
-  document.getElementById("tenantSave").addEventListener("click", function () {
+  document.getElementById("tenantSave").addEventListener("click", async function () {
     var id = document.getElementById("tenantId").value;
     var name = document.getElementById("tenantName").value.trim();
     var property = document.getElementById("tenantProperty").value.trim();
@@ -519,69 +619,70 @@
     if (!rent || rent <= 0) { alert("Merci de saisir un loyer mensuel valide."); return; }
     if (!start) { alert("Merci de saisir la date d'entrée."); return; }
 
-    if (id) {
-      var t = tenants.find(function (x) { return x.id === id; });
-      t.name = name; t.property = property; t.rent = rent; t.start = start; t.note = note;
-    } else {
-      tenants.push({ id: uid(), name: name, property: property, rent: rent, start: start, note: note });
+    var btn = document.getElementById("tenantSave");
+    btn.disabled = true;
+    try {
+      var body = { name: name, property: property, rent: rent, start: start, note: note };
+      if (id) {
+        var updated = await api("/api/tenants/" + id, { method: "PUT", body: body });
+        var idx = tenants.findIndex(function (x) { return x.id === id; });
+        if (idx !== -1) tenants[idx] = updated;
+      } else {
+        var created = await api("/api/tenants", { method: "POST", body: body });
+        tenants.push(created);
+      }
+      closeTenantModal();
+      render();
+    } catch (e) {
+      showBanner(e.message);
+    } finally {
+      btn.disabled = false;
     }
-    save(LS_TENANTS, tenants);
-    closeTenantModal();
-    render();
   });
 
   document.getElementById("search").addEventListener("input", render);
   document.getElementById("filterStatus").addEventListener("change", render);
 
-  // Export / Import
-  document.getElementById("btnExport").addEventListener("click", function () {
-    var data = { tenants: tenants, payments: payments, exportedAt: new Date().toISOString() };
-    var blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
-    var url = URL.createObjectURL(blob);
-    var a = document.createElement("a");
-    a.href = url;
-    a.download = "loyers-sauvegarde-" + todayISO() + ".json";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+  // Settings modal
+  var settingsModal = document.getElementById("settingsModal");
+  function openSettingsModal() {
+    document.getElementById("cfgUrl").value = config ? (config.url || "") : "";
+    document.getElementById("cfgKey").value = config ? (config.key || "") : "";
+    settingsModal.hidden = false;
+  }
+  function closeSettingsModal() { settingsModal.hidden = true; }
+
+  document.getElementById("btnSettings").addEventListener("click", openSettingsModal);
+  document.getElementById("btnBannerSettings").addEventListener("click", openSettingsModal);
+  document.getElementById("btnBannerRetry").addEventListener("click", loadData);
+  document.getElementById("settingsCancel").addEventListener("click", function () {
+    if (config && config.url) closeSettingsModal();
+  });
+  settingsModal.addEventListener("click", function (e) {
+    if (e.target === settingsModal && config && config.url) closeSettingsModal();
   });
 
-  document.getElementById("btnImport").addEventListener("click", function () {
-    document.getElementById("fileImport").click();
-  });
-  document.getElementById("fileImport").addEventListener("change", function (e) {
-    var file = e.target.files[0];
-    if (!file) return;
-    var reader = new FileReader();
-    reader.onload = function () {
-      try {
-        var data = JSON.parse(reader.result);
-        if (!Array.isArray(data.tenants) || !Array.isArray(data.payments)) throw new Error("format invalide");
-        if (confirm("Importer ce fichier va remplacer toutes les données actuelles. Continuer ?")) {
-          tenants = data.tenants;
-          payments = data.payments;
-          save(LS_TENANTS, tenants);
-          save(LS_PAYMENTS, payments);
-          expandedId = null;
-          render();
-        }
-      } catch (err) {
-        alert("Fichier de sauvegarde invalide.");
-      }
-      e.target.value = "";
-    };
-    reader.readAsText(file);
+  document.getElementById("settingsSave").addEventListener("click", function () {
+    var url = document.getElementById("cfgUrl").value.trim().replace(/\/+$/, "");
+    var key = document.getElementById("cfgKey").value.trim();
+    if (!url || !/^https?:\/\//i.test(url)) {
+      alert("Merci de saisir une URL valide (commençant par https://).");
+      return;
+    }
+    config = { url: url, key: key };
+    saveConfig(config);
+    closeSettingsModal();
+    loadData();
   });
 
   render();
+  loadData();
 
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", function () {
       navigator.serviceWorker.register("sw.js").catch(function () {
         // Offline caching unavailable (e.g. opened as a local file); the
-        // app still works fully via localStorage, it just won't be
-        // installable/cacheable as a PWA in that context.
+        // app shell just won't be installable/cacheable as a PWA there.
       });
     });
   }
