@@ -1,13 +1,16 @@
-# API des loyers (Cloudflare Worker + D1)
+# Application des loyers (Cloudflare Worker + D1 + assets statiques)
 
-Ce dossier contient l'API qui connecte l'application (`../index.html`) à une
-base de données Cloudflare D1 partagée entre tous les appareils.
+Ce Worker sert **à la fois** l'application (fichiers statiques dans
+`../public/`) et l'API qui parle à la base Cloudflare D1 — un seul lien,
+un seul déploiement. Les requêtes `/api/*` sont traitées par
+`src/index.js` ; tout le reste (`/`, `/manifest.json`, ...) est servi
+directement depuis `../public/` grâce au binding `[assets]` de
+`wrangler.toml`.
 
 Déployé et en service : Worker **immo**, base D1 **immo-loyers** (liée via
 Settings → Bindings dans le dashboard), déploiement automatique à chaque
 push sur `claude/audio-help-0xwadi` grâce à l'intégration Git de Cloudflare
-Workers Builds. L'URL est préconfigurée par défaut dans l'application
-(modifiable via **⚙ Paramètres** si besoin) :
+Workers Builds (Root directory : `worker`).
 
 ```
 https://immo.ccds22431.workers.dev
