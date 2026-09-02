@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
-  <rect width="192" height="192" rx="32" fill="#2563eb"/>
+  <rect width="192" height="192" rx="32" fill="#0f6e63"/>
   <path d="M96 34 L164 90 H148 V158 H116 V116 H76 V158 H44 V90 H28 Z" fill="#ffffff"/>
   <text x="96" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#ffffff">€</text>
 </svg>

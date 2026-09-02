@@ -22,6 +22,15 @@ npx wrangler login       # ouvre le navigateur pour te connecter à ton compte C
 npx wrangler deploy
 ```
 
+## Migration v2 (connexion utilisateurs + paiements par mois)
+
+L'app demande maintenant de se connecter, et les paiements ciblent un mois
+précis. Ça ajoute les tables `users`/`sessions` et une colonne `period` sur
+`payments`. **À faire une seule fois**, dans le dashboard Cloudflare → D1 →
+`immo-loyers` → onglet **Console**, colle et exécute le contenu de
+`migration_v2.sql` (crée aussi le premier compte : editadigoun@gmail.com,
+mot de passe déjà hashé dans le script — jamais stocké en clair).
+
 ## (Optionnel) Protéger l'accès avec une clé
 
 Par défaut l'API est ouverte à quiconque connaît son URL (comme la clé
@@ -44,7 +53,9 @@ npx wrangler deploy
 ## Structure de la base
 
 - `tenants` : locataires (nom, bien, loyer mensuel, date d'entrée, note)
-- `payments` : paiements reçus (locataire, date, montant, moyen, note)
+- `payments` : paiements reçus (locataire, **mois concerné**, date de paiement, montant, moyen, note)
+- `users` : comptes pouvant se connecter (email, mot de passe hashé PBKDF2)
+- `sessions` : jetons de connexion actifs (30 jours)
 
 Le schéma (`schema.sql`) a déjà été appliqué à la base distante. Pour le
 reproduire en local (tests) :

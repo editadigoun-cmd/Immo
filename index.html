@@ -7,191 +7,335 @@
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon.svg">
-<meta name="theme-color" content="#2563eb">
+<meta name="theme-color" content="#0f6e63">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Loyers">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <style>
   :root {
-    --bg: #f4f5f7;
+    --bg: #f4f6f4;
     --card: #ffffff;
-    --border: #e2e4e9;
-    --text: #1b1f27;
-    --text-muted: #6b7280;
-    --primary: #2563eb;
-    --primary-hover: #1d4ed8;
-    --danger: #dc2626;
-    --danger-bg: #fef2f2;
-    --ok: #16a34a;
-    --ok-bg: #f0fdf4;
-    --warn: #d97706;
-    --warn-bg: #fffbeb;
-    --radius: 10px;
+    --border: #dfe4e0;
+    --border-soft: #eaeeec;
+    --text: #14201c;
+    --text-muted: #5c6b64;
+    --primary: #0f6e63;
+    --primary-hover: #0b564d;
+    --primary-text: #ffffff;
+    --accent-soft: #e4f2ef;
+    --danger: #c23b32;
+    --danger-bg: #fbeceb;
+    --ok: #227a4f;
+    --ok-bg: #e9f6ee;
+    --warn: #b56a17;
+    --warn-bg: #fdf1e2;
+    --radius: 12px;
+    --shadow: 0 1px 2px rgba(20, 32, 28, 0.04), 0 1px 12px rgba(20, 32, 28, 0.04);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #101613;
+      --card: #182420;
+      --border: #2b3a34;
+      --border-soft: #22302b;
+      --text: #eef3f0;
+      --text-muted: #9db2a9;
+      --primary: #55d6c5;
+      --primary-hover: #79e2d4;
+      --primary-text: #06211d;
+      --accent-soft: #1b332e;
+      --danger: #ff8b80;
+      --danger-bg: #3a201d;
+      --ok: #6bdb9e;
+      --ok-bg: #163527;
+      --warn: #f2b463;
+      --warn-bg: #3a2a12;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 1px 12px rgba(0, 0, 0, 0.2);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #101613;
+    --card: #182420;
+    --border: #2b3a34;
+    --border-soft: #22302b;
+    --text: #eef3f0;
+    --text-muted: #9db2a9;
+    --primary: #55d6c5;
+    --primary-hover: #79e2d4;
+    --primary-text: #06211d;
+    --accent-soft: #1b332e;
+    --danger: #ff8b80;
+    --danger-bg: #3a201d;
+    --ok: #6bdb9e;
+    --ok-bg: #163527;
+    --warn: #f2b463;
+    --warn-bg: #3a2a12;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 1px 12px rgba(0, 0, 0, 0.2);
   }
   * { box-sizing: border-box; }
   body {
     margin: 0;
     background: var(--bg);
     color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    padding: 16px;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   }
-  .wrap { max-width: 1100px; margin: 0 auto; }
-  h1 { font-size: 1.4rem; margin: 0 0 4px; }
-  .subtitle { color: var(--text-muted); font-size: 0.85rem; margin: 0 0 20px; }
+  .brand {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+  }
+  h1, h2, h3 { font-family: "Fraunces", Georgia, serif; font-weight: 600; text-wrap: balance; }
+
+  /* ---- Login screen ---- */
+  .login-wrap {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .login-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    padding: 36px 32px;
+    width: 100%;
+    max-width: 380px;
+  }
+  .login-logo {
+    width: 44px; height: 44px; border-radius: 10px;
+    background: var(--primary); color: var(--primary-text);
+    display: flex; align-items: center; justify-content: center;
+    font-family: "Fraunces", serif; font-weight: 700; font-size: 1.3rem;
+    margin-bottom: 16px;
+  }
+  .login-card h1 { font-size: 1.5rem; margin: 0 0 4px; }
+  .login-card .subtitle { color: var(--text-muted); font-size: 0.88rem; margin: 0 0 24px; }
+  .login-error {
+    background: var(--danger-bg); color: var(--danger); font-size: 0.85rem;
+    padding: 10px 12px; border-radius: 8px; margin-bottom: 16px;
+  }
+
+  /* ---- App shell ---- */
+  .topbar {
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    padding: 14px 24px; border-bottom: 1px solid var(--border);
+    background: var(--card);
+  }
+  .topbar .wordmark { display: flex; align-items: center; gap: 10px; }
+  .topbar .wordmark .mark {
+    width: 30px; height: 30px; border-radius: 8px;
+    background: var(--primary); color: var(--primary-text);
+    display: flex; align-items: center; justify-content: center;
+    font-family: "Fraunces", serif; font-weight: 700; font-size: 0.95rem;
+  }
+  .topbar .wordmark h1 { font-size: 1.15rem; margin: 0; }
+  .topbar .spacer { flex: 1; }
+  .topbar .user-email { font-size: 0.82rem; color: var(--text-muted); }
+
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 24px 20px 40px; }
+  .subtitle { color: var(--text-muted); font-size: 0.88rem; margin: 0 0 22px; }
 
   .banner {
     display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-    padding: 10px 14px; border-radius: var(--radius); margin-bottom: 16px;
+    padding: 11px 14px; border-radius: var(--radius); margin-bottom: 18px;
     background: var(--danger-bg); color: var(--danger); font-size: 0.85rem;
   }
   .banner button { margin-left: auto; }
 
   .stats {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 10px;
-    margin-bottom: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 22px;
   }
   .stat {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 12px 14px;
+    box-shadow: var(--shadow);
+    padding: 14px 16px;
   }
-  .stat .label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .03em; }
-  .stat .value { font-size: 1.3rem; font-weight: 600; margin-top: 4px; }
+  .stat .label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .04em; }
+  .stat .value { font-size: 1.5rem; font-weight: 600; margin-top: 6px; font-variant-numeric: tabular-nums; font-family: "Fraunces", serif; }
   .stat.danger .value { color: var(--danger); }
   .stat.ok .value { color: var(--ok); }
 
-  .toolbar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; align-items: center; }
+  .toolbar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; align-items: center; }
   .toolbar .spacer { flex: 1; }
   input, select {
     font: inherit;
-    padding: 8px 10px;
+    padding: 9px 11px;
     border: 1px solid var(--border);
     border-radius: 8px;
     background: var(--card);
     color: var(--text);
   }
+  input:focus-visible, select:focus-visible, button:focus-visible {
+    outline: 2px solid var(--primary); outline-offset: 1px;
+  }
   button {
     font: inherit;
-    padding: 8px 14px;
+    padding: 9px 15px;
     border-radius: 8px;
     border: 1px solid var(--border);
     background: var(--card);
     color: var(--text);
     cursor: pointer;
   }
-  button:hover { background: #f0f1f3; }
-  button:disabled { opacity: 0.6; cursor: default; }
-  button.primary { background: var(--primary); color: #fff; border-color: var(--primary); }
-  button.primary:hover { background: var(--primary-hover); }
+  button:hover { filter: brightness(0.97); }
+  button:disabled { opacity: 0.55; cursor: default; }
+  button.primary { background: var(--primary); color: var(--primary-text); border-color: var(--primary); font-weight: 600; }
+  button.primary:hover { background: var(--primary-hover); border-color: var(--primary-hover); }
   button.danger { color: var(--danger); }
   button.danger:hover { background: var(--danger-bg); }
-  button.small { padding: 4px 9px; font-size: 0.8rem; }
+  button.small { padding: 5px 10px; font-size: 0.8rem; }
+  button.ghost { border-color: transparent; background: transparent; }
+  button.ghost:hover { background: var(--border-soft); }
+  button.block { width: 100%; }
 
   .card {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
+    box-shadow: var(--shadow);
     overflow: hidden;
-    margin-bottom: 16px;
+    margin-bottom: 18px;
   }
   table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
-  th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; }
-  th { background: #fafbfc; font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: .03em; }
+  th, td { padding: 11px 13px; text-align: left; border-bottom: 1px solid var(--border-soft); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  th { background: var(--accent-soft); font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: .04em; font-variant-numeric: normal; font-weight: 600; }
   tr:last-child td { border-bottom: none; }
   .table-scroll { overflow-x: auto; }
 
-  .badge { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 0.76rem; font-weight: 600; }
+  .badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
   .badge.ok { background: var(--ok-bg); color: var(--ok); }
   .badge.danger { background: var(--danger-bg); color: var(--danger); }
   .badge.warn { background: var(--warn-bg); color: var(--warn); }
 
   .row-actions { display: flex; gap: 6px; }
 
-  .detail-row td { background: #fafbfc; white-space: normal; }
-  .detail-inner { padding: 6px 4px 14px; }
-  .detail-inner h4 { margin: 0 0 8px; font-size: 0.85rem; }
-  .pay-form { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; align-items: end; }
-  .pay-form label { display: flex; flex-direction: column; font-size: 0.72rem; color: var(--text-muted); gap: 3px; }
-  .empty { color: var(--text-muted); font-style: italic; padding: 20px; text-align: center; }
+  .detail-row td { background: var(--accent-soft); white-space: normal; padding: 0; }
+  .detail-inner { padding: 18px 16px 20px; }
+  .detail-inner h4 { margin: 0 0 10px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: .04em; color: var(--text-muted); font-family: "Inter", sans-serif; font-weight: 600; }
+  .detail-section { margin-bottom: 20px; }
+  .detail-section:last-child { margin-bottom: 0; }
+  .empty { color: var(--text-muted); font-style: italic; padding: 22px; text-align: center; }
+  .month-cell { font-weight: 600; text-transform: capitalize; }
 
   .modal-backdrop {
-    position: fixed; inset: 0; background: rgba(0,0,0,.4);
+    position: fixed; inset: 0; background: rgba(10, 16, 14, .45);
     display: flex; align-items: center; justify-content: center;
     z-index: 50; padding: 16px;
   }
   .modal {
-    background: var(--card); border-radius: var(--radius); padding: 20px;
-    width: 100%; max-width: 420px; max-height: 90vh; overflow-y: auto;
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 22px;
+    width: 100%; max-width: 440px; max-height: 90vh; overflow-y: auto;
+    box-shadow: var(--shadow);
   }
-  .modal h3 { margin-top: 0; }
+  .modal h3 { margin-top: 0; font-size: 1.15rem; }
   .modal p.hint { font-size: 0.8rem; color: var(--text-muted); margin-top: -6px; }
-  .field { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; }
-  .field label { font-size: 0.78rem; color: var(--text-muted); }
+  .field { display: flex; flex-direction: column; gap: 4px; margin-bottom: 13px; }
+  .field label { font-size: 0.78rem; color: var(--text-muted); font-weight: 500; }
   .field input, .field select { width: 100%; }
-  .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
+  .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px; }
+  .modal .userslist { list-style: none; margin: 0 0 16px; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  .modal .userslist li { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 10px; border: 1px solid var(--border-soft); border-radius: 8px; font-size: 0.85rem; }
 
   [hidden] { display: none !important; }
-  footer { text-align: center; color: var(--text-muted); font-size: 0.75rem; margin-top: 24px; }
+  footer { text-align: center; color: var(--text-muted); font-size: 0.75rem; margin-top: 28px; }
   .amount-due { color: var(--danger); font-weight: 600; }
   .amount-ok { color: var(--ok); font-weight: 600; }
   .amount-credit { color: var(--primary); font-weight: 600; }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <h1>Gestion des loyers</h1>
-  <p class="subtitle">Suivi automatique des loyers dus et des paiements par locataire</p>
 
-  <div class="banner" id="banner" hidden>
-    <span id="bannerText"></span>
-    <button class="small" id="btnBannerRetry">Réessayer</button>
-    <button class="small" id="btnBannerSettings">Paramètres</button>
-  </div>
-
-  <div class="stats" id="stats"></div>
-
-  <div class="toolbar">
-    <input type="text" id="search" placeholder="Rechercher un locataire ou un bien...">
-    <select id="filterStatus">
-      <option value="all">Tous les statuts</option>
-      <option value="late">En retard</option>
-      <option value="ok">À jour</option>
-      <option value="credit">Payé d'avance</option>
-    </select>
-    <div class="spacer"></div>
-    <button id="btnSettings" title="Configurer la connexion à la base de données">⚙ Paramètres</button>
-    <button class="primary" id="btnNewTenant">+ Nouveau locataire</button>
-  </div>
-
-  <div class="card">
-    <div class="table-scroll">
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            <th>Locataire</th>
-            <th>Bien</th>
-            <th>Loyer mensuel</th>
-            <th>Depuis le</th>
-            <th>Mois échus</th>
-            <th>Total dû</th>
-            <th>Total payé</th>
-            <th>Solde</th>
-            <th>Statut</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="tbody"></tbody>
-      </table>
-      <div class="empty" id="emptyMsg" hidden>Aucun locataire pour le moment. Cliquez sur « + Nouveau locataire » pour commencer.</div>
+<div class="login-wrap" id="loginView">
+  <div class="login-card">
+    <div class="login-logo">L</div>
+    <h1>Gestion des loyers</h1>
+    <p class="subtitle">Connecte-toi pour accéder à tes locataires et paiements.</p>
+    <div class="login-error" id="loginError" hidden></div>
+    <div class="field">
+      <label>Email</label>
+      <input type="email" id="loginEmail" autocomplete="username" placeholder="toi@exemple.com">
     </div>
+    <div class="field">
+      <label>Mot de passe</label>
+      <input type="password" id="loginPassword" autocomplete="current-password" placeholder="••••••••">
+    </div>
+    <button class="primary block" id="loginSubmit">Se connecter</button>
+    <button class="ghost small block" id="btnLoginSettings" style="margin-top:10px;">⚙ Paramètres de connexion</button>
+  </div>
+</div>
+
+<div id="appView" hidden>
+  <div class="topbar">
+    <div class="wordmark">
+      <div class="mark">L</div>
+      <h1 class="brand">Loyers</h1>
+    </div>
+    <div class="spacer"></div>
+    <span class="user-email" id="topbarEmail"></span>
+    <button class="ghost small" id="btnUsers" title="Gérer les comptes utilisateurs">👤 Utilisateurs</button>
+    <button class="ghost small" id="btnSettings" title="Configurer la connexion à la base de données">⚙ Paramètres</button>
+    <button class="ghost small" id="btnLogout">Se déconnecter</button>
   </div>
 
-  <footer>Les données sont stockées dans ta base Cloudflare D1, partagées entre tous les appareils qui utilisent ce lien.</footer>
+  <div class="wrap">
+    <p class="subtitle">Suivi mensuel des loyers dus et des paiements par locataire</p>
+
+    <div class="banner" id="banner" hidden>
+      <span id="bannerText"></span>
+      <button class="small" id="btnBannerRetry">Réessayer</button>
+      <button class="small" id="btnBannerSettings">Paramètres</button>
+    </div>
+
+    <div class="stats" id="stats"></div>
+
+    <div class="toolbar">
+      <input type="text" id="search" placeholder="Rechercher un locataire ou un bien...">
+      <select id="filterStatus">
+        <option value="all">Tous les statuts</option>
+        <option value="late">En retard</option>
+        <option value="ok">À jour</option>
+        <option value="credit">Payé d'avance</option>
+      </select>
+      <div class="spacer"></div>
+      <button class="primary" id="btnNewTenant">+ Nouveau locataire</button>
+    </div>
+
+    <div class="card">
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>Locataire</th>
+              <th>Bien</th>
+              <th>Loyer mensuel</th>
+              <th>Depuis le</th>
+              <th>Mois échus</th>
+              <th>Total dû</th>
+              <th>Total payé</th>
+              <th>Solde</th>
+              <th>Statut</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+        <div class="empty" id="emptyMsg" hidden>Aucun locataire pour le moment. Cliquez sur « + Nouveau locataire » pour commencer.</div>
+      </div>
+    </div>
+
+    <footer>Les données sont stockées dans ta base Cloudflare D1, partagées entre tous les appareils qui utilisent ce lien.</footer>
+  </div>
 </div>
 
 <div class="modal-backdrop" id="tenantModal" hidden>
@@ -211,7 +355,7 @@
       <input type="number" id="tenantRent" min="0" step="0.01" placeholder="Ex: 650">
     </div>
     <div class="field">
-      <label>Locataire depuis le (date d'entrée / 1er loyer dû) *</label>
+      <label>Locataire depuis le (date d'entrée) *</label>
       <input type="date" id="tenantStart">
     </div>
     <div class="field">
@@ -225,21 +369,78 @@
   </div>
 </div>
 
+<div class="modal-backdrop" id="paymentModal" hidden>
+  <div class="modal">
+    <h3>Enregistrer un paiement</h3>
+    <p class="hint" id="paymentTenantName"></p>
+    <input type="hidden" id="payTenantId">
+    <div class="field">
+      <label>Mois concerné *</label>
+      <select id="payPeriod"></select>
+    </div>
+    <div class="field">
+      <label>Montant (€) *</label>
+      <input type="number" id="payAmount" min="0" step="0.01">
+    </div>
+    <div class="field">
+      <label>Date du paiement *</label>
+      <input type="date" id="payDate">
+    </div>
+    <div class="field">
+      <label>Moyen</label>
+      <select id="payMethod">
+        <option value="Virement">Virement</option>
+        <option value="Espèces">Espèces</option>
+        <option value="Chèque">Chèque</option>
+        <option value="Autre">Autre</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Note (optionnel)</label>
+      <input type="text" id="payNote">
+    </div>
+    <div class="modal-actions">
+      <button id="paymentCancel">Annuler</button>
+      <button class="primary" id="paymentSave">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="usersModal" hidden>
+  <div class="modal">
+    <h3>Comptes utilisateurs</h3>
+    <p class="hint">Toute personne avec un compte peut se connecter et gérer l'application.</p>
+    <ul class="userslist" id="usersList"></ul>
+    <div class="field">
+      <label>Nouvel utilisateur — email</label>
+      <input type="email" id="newUserEmail" placeholder="quelqu.un@exemple.com">
+    </div>
+    <div class="field">
+      <label>Mot de passe (6 caractères minimum)</label>
+      <input type="password" id="newUserPassword">
+    </div>
+    <div class="modal-actions">
+      <button id="usersClose">Fermer</button>
+      <button class="primary" id="addUserSave">Ajouter</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-backdrop" id="settingsModal" hidden>
   <div class="modal">
     <h3>Connexion à la base de données</h3>
-    <p class="hint">Adresse de l'API Cloudflare Worker déployée devant ta base D1 (ex : https://immo-loyers-api.ton-compte.workers.dev).</p>
+    <p class="hint">Adresse de l'API Cloudflare Worker déployée devant la base D1.</p>
     <div class="field">
       <label>URL de l'API *</label>
-      <input type="text" id="cfgUrl" placeholder="https://immo-loyers-api.xxx.workers.dev">
+      <input type="text" id="cfgUrl" placeholder="https://immo.xxx.workers.dev">
     </div>
     <div class="field">
-      <label>Clé API (optionnel, si tu en as défini une côté Worker)</label>
+      <label>Clé API (optionnel)</label>
       <input type="text" id="cfgKey" placeholder="laisser vide si aucune">
     </div>
     <div class="modal-actions">
       <button id="settingsCancel">Annuler</button>
-      <button class="primary" id="settingsSave">Enregistrer et connecter</button>
+      <button class="primary" id="settingsSave">Enregistrer</button>
     </div>
   </div>
 </div>
@@ -249,8 +450,7 @@
   "use strict";
 
   var LS_CONFIG = "immo_api_config";
-  // Preconfigured Worker so the app works out of the box; still
-  // overridable per-browser from the Paramètres modal.
+  var LS_AUTH = "immo_auth";
   var DEFAULT_API_URL = "https://immo.ccds22431.workers.dev";
 
   function loadConfig() {
@@ -261,19 +461,28 @@
       return { url: DEFAULT_API_URL, key: "" };
     }
   }
-  function saveConfig(cfg) {
-    localStorage.setItem(LS_CONFIG, JSON.stringify(cfg));
+  function saveConfig(cfg) { localStorage.setItem(LS_CONFIG, JSON.stringify(cfg)); }
+
+  function loadAuth() {
+    try {
+      var raw = localStorage.getItem(LS_AUTH);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) { return null; }
+  }
+  function saveAuth(a) {
+    if (a) localStorage.setItem(LS_AUTH, JSON.stringify(a));
+    else localStorage.removeItem(LS_AUTH);
   }
 
   var config = loadConfig();
+  var auth = loadAuth();
   var tenants = [];
   var payments = [];
+  var users = [];
   var expandedId = null;
   var loaded = false;
 
-  function uid() {
-    return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-  }
+  function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
 
   function fmtMoney(n) {
     return (Math.round(n * 100) / 100).toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
@@ -283,13 +492,13 @@
     var d = new Date(iso + "T00:00:00");
     return d.toLocaleDateString("fr-FR");
   }
-  function todayISO() {
-    var d = new Date();
-    return d.toISOString().slice(0, 10);
+  function todayISO() { return new Date().toISOString().slice(0, 10); }
+  function currentPeriod() { return todayISO().slice(0, 7); }
+  function fmtPeriod(p) {
+    var d = new Date(p + "-01T00:00:00");
+    return d.toLocaleDateString("fr-FR", { month: "long", year: "numeric" });
   }
 
-  // Number of rent periods due between the tenant's start date and "today",
-  // using the day-of-month of the start date as the recurring due day.
   function monthsDue(startISO, asOfISO) {
     var start = new Date(startISO + "T00:00:00");
     var asOf = new Date(asOfISO + "T00:00:00");
@@ -299,14 +508,30 @@
     return Math.max(0, months);
   }
 
-  // ---- API layer ----
-  function apiUrl(path) {
-    return config.url.replace(/\/+$/, "") + path;
+  // Every "YYYY-MM" from a tenant's start month through the later of
+  // today's month or the furthest month they have a payment logged for
+  // (so advance payments stay visible), most recent first.
+  function periodRange(startISO, extraThroughPeriod) {
+    var start = startISO.slice(0, 7);
+    var through = currentPeriod();
+    if (extraThroughPeriod && extraThroughPeriod > through) through = extraThroughPeriod;
+    var out = [];
+    var y = parseInt(start.slice(0, 4), 10), m = parseInt(start.slice(5, 7), 10);
+    var ty = parseInt(through.slice(0, 4), 10), tm = parseInt(through.slice(5, 7), 10);
+    while (y < ty || (y === ty && m <= tm)) {
+      out.push(y + "-" + String(m).padStart(2, "0"));
+      m++;
+      if (m > 12) { m = 1; y++; }
+    }
+    return out.reverse();
   }
+
+  function apiUrl(path) { return config.url.replace(/\/+$/, "") + path; }
   async function api(path, options) {
     options = options || {};
     var headers = { "Content-Type": "application/json" };
     if (config.key) headers["X-Api-Key"] = config.key;
+    if (auth && auth.token) headers["Authorization"] = "Bearer " + auth.token;
     var res;
     try {
       res = await fetch(apiUrl(path), {
@@ -318,11 +543,13 @@
     } catch (e) {
       throw new Error("Impossible de contacter le serveur. Vérifie ta connexion et l'URL configurée.");
     }
+    if (res.status === 401 && path !== "/api/auth/login") {
+      forceLogout();
+      throw new Error("Session expirée, merci de te reconnecter.");
+    }
     var data = null;
     try { data = await res.json(); } catch (e) {}
-    if (!res.ok) {
-      throw new Error((data && data.error) || ("Erreur serveur (" + res.status + ")"));
-    }
+    if (!res.ok) throw new Error((data && data.error) || ("Erreur serveur (" + res.status + ")"));
     return data;
   }
 
@@ -330,10 +557,59 @@
     document.getElementById("bannerText").textContent = message;
     document.getElementById("banner").hidden = false;
   }
-  function hideBanner() {
-    document.getElementById("banner").hidden = true;
+  function hideBanner() { document.getElementById("banner").hidden = true; }
+
+  // ---- Auth screens ----
+  function showLogin() {
+    document.getElementById("loginView").hidden = false;
+    document.getElementById("appView").hidden = true;
+  }
+  function showApp() {
+    document.getElementById("loginView").hidden = true;
+    document.getElementById("appView").hidden = false;
+    document.getElementById("topbarEmail").textContent = auth ? auth.email : "";
+  }
+  function forceLogout() {
+    auth = null;
+    saveAuth(null);
+    showLogin();
   }
 
+  document.getElementById("loginSubmit").addEventListener("click", async function () {
+    var email = document.getElementById("loginEmail").value.trim();
+    var password = document.getElementById("loginPassword").value;
+    var errEl = document.getElementById("loginError");
+    errEl.hidden = true;
+    if (!email || !password) {
+      errEl.textContent = "Merci de renseigner email et mot de passe.";
+      errEl.hidden = false;
+      return;
+    }
+    var btn = document.getElementById("loginSubmit");
+    btn.disabled = true;
+    try {
+      var res = await api("/api/auth/login", { method: "POST", body: { email: email, password: password } });
+      auth = { token: res.token, email: res.email };
+      saveAuth(auth);
+      showApp();
+      loadData();
+    } catch (e) {
+      errEl.textContent = e.message;
+      errEl.hidden = false;
+    } finally {
+      btn.disabled = false;
+    }
+  });
+  document.getElementById("loginPassword").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") document.getElementById("loginSubmit").click();
+  });
+
+  document.getElementById("btnLogout").addEventListener("click", async function () {
+    try { await api("/api/auth/logout", { method: "POST" }); } catch (e) {}
+    forceLogout();
+  });
+
+  // ---- Data loading ----
   async function loadData() {
     if (!config || !config.url) {
       openSettingsModal();
@@ -353,11 +629,20 @@
   }
 
   function paymentsForTenant(tenantId) {
-    return payments.filter(function (p) { return p.tenantId === tenantId; })
-      .sort(function (a, b) { return b.date.localeCompare(a.date); });
+    return payments.filter(function (p) { return p.tenantId === tenantId; });
+  }
+  function paymentsForTenantSorted(tenantId) {
+    return paymentsForTenant(tenantId).slice().sort(function (a, b) {
+      return (b.period + b.date).localeCompare(a.period + a.date);
+    });
   }
   function totalPaid(tenantId) {
     return paymentsForTenant(tenantId).reduce(function (sum, p) { return sum + p.amount; }, 0);
+  }
+  function paidForPeriod(tenantId, period) {
+    return paymentsForTenant(tenantId)
+      .filter(function (p) { return p.period === period; })
+      .reduce(function (sum, p) { return sum + p.amount; }, 0);
   }
 
   function computeTenant(t) {
@@ -390,6 +675,12 @@
     if (status === "late") return '<span class="badge danger">En retard</span>';
     if (status === "credit") return '<span class="badge warn">Avance</span>';
     return '<span class="badge ok">À jour</span>';
+  }
+  function monthBadge(paid, due) {
+    if (paid <= 0.005) return '<span class="badge danger">Impayé</span>';
+    if (paid + 0.005 < due) return '<span class="badge warn">Partiel</span>';
+    if (paid > due + 0.005) return '<span class="badge ok">Payé (+' + fmtMoney(paid - due) + ')</span>';
+    return '<span class="badge ok">Payé</span>';
   }
 
   function amountClass(status) {
@@ -428,7 +719,7 @@
         var balanceLabel = c.status === "credit" ? fmtMoney(Math.abs(c.balance)) + " d'avance" : fmtMoney(c.balance);
 
         tr.innerHTML =
-          '<td><button class="small" data-toggle="' + t.id + '">' + (isOpen ? "▾" : "▸") + '</button></td>' +
+          '<td><button class="small ghost" data-toggle="' + t.id + '">' + (isOpen ? "▾" : "▸") + '</button></td>' +
           '<td>' + escapeHtml(t.name) + '</td>' +
           '<td>' + escapeHtml(t.property || "—") + '</td>' +
           '<td>' + fmtMoney(t.rent) + '</td>' +
@@ -440,8 +731,8 @@
           '<td>' + badge(c.status) + '</td>' +
           '<td class="row-actions">' +
             '<button class="small" data-pay="' + t.id + '">+ Paiement</button>' +
-            '<button class="small" data-edit="' + t.id + '">Modifier</button>' +
-            '<button class="small danger" data-del="' + t.id + '">Suppr.</button>' +
+            '<button class="small ghost" data-edit="' + t.id + '">Modifier</button>' +
+            '<button class="small danger ghost" data-del="' + t.id + '">Suppr.</button>' +
           '</td>';
         tbody.appendChild(tr);
 
@@ -467,35 +758,44 @@
   }
 
   function renderDetail(t) {
-    var list = paymentsForTenant(t.id);
-    var rows = list.map(function (p) {
+    var list = paymentsForTenantSorted(t.id);
+    var latestPeriod = list.reduce(function (max, p) { return p.period > max ? p.period : max; }, "");
+    var months = periodRange(t.start, latestPeriod);
+
+    var monthRows = months.map(function (p) {
+      var paid = paidForPeriod(t.id, p);
       return '<tr>' +
+        '<td class="month-cell">' + fmtPeriod(p) + '</td>' +
+        '<td>' + fmtMoney(t.rent) + '</td>' +
+        '<td>' + fmtMoney(paid) + '</td>' +
+        '<td>' + fmtMoney(t.rent - paid) + '</td>' +
+        '<td>' + monthBadge(paid, t.rent) + '</td>' +
+        '<td><button class="small" data-pay="' + t.id + '" data-period="' + p + '">+ Paiement</button></td>' +
+        '</tr>';
+    }).join("");
+
+    var logRows = list.map(function (p) {
+      return '<tr>' +
+        '<td class="month-cell">' + fmtPeriod(p.period) + '</td>' +
         '<td>' + fmtDate(p.date) + '</td>' +
         '<td>' + fmtMoney(p.amount) + '</td>' +
         '<td>' + escapeHtml(p.method || "—") + '</td>' +
         '<td>' + escapeHtml(p.note || "") + '</td>' +
-        '<td><button class="small danger" data-delpay="' + p.id + '" data-tenant="' + t.id + '">Suppr.</button></td>' +
+        '<td><button class="small danger ghost" data-delpay="' + p.id + '">Suppr.</button></td>' +
         '</tr>';
     }).join("");
 
     return '<div class="detail-inner">' +
-      '<h4>Enregistrer un paiement pour ' + escapeHtml(t.name) + '</h4>' +
-      '<div class="pay-form">' +
-        '<label>Date<input type="date" data-pf-date="' + t.id + '" value="' + todayISO() + '"></label>' +
-        '<label>Montant (€)<input type="number" min="0" step="0.01" data-pf-amount="' + t.id + '" placeholder="' + t.rent + '"></label>' +
-        '<label>Moyen<select data-pf-method="' + t.id + '">' +
-          '<option value="Virement">Virement</option>' +
-          '<option value="Espèces">Espèces</option>' +
-          '<option value="Chèque">Chèque</option>' +
-          '<option value="Autre">Autre</option>' +
-        '</select></label>' +
-        '<label>Note<input type="text" data-pf-note="' + t.id + '" placeholder="optionnel"></label>' +
-        '<button class="primary" data-pf-submit="' + t.id + '">Ajouter</button>' +
+      '<div class="detail-section">' +
+        '<h4>Suivi mois par mois</h4>' +
+        '<div class="table-scroll"><table><thead><tr><th>Mois</th><th>Loyer dû</th><th>Payé</th><th>Solde</th><th>Statut</th><th></th></tr></thead><tbody>' + monthRows + '</tbody></table></div>' +
       '</div>' +
-      '<h4>Historique des paiements</h4>' +
-      (list.length
-        ? '<table><thead><tr><th>Date</th><th>Montant</th><th>Moyen</th><th>Note</th><th></th></tr></thead><tbody>' + rows + '</tbody></table>'
-        : '<p class="empty">Aucun paiement enregistré.</p>') +
+      '<div class="detail-section">' +
+        '<h4>Historique des paiements</h4>' +
+        (list.length
+          ? '<div class="table-scroll"><table><thead><tr><th>Mois</th><th>Payé le</th><th>Montant</th><th>Moyen</th><th>Note</th><th></th></tr></thead><tbody>' + logRows + '</tbody></table></div>'
+          : '<p class="empty">Aucun paiement enregistré.</p>') +
+      '</div>' +
       '</div>';
   }
 
@@ -536,38 +836,7 @@
     });
     document.querySelectorAll("[data-pay]").forEach(function (btn) {
       btn.addEventListener("click", function () {
-        expandedId = btn.getAttribute("data-pay");
-        render();
-      });
-    });
-    document.querySelectorAll("[data-pf-submit]").forEach(function (btn) {
-      btn.addEventListener("click", async function () {
-        var id = btn.getAttribute("data-pf-submit");
-        var dateEl = document.querySelector('[data-pf-date="' + id + '"]');
-        var amountEl = document.querySelector('[data-pf-amount="' + id + '"]');
-        var methodEl = document.querySelector('[data-pf-method="' + id + '"]');
-        var noteEl = document.querySelector('[data-pf-note="' + id + '"]');
-        var amount = parseFloat(amountEl.value);
-        if (!amount || amount <= 0) { alert("Merci de saisir un montant valide."); return; }
-        if (!dateEl.value) { alert("Merci de saisir une date."); return; }
-        btn.disabled = true;
-        try {
-          var created = await api("/api/payments", {
-            method: "POST",
-            body: {
-              tenantId: id,
-              date: dateEl.value,
-              amount: amount,
-              method: methodEl.value,
-              note: noteEl.value.trim(),
-            },
-          });
-          payments.push(created);
-          render();
-        } catch (e) {
-          showBanner(e.message);
-          btn.disabled = false;
-        }
+        openPaymentModal(btn.getAttribute("data-pay"), btn.getAttribute("data-period"));
       });
     });
     document.querySelectorAll("[data-delpay]").forEach(function (btn) {
@@ -587,7 +856,7 @@
     });
   }
 
-  // Tenant modal
+  // ---- Tenant modal ----
   var modal = document.getElementById("tenantModal");
   function openTenantModal(id) {
     var t = id ? tenants.find(function (x) { return x.id === id; }) : null;
@@ -646,7 +915,139 @@
   document.getElementById("search").addEventListener("input", render);
   document.getElementById("filterStatus").addEventListener("change", render);
 
-  // Settings modal
+  // ---- Payment modal ----
+  var paymentModal = document.getElementById("paymentModal");
+  function openPaymentModal(tenantId, presetPeriod) {
+    var t = tenants.find(function (x) { return x.id === tenantId; });
+    if (!t) return;
+    document.getElementById("payTenantId").value = tenantId;
+    document.getElementById("paymentTenantName").textContent = t.name + (t.property ? " — " + t.property : "");
+
+    var months = periodRange(t.start, currentPeriod());
+    // offer two months ahead too, for advance payments
+    var extra = [];
+    var last = months[0] || currentPeriod();
+    var y = parseInt(last.slice(0, 4), 10), m = parseInt(last.slice(5, 7), 10);
+    for (var i = 0; i < 2; i++) {
+      m++;
+      if (m > 12) { m = 1; y++; }
+      extra.push(y + "-" + String(m).padStart(2, "0"));
+    }
+    var allPeriods = extra.reverse().concat(months);
+
+    var firstUnpaid = months.slice().reverse().find(function (p) { return paidForPeriod(tenantId, p) + 0.005 < t.rent; });
+    var defaultPeriod = presetPeriod || firstUnpaid || currentPeriod();
+
+    var sel = document.getElementById("payPeriod");
+    sel.innerHTML = allPeriods.map(function (p) {
+      return '<option value="' + p + '"' + (p === defaultPeriod ? " selected" : "") + '>' + capitalize(fmtPeriod(p)) + '</option>';
+    }).join("");
+
+    document.getElementById("payAmount").value = t.rent - paidForPeriod(tenantId, defaultPeriod) > 0
+      ? (t.rent - paidForPeriod(tenantId, defaultPeriod)).toFixed(2)
+      : t.rent;
+    document.getElementById("payDate").value = todayISO();
+    document.getElementById("payMethod").value = "Virement";
+    document.getElementById("payNote").value = "";
+    paymentModal.hidden = false;
+  }
+  function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+  function closePaymentModal() { paymentModal.hidden = true; }
+
+  document.getElementById("paymentCancel").addEventListener("click", closePaymentModal);
+  paymentModal.addEventListener("click", function (e) { if (e.target === paymentModal) closePaymentModal(); });
+
+  document.getElementById("paymentSave").addEventListener("click", async function () {
+    var tenantId = document.getElementById("payTenantId").value;
+    var period = document.getElementById("payPeriod").value;
+    var amount = parseFloat(document.getElementById("payAmount").value);
+    var date = document.getElementById("payDate").value;
+    var method = document.getElementById("payMethod").value;
+    var note = document.getElementById("payNote").value.trim();
+
+    if (!amount || amount <= 0) { alert("Merci de saisir un montant valide."); return; }
+    if (!date) { alert("Merci de saisir une date."); return; }
+
+    var btn = document.getElementById("paymentSave");
+    btn.disabled = true;
+    try {
+      var created = await api("/api/payments", {
+        method: "POST",
+        body: { tenantId: tenantId, period: period, date: date, amount: amount, method: method, note: note },
+      });
+      payments.push(created);
+      closePaymentModal();
+      render();
+    } catch (e) {
+      showBanner(e.message);
+    } finally {
+      btn.disabled = false;
+    }
+  });
+
+  // ---- Users modal ----
+  var usersModal = document.getElementById("usersModal");
+  async function openUsersModal() {
+    usersModal.hidden = false;
+    document.getElementById("newUserEmail").value = "";
+    document.getElementById("newUserPassword").value = "";
+    await refreshUsers();
+  }
+  async function refreshUsers() {
+    try {
+      var res = await api("/api/users");
+      users = res.users || [];
+      renderUsersList();
+    } catch (e) {
+      showBanner(e.message);
+    }
+  }
+  function renderUsersList() {
+    var list = document.getElementById("usersList");
+    list.innerHTML = users.map(function (u) {
+      var isSelf = auth && u.email === auth.email;
+      return '<li><span>' + escapeHtml(u.email) + (isSelf ? " (toi)" : "") + '</span>' +
+        '<button class="small danger ghost" data-deluser="' + escapeHtml(u.email) + '"' + (users.length <= 1 ? " disabled" : "") + '>Suppr.</button></li>';
+    }).join("");
+    list.querySelectorAll("[data-deluser]").forEach(function (btn) {
+      btn.addEventListener("click", async function () {
+        var email = btn.getAttribute("data-deluser");
+        if (!confirm('Supprimer l\'accès de "' + email + '" ?')) return;
+        btn.disabled = true;
+        try {
+          await api("/api/users/" + encodeURIComponent(email), { method: "DELETE" });
+          await refreshUsers();
+        } catch (e) {
+          showBanner(e.message);
+          btn.disabled = false;
+        }
+      });
+    });
+  }
+  document.getElementById("btnUsers").addEventListener("click", openUsersModal);
+  document.getElementById("usersClose").addEventListener("click", function () { usersModal.hidden = true; });
+  usersModal.addEventListener("click", function (e) { if (e.target === usersModal) usersModal.hidden = true; });
+
+  document.getElementById("addUserSave").addEventListener("click", async function () {
+    var email = document.getElementById("newUserEmail").value.trim();
+    var password = document.getElementById("newUserPassword").value;
+    if (!email) { alert("Merci de saisir un email."); return; }
+    if (!password || password.length < 6) { alert("Le mot de passe doit faire au moins 6 caractères."); return; }
+    var btn = document.getElementById("addUserSave");
+    btn.disabled = true;
+    try {
+      await api("/api/users", { method: "POST", body: { email: email, password: password } });
+      document.getElementById("newUserEmail").value = "";
+      document.getElementById("newUserPassword").value = "";
+      await refreshUsers();
+    } catch (e) {
+      showBanner(e.message);
+    } finally {
+      btn.disabled = false;
+    }
+  });
+
+  // ---- Settings modal ----
   var settingsModal = document.getElementById("settingsModal");
   function openSettingsModal() {
     document.getElementById("cfgUrl").value = config ? (config.url || "") : "";
@@ -656,6 +1057,7 @@
   function closeSettingsModal() { settingsModal.hidden = true; }
 
   document.getElementById("btnSettings").addEventListener("click", openSettingsModal);
+  document.getElementById("btnLoginSettings").addEventListener("click", openSettingsModal);
   document.getElementById("btnBannerSettings").addEventListener("click", openSettingsModal);
   document.getElementById("btnBannerRetry").addEventListener("click", loadData);
   document.getElementById("settingsCancel").addEventListener("click", function () {
@@ -678,15 +1080,25 @@
     loadData();
   });
 
-  render();
-  loadData();
+  // ---- Boot ----
+  async function boot() {
+    if (auth && auth.token) {
+      try {
+        await api("/api/auth/me");
+        showApp();
+        loadData();
+        return;
+      } catch (e) {
+        // token invalid/expired, fall through to login
+      }
+    }
+    showLogin();
+  }
+  boot();
 
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", function () {
-      navigator.serviceWorker.register("sw.js").catch(function () {
-        // Offline caching unavailable (e.g. opened as a local file); the
-        // app shell just won't be installable/cacheable as a PWA there.
-      });
+      navigator.serviceWorker.register("sw.js").catch(function () {});
     });
   }
 })();
