@@ -83,28 +83,14 @@
     color: var(--text);
     font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   }
-  .brand {
-    font-family: "Fraunces", Georgia, serif;
-    font-weight: 600;
-  }
+  .brand { font-family: "Fraunces", Georgia, serif; font-weight: 600; }
   h1, h2, h3 { font-family: "Fraunces", Georgia, serif; font-weight: 600; text-wrap: balance; }
 
   /* ---- Login screen ---- */
-  .login-wrap {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-  }
+  .login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
   .login-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    box-shadow: var(--shadow);
-    padding: 36px 32px;
-    width: 100%;
-    max-width: 380px;
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+    box-shadow: var(--shadow); padding: 36px 32px; width: 100%; max-width: 380px;
   }
   .login-logo {
     width: 44px; height: 44px; border-radius: 10px;
@@ -123,10 +109,9 @@
   /* ---- App shell ---- */
   .topbar {
     display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
-    padding: 14px 24px; border-bottom: 1px solid var(--border);
-    background: var(--card);
+    padding: 14px 24px; border-bottom: 1px solid var(--border); background: var(--card);
   }
-  .topbar .wordmark { display: flex; align-items: center; gap: 10px; }
+  .topbar .wordmark { display: flex; align-items: center; gap: 10px; cursor: pointer; }
   .topbar .wordmark .mark {
     width: 30px; height: 30px; border-radius: 8px;
     background: var(--primary); color: var(--primary-text);
@@ -139,6 +124,10 @@
 
   .wrap { max-width: 1180px; margin: 0 auto; padding: 24px 20px 40px; }
   .subtitle { color: var(--text-muted); font-size: 0.88rem; margin: 0 0 22px; }
+  .back-link {
+    display: inline-flex; align-items: center; gap: 6px; margin-bottom: 16px;
+    color: var(--text-muted); font-size: 0.85rem; font-weight: 500;
+  }
 
   .banner {
     display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
@@ -147,19 +136,8 @@
   }
   .banner button { margin-left: auto; }
 
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 12px;
-    margin-bottom: 22px;
-  }
-  .stat {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 14px 16px;
-  }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 22px; }
+  .stat { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 14px 16px; }
   .stat .label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .04em; }
   .stat .value { font-size: 1.5rem; font-weight: 600; margin-top: 6px; font-variant-numeric: tabular-nums; font-family: "Fraunces", serif; }
   .stat.danger .value { color: var(--danger); }
@@ -168,24 +146,13 @@
   .toolbar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; align-items: center; }
   .toolbar .spacer { flex: 1; }
   input, select {
-    font: inherit;
-    padding: 9px 11px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    background: var(--card);
-    color: var(--text);
+    font: inherit; padding: 9px 11px; border: 1px solid var(--border); border-radius: 8px;
+    background: var(--card); color: var(--text);
   }
-  input:focus-visible, select:focus-visible, button:focus-visible {
-    outline: 2px solid var(--primary); outline-offset: 1px;
-  }
+  input:focus-visible, select:focus-visible, button:focus-visible { outline: 2px solid var(--primary); outline-offset: 1px; }
   button {
-    font: inherit;
-    padding: 9px 15px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    background: var(--card);
-    color: var(--text);
-    cursor: pointer;
+    font: inherit; padding: 9px 15px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--card); color: var(--text); cursor: pointer;
   }
   button:hover { filter: brightness(0.97); }
   button:disabled { opacity: 0.55; cursor: default; }
@@ -198,14 +165,8 @@
   button.ghost:hover { background: var(--border-soft); }
   button.block { width: 100%; }
 
-  .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    overflow: hidden;
-    margin-bottom: 18px;
-  }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; margin-bottom: 18px; }
+  .card-pad { padding: 18px 20px; }
   table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
   th, td { padding: 11px 13px; text-align: left; border-bottom: 1px solid var(--border-soft); white-space: nowrap; font-variant-numeric: tabular-nums; }
   th { background: var(--accent-soft); font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: .04em; font-variant-numeric: normal; font-weight: 600; }
@@ -217,25 +178,25 @@
   .badge.danger { background: var(--danger-bg); color: var(--danger); }
   .badge.warn { background: var(--warn-bg); color: var(--warn); }
 
-  .row-actions { display: flex; gap: 6px; }
-
-  .detail-row td { background: var(--accent-soft); white-space: normal; padding: 0; }
-  .detail-inner { padding: 18px 16px 20px; }
-  .detail-inner h4 { margin: 0 0 10px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: .04em; color: var(--text-muted); font-family: "Inter", sans-serif; font-weight: 600; }
-  .detail-section { margin-bottom: 20px; }
-  .detail-section:last-child { margin-bottom: 0; }
+  .row-actions { display: flex; gap: 6px; flex-wrap: wrap; }
   .empty { color: var(--text-muted); font-style: italic; padding: 22px; text-align: center; }
   .month-cell { font-weight: 600; text-transform: capitalize; }
+  .section-title { margin: 0 0 12px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: .04em; color: var(--text-muted); font-family: "Inter", sans-serif; font-weight: 600; }
+
+  .tenant-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
+  .tenant-header h2 { margin: 0 0 4px; font-size: 1.6rem; }
+  .tenant-header .prop { color: var(--text-muted); font-size: 0.92rem; }
+  .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; }
+  .info-grid .item .label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .04em; }
+  .info-grid .item .value { font-size: 1rem; font-weight: 500; margin-top: 4px; }
 
   .modal-backdrop {
     position: fixed; inset: 0; background: rgba(10, 16, 14, .45);
-    display: flex; align-items: center; justify-content: center;
-    z-index: 50; padding: 16px;
+    display: flex; align-items: center; justify-content: center; z-index: 50; padding: 16px;
   }
   .modal {
     background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 22px;
-    width: 100%; max-width: 440px; max-height: 90vh; overflow-y: auto;
-    box-shadow: var(--shadow);
+    width: 100%; max-width: 440px; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow);
   }
   .modal h3 { margin-top: 0; font-size: 1.15rem; }
   .modal p.hint { font-size: 0.8rem; color: var(--text-muted); margin-top: -6px; }
@@ -243,11 +204,11 @@
   .field label { font-size: 0.78rem; color: var(--text-muted); font-weight: 500; }
   .field input, .field select { width: 100%; }
   .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px; }
-  .modal .userslist { list-style: none; margin: 0 0 16px; padding: 0; display: flex; flex-direction: column; gap: 8px; }
-  .modal .userslist li { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 10px; border: 1px solid var(--border-soft); border-radius: 8px; font-size: 0.85rem; }
+
+  .userslist { list-style: none; margin: 0 0 8px; padding: 0; display: flex; flex-direction: column; gap: 8px; max-width: 480px; }
+  .userslist li { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 14px; border: 1px solid var(--border-soft); border-radius: 8px; font-size: 0.9rem; }
 
   [hidden] { display: none !important; }
-  footer { text-align: center; color: var(--text-muted); font-size: 0.75rem; margin-top: 28px; }
   .amount-due { color: var(--danger); font-weight: 600; }
   .amount-ok { color: var(--ok); font-weight: 600; }
   .amount-credit { color: var(--primary); font-weight: 600; }
@@ -270,30 +231,28 @@
       <input type="password" id="loginPassword" autocomplete="current-password" placeholder="••••••••">
     </div>
     <button class="primary block" id="loginSubmit">Se connecter</button>
-    <button class="ghost small block" id="btnLoginSettings" style="margin-top:10px;">⚙ Paramètres de connexion</button>
   </div>
 </div>
 
 <div id="appView" hidden>
   <div class="topbar">
-    <div class="wordmark">
+    <div class="wordmark" id="btnHome">
       <div class="mark">L</div>
       <h1 class="brand">Loyers</h1>
     </div>
     <div class="spacer"></div>
     <span class="user-email" id="topbarEmail"></span>
-    <button class="ghost small" id="btnUsers" title="Gérer les comptes utilisateurs">👤 Utilisateurs</button>
-    <button class="ghost small" id="btnSettings" title="Configurer la connexion à la base de données">⚙ Paramètres</button>
+    <button class="ghost small" id="btnUsers">👤 Utilisateurs</button>
     <button class="ghost small" id="btnLogout">Se déconnecter</button>
   </div>
 
-  <div class="wrap">
+  <!-- ---- Dashboard ---- -->
+  <div class="wrap" id="dashboardView">
     <p class="subtitle">Suivi mensuel des loyers dus et des paiements par locataire</p>
 
     <div class="banner" id="banner" hidden>
       <span id="bannerText"></span>
       <button class="small" id="btnBannerRetry">Réessayer</button>
-      <button class="small" id="btnBannerSettings">Paramètres</button>
     </div>
 
     <div class="stats" id="stats"></div>
@@ -315,17 +274,15 @@
         <table>
           <thead>
             <tr>
-              <th></th>
               <th>Locataire</th>
               <th>Bien</th>
               <th>Loyer mensuel</th>
               <th>Depuis le</th>
-              <th>Mois échus</th>
               <th>Total dû</th>
               <th>Total payé</th>
               <th>Solde</th>
               <th>Statut</th>
-              <th>Actions</th>
+              <th></th>
             </tr>
           </thead>
           <tbody id="tbody"></tbody>
@@ -333,8 +290,71 @@
         <div class="empty" id="emptyMsg" hidden>Aucun locataire pour le moment. Cliquez sur « + Nouveau locataire » pour commencer.</div>
       </div>
     </div>
+  </div>
 
-    <footer>Les données sont stockées dans ta base Cloudflare D1, partagées entre tous les appareils qui utilisent ce lien.</footer>
+  <!-- ---- Tenant detail page ---- -->
+  <div class="wrap" id="tenantView" hidden>
+    <a href="#/" class="back-link">← Retour</a>
+    <div class="tenant-header">
+      <div>
+        <h2 id="tdName"></h2>
+        <p class="prop" id="tdProperty"></p>
+      </div>
+      <div class="row-actions">
+        <button class="primary" id="tdPayBtn">+ Paiement</button>
+        <button class="ghost" id="tdEditBtn">Modifier</button>
+        <button class="danger ghost" id="tdDeleteBtn">Supprimer</button>
+      </div>
+    </div>
+
+    <div class="card card-pad">
+      <div class="info-grid" id="tdInfoGrid"></div>
+    </div>
+
+    <div class="stats" id="tdStats"></div>
+
+    <div class="card">
+      <div class="card-pad" style="padding-bottom:0;"><p class="section-title">Suivi mois par mois</p></div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Mois</th><th>Loyer dû</th><th>Payé</th><th>Solde</th><th>Statut</th><th></th></tr></thead>
+          <tbody id="tdMonthBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-pad" style="padding-bottom:0;"><p class="section-title">Historique des paiements</p></div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Mois</th><th>Payé le</th><th>Montant</th><th>Moyen</th><th>Note</th><th></th></tr></thead>
+          <tbody id="tdHistoryBody"></tbody>
+        </table>
+      </div>
+      <p class="empty" id="tdHistoryEmpty" hidden>Aucun paiement enregistré.</p>
+    </div>
+  </div>
+
+  <!-- ---- Users page ---- -->
+  <div class="wrap" id="usersView" hidden>
+    <a href="#/" class="back-link">← Retour</a>
+    <h2>Comptes utilisateurs</h2>
+    <p class="subtitle">Toute personne avec un compte peut se connecter et gérer l'application.</p>
+    <div class="card card-pad">
+      <ul class="userslist" id="usersList"></ul>
+    </div>
+    <div class="card card-pad" style="max-width:420px;">
+      <p class="section-title">Ajouter un utilisateur</p>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="newUserEmail" placeholder="quelqu.un@exemple.com">
+      </div>
+      <div class="field">
+        <label>Mot de passe (6 caractères minimum)</label>
+        <input type="password" id="newUserPassword">
+      </div>
+      <button class="primary" id="addUserSave">Ajouter</button>
+    </div>
   </div>
 </div>
 
@@ -351,8 +371,8 @@
       <input type="text" id="tenantProperty" placeholder="Ex: Appartement 3B">
     </div>
     <div class="field">
-      <label>Loyer mensuel (charges comprises) *</label>
-      <input type="number" id="tenantRent" min="0" step="0.01" placeholder="Ex: 650">
+      <label>Loyer mensuel en FCFA (charges comprises) *</label>
+      <input type="number" id="tenantRent" min="0" step="1" placeholder="Ex: 50000">
     </div>
     <div class="field">
       <label>Locataire depuis le (date d'entrée) *</label>
@@ -377,10 +397,11 @@
     <div class="field">
       <label>Mois concerné *</label>
       <select id="payPeriod"></select>
+      <p class="hint" id="payRemainingHint"></p>
     </div>
     <div class="field">
-      <label>Montant (€) *</label>
-      <input type="number" id="payAmount" min="0" step="0.01">
+      <label>Montant (FCFA) *</label>
+      <input type="number" id="payAmount" min="0" step="1">
     </div>
     <div class="field">
       <label>Date du paiement *</label>
@@ -391,6 +412,7 @@
       <select id="payMethod">
         <option value="Virement">Virement</option>
         <option value="Espèces">Espèces</option>
+        <option value="Mobile money">Mobile money</option>
         <option value="Chèque">Chèque</option>
         <option value="Autre">Autre</option>
       </select>
@@ -406,62 +428,11 @@
   </div>
 </div>
 
-<div class="modal-backdrop" id="usersModal" hidden>
-  <div class="modal">
-    <h3>Comptes utilisateurs</h3>
-    <p class="hint">Toute personne avec un compte peut se connecter et gérer l'application.</p>
-    <ul class="userslist" id="usersList"></ul>
-    <div class="field">
-      <label>Nouvel utilisateur — email</label>
-      <input type="email" id="newUserEmail" placeholder="quelqu.un@exemple.com">
-    </div>
-    <div class="field">
-      <label>Mot de passe (6 caractères minimum)</label>
-      <input type="password" id="newUserPassword">
-    </div>
-    <div class="modal-actions">
-      <button id="usersClose">Fermer</button>
-      <button class="primary" id="addUserSave">Ajouter</button>
-    </div>
-  </div>
-</div>
-
-<div class="modal-backdrop" id="settingsModal" hidden>
-  <div class="modal">
-    <h3>Connexion à la base de données</h3>
-    <p class="hint">Adresse de l'API Cloudflare Worker déployée devant la base D1.</p>
-    <div class="field">
-      <label>URL de l'API *</label>
-      <input type="text" id="cfgUrl" placeholder="https://immo.xxx.workers.dev">
-    </div>
-    <div class="field">
-      <label>Clé API (optionnel)</label>
-      <input type="text" id="cfgKey" placeholder="laisser vide si aucune">
-    </div>
-    <div class="modal-actions">
-      <button id="settingsCancel">Annuler</button>
-      <button class="primary" id="settingsSave">Enregistrer</button>
-    </div>
-  </div>
-</div>
-
 <script>
 (function () {
   "use strict";
 
-  var LS_CONFIG = "immo_api_config";
   var LS_AUTH = "immo_auth";
-  var DEFAULT_API_URL = "https://immo.ccds22431.workers.dev";
-
-  function loadConfig() {
-    try {
-      var raw = localStorage.getItem(LS_CONFIG);
-      return raw ? JSON.parse(raw) : { url: DEFAULT_API_URL, key: "" };
-    } catch (e) {
-      return { url: DEFAULT_API_URL, key: "" };
-    }
-  }
-  function saveConfig(cfg) { localStorage.setItem(LS_CONFIG, JSON.stringify(cfg)); }
 
   function loadAuth() {
     try {
@@ -474,18 +445,14 @@
     else localStorage.removeItem(LS_AUTH);
   }
 
-  var config = loadConfig();
   var auth = loadAuth();
   var tenants = [];
   var payments = [];
   var users = [];
-  var expandedId = null;
   var loaded = false;
 
-  function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
-
   function fmtMoney(n) {
-    return (Math.round(n * 100) / 100).toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
+    return Math.round(n).toLocaleString("fr-FR") + " FCFA";
   }
   function fmtDate(iso) {
     if (!iso) return "";
@@ -498,6 +465,7 @@
     var d = new Date(p + "-01T00:00:00");
     return d.toLocaleDateString("fr-FR", { month: "long", year: "numeric" });
   }
+  function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
 
   function monthsDue(startISO, asOfISO) {
     var start = new Date(startISO + "T00:00:00");
@@ -509,8 +477,8 @@
   }
 
   // Every "YYYY-MM" from a tenant's start month through the later of
-  // today's month or the furthest month they have a payment logged for
-  // (so advance payments stay visible), most recent first.
+  // today's month or the furthest month they have a payment logged for,
+  // most recent first.
   function periodRange(startISO, extraThroughPeriod) {
     var start = startISO.slice(0, 7);
     var through = currentPeriod();
@@ -525,23 +493,31 @@
     }
     return out.reverse();
   }
+  function nextPeriods(fromPeriod, count) {
+    var y = parseInt(fromPeriod.slice(0, 4), 10), m = parseInt(fromPeriod.slice(5, 7), 10);
+    var out = [];
+    for (var i = 0; i < count; i++) {
+      m++;
+      if (m > 12) { m = 1; y++; }
+      out.push(y + "-" + String(m).padStart(2, "0"));
+    }
+    return out;
+  }
 
-  function apiUrl(path) { return config.url.replace(/\/+$/, "") + path; }
   async function api(path, options) {
     options = options || {};
     var headers = { "Content-Type": "application/json" };
-    if (config.key) headers["X-Api-Key"] = config.key;
     if (auth && auth.token) headers["Authorization"] = "Bearer " + auth.token;
     var res;
     try {
-      res = await fetch(apiUrl(path), {
+      res = await fetch(path, {
         method: options.method || "GET",
         headers: headers,
         body: options.body ? JSON.stringify(options.body) : undefined,
         cache: "no-store",
       });
     } catch (e) {
-      throw new Error("Impossible de contacter le serveur. Vérifie ta connexion et l'URL configurée.");
+      throw new Error("Impossible de contacter le serveur. Vérifie ta connexion internet.");
     }
     if (res.status === 401 && path !== "/api/auth/login") {
       forceLogout();
@@ -608,21 +584,18 @@
     try { await api("/api/auth/logout", { method: "POST" }); } catch (e) {}
     forceLogout();
   });
+  document.getElementById("btnHome").addEventListener("click", function () { location.hash = "#/"; });
+  document.getElementById("btnUsers").addEventListener("click", function () { location.hash = "#/utilisateurs"; });
 
   // ---- Data loading ----
   async function loadData() {
-    if (!config || !config.url) {
-      openSettingsModal();
-      showBanner("Configure d'abord l'adresse de ton API pour charger les données.");
-      return;
-    }
     try {
       var data = await api("/api/data");
       tenants = data.tenants || [];
       payments = data.payments || [];
       loaded = true;
       hideBanner();
-      render();
+      route();
     } catch (e) {
       showBanner(e.message);
     }
@@ -650,25 +623,8 @@
     var due = months * t.rent;
     var paid = totalPaid(t.id);
     var balance = due - paid;
-    var status = balance > 0.005 ? "late" : (balance < -0.005 ? "credit" : "ok");
+    var status = balance > 0.5 ? "late" : (balance < -0.5 ? "credit" : "ok");
     return { months: months, due: due, paid: paid, balance: balance, status: status };
-  }
-
-  function renderStats() {
-    var totalDue = 0, totalPaid_ = 0, lateCount = 0;
-    tenants.forEach(function (t) {
-      var c = computeTenant(t);
-      totalDue += c.due;
-      totalPaid_ += c.paid;
-      if (c.status === "late") lateCount++;
-    });
-    var totalOutstanding = totalDue - totalPaid_;
-    var el = document.getElementById("stats");
-    el.innerHTML =
-      '<div class="stat"><div class="label">Locataires</div><div class="value">' + tenants.length + '</div></div>' +
-      '<div class="stat danger"><div class="label">En retard</div><div class="value">' + lateCount + '</div></div>' +
-      '<div class="stat"><div class="label">Total encaissé</div><div class="value">' + fmtMoney(totalPaid_) + '</div></div>' +
-      '<div class="stat ' + (totalOutstanding > 0.005 ? "danger" : "ok") + '"><div class="label">Reste dû (global)</div><div class="value">' + fmtMoney(totalOutstanding) + '</div></div>';
   }
 
   function badge(status) {
@@ -677,18 +633,47 @@
     return '<span class="badge ok">À jour</span>';
   }
   function monthBadge(paid, due) {
-    if (paid <= 0.005) return '<span class="badge danger">Impayé</span>';
-    if (paid + 0.005 < due) return '<span class="badge warn">Partiel</span>';
-    if (paid > due + 0.005) return '<span class="badge ok">Payé (+' + fmtMoney(paid - due) + ')</span>';
+    if (paid <= 0.5) return '<span class="badge danger">Impayé</span>';
+    if (paid + 0.5 < due) return '<span class="badge warn">Partiel</span>';
+    if (paid > due + 0.5) return '<span class="badge ok">Payé (+' + fmtMoney(paid - due) + ')</span>';
     return '<span class="badge ok">Payé</span>';
   }
-
   function amountClass(status) {
     if (status === "late") return "amount-due";
     if (status === "credit") return "amount-credit";
     return "amount-ok";
   }
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
 
+  // ============ ROUTER ============
+  function route() {
+    if (!loaded) return;
+    var hash = location.hash || "#/";
+    document.getElementById("dashboardView").hidden = true;
+    document.getElementById("tenantView").hidden = true;
+    document.getElementById("usersView").hidden = true;
+
+    var m = hash.match(/^#\/locataire\/(.+)$/);
+    if (m) {
+      var t = tenants.find(function (x) { return x.id === decodeURIComponent(m[1]); });
+      if (!t) { location.hash = "#/"; return; }
+      document.getElementById("tenantView").hidden = false;
+      renderTenantDetail(t);
+    } else if (hash === "#/utilisateurs") {
+      document.getElementById("usersView").hidden = false;
+      renderUsersPage();
+    } else {
+      document.getElementById("dashboardView").hidden = false;
+      renderDashboard();
+    }
+  }
+  window.addEventListener("hashchange", route);
+
+  // ============ DASHBOARD ============
   function matchesFilters(t, c) {
     var q = document.getElementById("search").value.trim().toLowerCase();
     var st = document.getElementById("filterStatus").value;
@@ -700,83 +685,94 @@
     return true;
   }
 
-  function render() {
-    renderStats();
+  function renderDashboard() {
+    var totalDue = 0, totalPaid_ = 0, lateCount = 0;
+    tenants.forEach(function (t) {
+      var c = computeTenant(t);
+      totalDue += c.due;
+      totalPaid_ += c.paid;
+      if (c.status === "late") lateCount++;
+    });
+    var totalOutstanding = totalDue - totalPaid_;
+    document.getElementById("stats").innerHTML =
+      '<div class="stat"><div class="label">Locataires</div><div class="value">' + tenants.length + '</div></div>' +
+      '<div class="stat danger"><div class="label">En retard</div><div class="value">' + lateCount + '</div></div>' +
+      '<div class="stat"><div class="label">Total encaissé</div><div class="value">' + fmtMoney(totalPaid_) + '</div></div>' +
+      '<div class="stat ' + (totalOutstanding > 0.5 ? "danger" : "ok") + '"><div class="label">Reste dû (global)</div><div class="value">' + fmtMoney(totalOutstanding) + '</div></div>';
+
     var tbody = document.getElementById("tbody");
     tbody.innerHTML = "";
     var visible = 0;
-
-    tenants
-      .slice()
-      .sort(function (a, b) { return a.name.localeCompare(b.name, "fr"); })
-      .forEach(function (t) {
-        var c = computeTenant(t);
-        if (!matchesFilters(t, c)) return;
-        visible++;
-
-        var tr = document.createElement("tr");
-        var isOpen = expandedId === t.id;
-        var balanceLabel = c.status === "credit" ? fmtMoney(Math.abs(c.balance)) + " d'avance" : fmtMoney(c.balance);
-
-        tr.innerHTML =
-          '<td><button class="small ghost" data-toggle="' + t.id + '">' + (isOpen ? "▾" : "▸") + '</button></td>' +
-          '<td>' + escapeHtml(t.name) + '</td>' +
-          '<td>' + escapeHtml(t.property || "—") + '</td>' +
-          '<td>' + fmtMoney(t.rent) + '</td>' +
-          '<td>' + fmtDate(t.start) + '</td>' +
-          '<td>' + c.months + '</td>' +
-          '<td>' + fmtMoney(c.due) + '</td>' +
-          '<td>' + fmtMoney(c.paid) + '</td>' +
-          '<td class="' + amountClass(c.status) + '">' + balanceLabel + '</td>' +
-          '<td>' + badge(c.status) + '</td>' +
-          '<td class="row-actions">' +
-            '<button class="small" data-pay="' + t.id + '">+ Paiement</button>' +
-            '<button class="small ghost" data-edit="' + t.id + '">Modifier</button>' +
-            '<button class="small danger ghost" data-del="' + t.id + '">Suppr.</button>' +
-          '</td>';
-        tbody.appendChild(tr);
-
-        if (isOpen) {
-          var detailTr = document.createElement("tr");
-          detailTr.className = "detail-row";
-          var td = document.createElement("td");
-          td.colSpan = 11;
-          td.innerHTML = renderDetail(t);
-          detailTr.appendChild(td);
-          tbody.appendChild(detailTr);
-        }
-      });
-
-    document.getElementById("emptyMsg").hidden = !loaded || tenants.length > 0;
-    if (tenants.length > 0 && visible === 0) {
+    tenants.slice().sort(function (a, b) { return a.name.localeCompare(b.name, "fr"); }).forEach(function (t) {
+      var c = computeTenant(t);
+      if (!matchesFilters(t, c)) return;
+      visible++;
+      var balanceLabel = c.status === "credit" ? fmtMoney(Math.abs(c.balance)) + " d'avance" : fmtMoney(c.balance);
       var tr = document.createElement("tr");
-      tr.innerHTML = '<td colspan="11" class="empty">Aucun résultat pour ce filtre.</td>';
+      tr.innerHTML =
+        '<td>' + escapeHtml(t.name) + '</td>' +
+        '<td>' + escapeHtml(t.property || "—") + '</td>' +
+        '<td>' + fmtMoney(t.rent) + '</td>' +
+        '<td>' + fmtDate(t.start) + '</td>' +
+        '<td>' + fmtMoney(c.due) + '</td>' +
+        '<td>' + fmtMoney(c.paid) + '</td>' +
+        '<td class="' + amountClass(c.status) + '">' + balanceLabel + '</td>' +
+        '<td>' + badge(c.status) + '</td>' +
+        '<td><a href="#/locataire/' + encodeURIComponent(t.id) + '"><button class="small">Détails</button></a></td>';
       tbody.appendChild(tr);
+    });
+    document.getElementById("emptyMsg").hidden = tenants.length > 0;
+    if (tenants.length > 0 && visible === 0) {
+      var tr2 = document.createElement("tr");
+      tr2.innerHTML = '<td colspan="9" class="empty">Aucun résultat pour ce filtre.</td>';
+      tbody.appendChild(tr2);
     }
-
-    bindRowEvents();
   }
+  document.getElementById("search").addEventListener("input", function () { if (!document.getElementById("dashboardView").hidden) renderDashboard(); });
+  document.getElementById("filterStatus").addEventListener("change", function () { if (!document.getElementById("dashboardView").hidden) renderDashboard(); });
 
-  function renderDetail(t) {
+  // ============ TENANT DETAIL PAGE ============
+  var currentTenantId = null;
+
+  function renderTenantDetail(t) {
+    currentTenantId = t.id;
+    var c = computeTenant(t);
+
+    document.getElementById("tdName").textContent = t.name;
+    document.getElementById("tdProperty").textContent = t.property || "";
+
+    document.getElementById("tdInfoGrid").innerHTML =
+      '<div class="item"><div class="label">Loyer mensuel</div><div class="value">' + fmtMoney(t.rent) + '</div></div>' +
+      '<div class="item"><div class="label">Locataire depuis le</div><div class="value">' + fmtDate(t.start) + '</div></div>' +
+      '<div class="item"><div class="label">Mois échus</div><div class="value">' + c.months + '</div></div>' +
+      '<div class="item"><div class="label">Note</div><div class="value">' + (t.note ? escapeHtml(t.note) : "—") + '</div></div>';
+
+    var balanceLabel = c.status === "credit" ? fmtMoney(Math.abs(c.balance)) + " d'avance" : fmtMoney(c.balance);
+    document.getElementById("tdStats").innerHTML =
+      '<div class="stat"><div class="label">Total dû</div><div class="value">' + fmtMoney(c.due) + '</div></div>' +
+      '<div class="stat"><div class="label">Total payé</div><div class="value">' + fmtMoney(c.paid) + '</div></div>' +
+      '<div class="stat ' + (c.status === "late" ? "danger" : "ok") + '"><div class="label">Solde</div><div class="value">' + balanceLabel + '</div></div>' +
+      '<div class="stat"><div class="label">Statut</div><div class="value">' + badge(c.status) + '</div></div>';
+
     var list = paymentsForTenantSorted(t.id);
     var latestPeriod = list.reduce(function (max, p) { return p.period > max ? p.period : max; }, "");
     var months = periodRange(t.start, latestPeriod);
-
-    var monthRows = months.map(function (p) {
+    document.getElementById("tdMonthBody").innerHTML = months.map(function (p) {
       var paid = paidForPeriod(t.id, p);
       return '<tr>' +
-        '<td class="month-cell">' + fmtPeriod(p) + '</td>' +
+        '<td class="month-cell">' + capitalize(fmtPeriod(p)) + '</td>' +
         '<td>' + fmtMoney(t.rent) + '</td>' +
         '<td>' + fmtMoney(paid) + '</td>' +
-        '<td>' + fmtMoney(t.rent - paid) + '</td>' +
+        '<td>' + fmtMoney(Math.max(0, t.rent - paid)) + '</td>' +
         '<td>' + monthBadge(paid, t.rent) + '</td>' +
-        '<td><button class="small" data-pay="' + t.id + '" data-period="' + p + '">+ Paiement</button></td>' +
+        '<td>' + (paid + 0.5 < t.rent ? '<button class="small" data-pay-period="' + p + '">+ Paiement</button>' : '') + '</td>' +
         '</tr>';
     }).join("");
 
-    var logRows = list.map(function (p) {
+    var historyBody = document.getElementById("tdHistoryBody");
+    historyBody.innerHTML = list.map(function (p) {
       return '<tr>' +
-        '<td class="month-cell">' + fmtPeriod(p.period) + '</td>' +
+        '<td class="month-cell">' + capitalize(fmtPeriod(p.period)) + '</td>' +
         '<td>' + fmtDate(p.date) + '</td>' +
         '<td>' + fmtMoney(p.amount) + '</td>' +
         '<td>' + escapeHtml(p.method || "—") + '</td>' +
@@ -784,62 +780,12 @@
         '<td><button class="small danger ghost" data-delpay="' + p.id + '">Suppr.</button></td>' +
         '</tr>';
     }).join("");
+    document.getElementById("tdHistoryEmpty").hidden = list.length > 0;
 
-    return '<div class="detail-inner">' +
-      '<div class="detail-section">' +
-        '<h4>Suivi mois par mois</h4>' +
-        '<div class="table-scroll"><table><thead><tr><th>Mois</th><th>Loyer dû</th><th>Payé</th><th>Solde</th><th>Statut</th><th></th></tr></thead><tbody>' + monthRows + '</tbody></table></div>' +
-      '</div>' +
-      '<div class="detail-section">' +
-        '<h4>Historique des paiements</h4>' +
-        (list.length
-          ? '<div class="table-scroll"><table><thead><tr><th>Mois</th><th>Payé le</th><th>Montant</th><th>Moyen</th><th>Note</th><th></th></tr></thead><tbody>' + logRows + '</tbody></table></div>'
-          : '<p class="empty">Aucun paiement enregistré.</p>') +
-      '</div>' +
-      '</div>';
-  }
-
-  function escapeHtml(s) {
-    return String(s).replace(/[&<>"']/g, function (c) {
-      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    document.querySelectorAll("[data-pay-period]").forEach(function (btn) {
+      btn.addEventListener("click", function () { openPaymentModal(t.id, btn.getAttribute("data-pay-period")); });
     });
-  }
-
-  function bindRowEvents() {
-    document.querySelectorAll("[data-toggle]").forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        var id = btn.getAttribute("data-toggle");
-        expandedId = expandedId === id ? null : id;
-        render();
-      });
-    });
-    document.querySelectorAll("[data-edit]").forEach(function (btn) {
-      btn.addEventListener("click", function () { openTenantModal(btn.getAttribute("data-edit")); });
-    });
-    document.querySelectorAll("[data-del]").forEach(function (btn) {
-      btn.addEventListener("click", async function () {
-        var id = btn.getAttribute("data-del");
-        var t = tenants.find(function (x) { return x.id === id; });
-        if (!t || !confirm('Supprimer "' + t.name + '" et tout son historique de paiements ?')) return;
-        btn.disabled = true;
-        try {
-          await api("/api/tenants/" + id, { method: "DELETE" });
-          tenants = tenants.filter(function (x) { return x.id !== id; });
-          payments = payments.filter(function (x) { return x.tenantId !== id; });
-          if (expandedId === id) expandedId = null;
-          render();
-        } catch (e) {
-          showBanner(e.message);
-          btn.disabled = false;
-        }
-      });
-    });
-    document.querySelectorAll("[data-pay]").forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        openPaymentModal(btn.getAttribute("data-pay"), btn.getAttribute("data-period"));
-      });
-    });
-    document.querySelectorAll("[data-delpay]").forEach(function (btn) {
+    historyBody.querySelectorAll("[data-delpay]").forEach(function (btn) {
       btn.addEventListener("click", async function () {
         var pid = btn.getAttribute("data-delpay");
         if (!confirm("Supprimer ce paiement ?")) return;
@@ -847,7 +793,7 @@
         try {
           await api("/api/payments/" + pid, { method: "DELETE" });
           payments = payments.filter(function (p) { return p.id !== pid; });
-          render();
+          renderTenantDetail(tenants.find(function (x) { return x.id === t.id; }));
         } catch (e) {
           showBanner(e.message);
           btn.disabled = false;
@@ -856,7 +802,22 @@
     });
   }
 
-  // ---- Tenant modal ----
+  document.getElementById("tdPayBtn").addEventListener("click", function () { openPaymentModal(currentTenantId, null); });
+  document.getElementById("tdEditBtn").addEventListener("click", function () { openTenantModal(currentTenantId); });
+  document.getElementById("tdDeleteBtn").addEventListener("click", async function () {
+    var t = tenants.find(function (x) { return x.id === currentTenantId; });
+    if (!t || !confirm('Supprimer "' + t.name + '" et tout son historique de paiements ?')) return;
+    try {
+      await api("/api/tenants/" + t.id, { method: "DELETE" });
+      tenants = tenants.filter(function (x) { return x.id !== t.id; });
+      payments = payments.filter(function (x) { return x.tenantId !== t.id; });
+      location.hash = "#/";
+    } catch (e) {
+      showBanner(e.message);
+    }
+  });
+
+  // ============ TENANT MODAL (add / edit) ============
   var modal = document.getElementById("tenantModal");
   function openTenantModal(id) {
     var t = id ? tenants.find(function (x) { return x.id === id; }) : null;
@@ -872,10 +833,7 @@
   }
   function closeTenantModal() { modal.hidden = true; }
 
-  document.getElementById("btnNewTenant").addEventListener("click", function () {
-    if (!config || !config.url) { openSettingsModal(); return; }
-    openTenantModal(null);
-  });
+  document.getElementById("btnNewTenant").addEventListener("click", function () { openTenantModal(null); });
   document.getElementById("tenantCancel").addEventListener("click", closeTenantModal);
   modal.addEventListener("click", function (e) { if (e.target === modal) closeTenantModal(); });
 
@@ -904,7 +862,7 @@
         tenants.push(created);
       }
       closeTenantModal();
-      render();
+      route();
     } catch (e) {
       showBanner(e.message);
     } finally {
@@ -912,10 +870,7 @@
     }
   });
 
-  document.getElementById("search").addEventListener("input", render);
-  document.getElementById("filterStatus").addEventListener("change", render);
-
-  // ---- Payment modal ----
+  // ============ PAYMENT MODAL ============
   var paymentModal = document.getElementById("paymentModal");
   function openPaymentModal(tenantId, presetPeriod) {
     var t = tenants.find(function (x) { return x.id === tenantId; });
@@ -924,34 +879,33 @@
     document.getElementById("paymentTenantName").textContent = t.name + (t.property ? " — " + t.property : "");
 
     var months = periodRange(t.start, currentPeriod());
-    // offer two months ahead too, for advance payments
-    var extra = [];
-    var last = months[0] || currentPeriod();
-    var y = parseInt(last.slice(0, 4), 10), m = parseInt(last.slice(5, 7), 10);
-    for (var i = 0; i < 2; i++) {
-      m++;
-      if (m > 12) { m = 1; y++; }
-      extra.push(y + "-" + String(m).padStart(2, "0"));
-    }
-    var allPeriods = extra.reverse().concat(months);
+    // Only months not already fully paid, plus a couple of future months for advance payments.
+    var owedMonths = months.filter(function (p) { return paidForPeriod(tenantId, p) + 0.5 < t.rent; });
+    var futureMonths = nextPeriods(months[0] || currentPeriod(), 2);
+    var allPeriods = futureMonths.reverse().concat(owedMonths);
 
-    var firstUnpaid = months.slice().reverse().find(function (p) { return paidForPeriod(tenantId, p) + 0.005 < t.rent; });
-    var defaultPeriod = presetPeriod || firstUnpaid || currentPeriod();
+    var defaultPeriod = presetPeriod || owedMonths[owedMonths.length - 1] || allPeriods[allPeriods.length - 1];
 
     var sel = document.getElementById("payPeriod");
     sel.innerHTML = allPeriods.map(function (p) {
       return '<option value="' + p + '"' + (p === defaultPeriod ? " selected" : "") + '>' + capitalize(fmtPeriod(p)) + '</option>';
     }).join("");
 
-    document.getElementById("payAmount").value = t.rent - paidForPeriod(tenantId, defaultPeriod) > 0
-      ? (t.rent - paidForPeriod(tenantId, defaultPeriod)).toFixed(2)
-      : t.rent;
+    function applyPeriod(period) {
+      var remaining = Math.max(0, t.rent - paidForPeriod(tenantId, period));
+      var amountEl = document.getElementById("payAmount");
+      amountEl.value = remaining;
+      amountEl.max = remaining;
+      document.getElementById("payRemainingHint").textContent = "Solde dû pour ce mois : " + fmtMoney(remaining);
+    }
+    sel.onchange = function () { applyPeriod(sel.value); };
+    applyPeriod(defaultPeriod);
+
     document.getElementById("payDate").value = todayISO();
     document.getElementById("payMethod").value = "Virement";
     document.getElementById("payNote").value = "";
     paymentModal.hidden = false;
   }
-  function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
   function closePaymentModal() { paymentModal.hidden = true; }
 
   document.getElementById("paymentCancel").addEventListener("click", closePaymentModal);
@@ -964,9 +918,15 @@
     var date = document.getElementById("payDate").value;
     var method = document.getElementById("payMethod").value;
     var note = document.getElementById("payNote").value.trim();
+    var t = tenants.find(function (x) { return x.id === tenantId; });
 
     if (!amount || amount <= 0) { alert("Merci de saisir un montant valide."); return; }
     if (!date) { alert("Merci de saisir une date."); return; }
+    var remaining = Math.max(0, t.rent - paidForPeriod(tenantId, period));
+    if (amount > remaining + 0.5) {
+      alert("Ce montant dépasse le solde dû pour ce mois (" + fmtMoney(remaining) + " restant).");
+      return;
+    }
 
     var btn = document.getElementById("paymentSave");
     btn.disabled = true;
@@ -977,7 +937,7 @@
       });
       payments.push(created);
       closePaymentModal();
-      render();
+      route();
     } catch (e) {
       showBanner(e.message);
     } finally {
@@ -985,24 +945,15 @@
     }
   });
 
-  // ---- Users modal ----
-  var usersModal = document.getElementById("usersModal");
-  async function openUsersModal() {
-    usersModal.hidden = false;
-    document.getElementById("newUserEmail").value = "";
-    document.getElementById("newUserPassword").value = "";
-    await refreshUsers();
-  }
-  async function refreshUsers() {
+  // ============ USERS PAGE ============
+  async function renderUsersPage() {
     try {
       var res = await api("/api/users");
       users = res.users || [];
-      renderUsersList();
     } catch (e) {
       showBanner(e.message);
+      return;
     }
-  }
-  function renderUsersList() {
     var list = document.getElementById("usersList");
     list.innerHTML = users.map(function (u) {
       var isSelf = auth && u.email === auth.email;
@@ -1016,7 +967,7 @@
         btn.disabled = true;
         try {
           await api("/api/users/" + encodeURIComponent(email), { method: "DELETE" });
-          await refreshUsers();
+          renderUsersPage();
         } catch (e) {
           showBanner(e.message);
           btn.disabled = false;
@@ -1024,9 +975,6 @@
       });
     });
   }
-  document.getElementById("btnUsers").addEventListener("click", openUsersModal);
-  document.getElementById("usersClose").addEventListener("click", function () { usersModal.hidden = true; });
-  usersModal.addEventListener("click", function (e) { if (e.target === usersModal) usersModal.hidden = true; });
 
   document.getElementById("addUserSave").addEventListener("click", async function () {
     var email = document.getElementById("newUserEmail").value.trim();
@@ -1039,7 +987,7 @@
       await api("/api/users", { method: "POST", body: { email: email, password: password } });
       document.getElementById("newUserEmail").value = "";
       document.getElementById("newUserPassword").value = "";
-      await refreshUsers();
+      renderUsersPage();
     } catch (e) {
       showBanner(e.message);
     } finally {
@@ -1047,38 +995,7 @@
     }
   });
 
-  // ---- Settings modal ----
-  var settingsModal = document.getElementById("settingsModal");
-  function openSettingsModal() {
-    document.getElementById("cfgUrl").value = config ? (config.url || "") : "";
-    document.getElementById("cfgKey").value = config ? (config.key || "") : "";
-    settingsModal.hidden = false;
-  }
-  function closeSettingsModal() { settingsModal.hidden = true; }
-
-  document.getElementById("btnSettings").addEventListener("click", openSettingsModal);
-  document.getElementById("btnLoginSettings").addEventListener("click", openSettingsModal);
-  document.getElementById("btnBannerSettings").addEventListener("click", openSettingsModal);
   document.getElementById("btnBannerRetry").addEventListener("click", loadData);
-  document.getElementById("settingsCancel").addEventListener("click", function () {
-    if (config && config.url) closeSettingsModal();
-  });
-  settingsModal.addEventListener("click", function (e) {
-    if (e.target === settingsModal && config && config.url) closeSettingsModal();
-  });
-
-  document.getElementById("settingsSave").addEventListener("click", function () {
-    var url = document.getElementById("cfgUrl").value.trim().replace(/\/+$/, "");
-    var key = document.getElementById("cfgKey").value.trim();
-    if (!url || !/^https?:\/\//i.test(url)) {
-      alert("Merci de saisir une URL valide (commençant par https://).");
-      return;
-    }
-    config = { url: url, key: key };
-    saveConfig(config);
-    closeSettingsModal();
-    loadData();
-  });
 
   // ---- Boot ----
   async function boot() {

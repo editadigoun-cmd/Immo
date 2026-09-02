@@ -257,8 +257,19 @@ export default {
         ) {
           return error("Champs invalides : locataire, mois concerné (AAAA-MM), montant (>0) et date (AAAA-MM-JJ) sont requis.");
         }
-        const tenant = await env.DB.prepare("SELECT id FROM tenants WHERE id = ?").bind(body.tenantId).first();
+        const tenant = await env.DB.prepare("SELECT id, rent FROM tenants WHERE id = ?").bind(body.tenantId).first();
         if (!tenant) return error("Locataire introuvable", 404);
+        const alreadyPaid = await env.DB.prepare(
+          "SELECT COALESCE(SUM(amount), 0) AS total FROM payments WHERE tenant_id = ? AND period = ?"
+        )
+          .bind(body.tenantId, body.period)
+          .first();
+        const remaining = tenant.rent - alreadyPaid.total;
+        if (body.amount > remaining + 0.005) {
+          return error(
+            "Ce montant dépasse le solde dû pour ce mois (" + remaining.toFixed(2) + " restant)."
+          );
+        }
         const id = crypto.randomUUID();
         await env.DB.prepare(
           "INSERT INTO payments (id, tenant_id, period, date, amount, method, note) VALUES (?, ?, ?, ?, ?, ?, ?)"
