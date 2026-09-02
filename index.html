@@ -249,13 +249,16 @@
   "use strict";
 
   var LS_CONFIG = "immo_api_config";
+  // Preconfigured Worker so the app works out of the box; still
+  // overridable per-browser from the Paramètres modal.
+  var DEFAULT_API_URL = "https://immo.ccds22431.workers.dev";
 
   function loadConfig() {
     try {
       var raw = localStorage.getItem(LS_CONFIG);
-      return raw ? JSON.parse(raw) : null;
+      return raw ? JSON.parse(raw) : { url: DEFAULT_API_URL, key: "" };
     } catch (e) {
-      return null;
+      return { url: DEFAULT_API_URL, key: "" };
     }
   }
   function saveConfig(cfg) {
