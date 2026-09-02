@@ -3,10 +3,17 @@
 Ce dossier contient l'API qui connecte l'application (`../index.html`) à une
 base de données Cloudflare D1 partagée entre tous les appareils.
 
-La base D1 `immo-loyers` existe déjà (créée via MCP) ; il ne reste qu'à
-déployer le Worker qui l'expose au navigateur.
+Déployé et en service : Worker **immo**, base D1 **immo-loyers** (liée via
+Settings → Bindings dans le dashboard), déploiement automatique à chaque
+push sur `claude/audio-help-0xwadi` grâce à l'intégration Git de Cloudflare
+Workers Builds. L'URL est préconfigurée par défaut dans l'application
+(modifiable via **⚙ Paramètres** si besoin) :
 
-## Déployer
+```
+https://immo.ccds22431.workers.dev
+```
+
+## Déployer manuellement (si besoin)
 
 Depuis ce dossier (`worker/`) :
 
@@ -14,16 +21,6 @@ Depuis ce dossier (`worker/`) :
 npx wrangler login       # ouvre le navigateur pour te connecter à ton compte Cloudflare
 npx wrangler deploy
 ```
-
-À la fin, `wrangler` affiche l'URL du Worker, du type :
-
-```
-https://immo-loyers-api.<ton-compte>.workers.dev
-```
-
-Ouvre l'application, clique sur **⚙ Paramètres**, colle cette URL dans
-« URL de l'API », enregistre. C'est tout — l'app lit et écrit directement
-dans ta base D1, partagée entre tous les appareils qui utilisent ce lien.
 
 ## (Optionnel) Protéger l'accès avec une clé
 

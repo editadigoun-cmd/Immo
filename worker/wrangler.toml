@@ -1,8 +1,8 @@
-name = "immo-loyers-api"
+name = "immo"
 main = "src/index.js"
 compatibility_date = "2026-09-01"
 
 [[d1_databases]]
 binding = "DB"
 database_name = "immo-loyers"
-database_id = "b05d9026-7c83-42ff-b513-1c20c835f647"
+database_id = "ad9d9bfb-2f03-4699-9d0c-f1f2d354712c"
