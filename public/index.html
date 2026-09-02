@@ -208,6 +208,40 @@
   .userslist { list-style: none; margin: 0 0 8px; padding: 0; display: flex; flex-direction: column; gap: 8px; max-width: 480px; }
   .userslist li { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 14px; border: 1px solid var(--border-soft); border-radius: 8px; font-size: 0.9rem; }
 
+  .nav-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+  .nav-card {
+    display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: var(--text);
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 20px; transition: transform .1s ease;
+  }
+  .nav-card:hover { border-color: var(--primary); }
+  .nav-card-icon { font-size: 1.6rem; }
+  .nav-card-title { font-family: "Fraunces", serif; font-weight: 600; font-size: 1.05rem; margin-top: 6px; }
+  .nav-card-desc { color: var(--text-muted); font-size: 0.85rem; }
+
+  .topbar-nav { display: flex; gap: 6px; }
+
+  .bottom-nav {
+    display: none;
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+    background: var(--card); border-top: 1px solid var(--border);
+    padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+  }
+  .bottom-nav .bn-item {
+    flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px;
+    text-decoration: none; color: var(--text-muted); font-size: 0.68rem; font-weight: 600;
+    padding: 6px 4px; border-radius: 10px;
+  }
+  .bottom-nav .bn-icon { font-size: 1.25rem; line-height: 1; }
+  .bottom-nav .bn-item.active { color: var(--primary); }
+
+  @media (max-width: 720px) {
+    .topbar-nav { display: none; }
+    .bottom-nav { display: flex; }
+    body { padding-bottom: 66px; }
+    .topbar .user-email { display: none; }
+  }
+
   [hidden] { display: none !important; }
   .amount-due { color: var(--danger); font-weight: 600; }
   .amount-ok { color: var(--ok); font-weight: 600; }
@@ -242,21 +276,42 @@
     </div>
     <div class="spacer"></div>
     <span class="user-email" id="topbarEmail"></span>
-    <button class="ghost small" id="btnUsers">👤 Utilisateurs</button>
+    <div class="topbar-nav">
+      <button class="ghost small" id="btnLocatairesTop">👥 Locataires</button>
+      <button class="ghost small" id="btnUsers">👤 Utilisateurs</button>
+    </div>
     <button class="ghost small" id="btnLogout">Se déconnecter</button>
   </div>
 
-  <!-- ---- Dashboard ---- -->
-  <div class="wrap" id="dashboardView">
-    <p class="subtitle">Suivi mensuel des loyers dus et des paiements par locataire</p>
-
+  <div class="wrap" style="padding-bottom:0;">
     <div class="banner" id="banner" hidden>
       <span id="bannerText"></span>
       <button class="small" id="btnBannerRetry">Réessayer</button>
     </div>
+  </div>
 
+  <!-- ---- Home / overview ---- -->
+  <div class="wrap" id="dashboardView">
+    <p class="subtitle">Vue d'ensemble de tes loyers</p>
     <div class="stats" id="stats"></div>
+    <div class="nav-cards">
+      <a href="#/locataires" class="nav-card">
+        <span class="nav-card-icon">👥</span>
+        <span class="nav-card-title">Locataires</span>
+        <span class="nav-card-desc">Voir la liste, ajouter un locataire</span>
+      </a>
+      <a href="#/utilisateurs" class="nav-card">
+        <span class="nav-card-icon">👤</span>
+        <span class="nav-card-title">Utilisateurs</span>
+        <span class="nav-card-desc">Gérer les comptes ayant accès</span>
+      </a>
+    </div>
+  </div>
 
+  <!-- ---- Locataires (list) ---- -->
+  <div class="wrap" id="locatairesView" hidden>
+    <a href="#/" class="back-link">← Retour</a>
+    <h2>Locataires</h2>
     <div class="toolbar">
       <input type="text" id="search" placeholder="Rechercher un locataire ou un bien...">
       <select id="filterStatus">
@@ -294,7 +349,7 @@
 
   <!-- ---- Tenant detail page ---- -->
   <div class="wrap" id="tenantView" hidden>
-    <a href="#/" class="back-link">← Retour</a>
+    <a href="#/locataires" class="back-link">← Retour</a>
     <div class="tenant-header">
       <div>
         <h2 id="tdName"></h2>
@@ -338,25 +393,24 @@
   <!-- ---- Users page ---- -->
   <div class="wrap" id="usersView" hidden>
     <a href="#/" class="back-link">← Retour</a>
-    <h2>Comptes utilisateurs</h2>
-    <p class="subtitle">Toute personne avec un compte peut se connecter et gérer l'application.</p>
+    <div class="tenant-header">
+      <div>
+        <h2>Comptes utilisateurs</h2>
+        <p class="prop subtitle" style="margin:0;">Toute personne avec un compte peut se connecter et gérer l'application.</p>
+      </div>
+      <button class="primary" id="btnAddUser">+ Ajouter un utilisateur</button>
+    </div>
     <div class="card card-pad">
       <ul class="userslist" id="usersList"></ul>
     </div>
-    <div class="card card-pad" style="max-width:420px;">
-      <p class="section-title">Ajouter un utilisateur</p>
-      <div class="field">
-        <label>Email</label>
-        <input type="email" id="newUserEmail" placeholder="quelqu.un@exemple.com">
-      </div>
-      <div class="field">
-        <label>Mot de passe (6 caractères minimum)</label>
-        <input type="password" id="newUserPassword">
-      </div>
-      <button class="primary" id="addUserSave">Ajouter</button>
-    </div>
   </div>
 </div>
+
+<nav class="bottom-nav" id="bottomNav">
+  <a href="#/" class="bn-item" data-section="home"><span class="bn-icon">🏠</span><span>Accueil</span></a>
+  <a href="#/locataires" class="bn-item" data-section="locataires"><span class="bn-icon">👥</span><span>Locataires</span></a>
+  <a href="#/utilisateurs" class="bn-item" data-section="utilisateurs"><span class="bn-icon">👤</span><span>Utilisateurs</span></a>
+</nav>
 
 <div class="modal-backdrop" id="tenantModal" hidden>
   <div class="modal">
@@ -424,6 +478,24 @@
     <div class="modal-actions">
       <button id="paymentCancel">Annuler</button>
       <button class="primary" id="paymentSave">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="addUserModal" hidden>
+  <div class="modal">
+    <h3>Ajouter un utilisateur</h3>
+    <div class="field">
+      <label>Email</label>
+      <input type="email" id="newUserEmail" placeholder="quelqu.un@exemple.com">
+    </div>
+    <div class="field">
+      <label>Mot de passe (6 caractères minimum)</label>
+      <input type="password" id="newUserPassword">
+    </div>
+    <div class="modal-actions">
+      <button id="addUserCancel">Annuler</button>
+      <button class="primary" id="addUserSave">Ajouter</button>
     </div>
   </div>
 </div>
@@ -586,6 +658,7 @@
   });
   document.getElementById("btnHome").addEventListener("click", function () { location.hash = "#/"; });
   document.getElementById("btnUsers").addEventListener("click", function () { location.hash = "#/utilisateurs"; });
+  document.getElementById("btnLocatairesTop").addEventListener("click", function () { location.hash = "#/locataires"; });
 
   // ---- Data loading ----
   async function loadData() {
@@ -650,42 +723,45 @@
   }
 
   // ============ ROUTER ============
+  function setBottomNavActive(section) {
+    document.querySelectorAll(".bottom-nav .bn-item").forEach(function (el) {
+      el.classList.toggle("active", el.getAttribute("data-section") === section);
+    });
+  }
+
   function route() {
     if (!loaded) return;
     var hash = location.hash || "#/";
     document.getElementById("dashboardView").hidden = true;
+    document.getElementById("locatairesView").hidden = true;
     document.getElementById("tenantView").hidden = true;
     document.getElementById("usersView").hidden = true;
 
     var m = hash.match(/^#\/locataire\/(.+)$/);
     if (m) {
       var t = tenants.find(function (x) { return x.id === decodeURIComponent(m[1]); });
-      if (!t) { location.hash = "#/"; return; }
+      if (!t) { location.hash = "#/locataires"; return; }
       document.getElementById("tenantView").hidden = false;
       renderTenantDetail(t);
+      setBottomNavActive("locataires");
+    } else if (hash === "#/locataires") {
+      document.getElementById("locatairesView").hidden = false;
+      renderLocataires();
+      setBottomNavActive("locataires");
     } else if (hash === "#/utilisateurs") {
       document.getElementById("usersView").hidden = false;
       renderUsersPage();
+      setBottomNavActive("utilisateurs");
     } else {
       document.getElementById("dashboardView").hidden = false;
-      renderDashboard();
+      renderHome();
+      setBottomNavActive("home");
     }
   }
   window.addEventListener("hashchange", route);
 
-  // ============ DASHBOARD ============
-  function matchesFilters(t, c) {
-    var q = document.getElementById("search").value.trim().toLowerCase();
-    var st = document.getElementById("filterStatus").value;
-    if (st !== "all" && c.status !== st) return false;
-    if (q) {
-      var hay = (t.name + " " + (t.property || "")).toLowerCase();
-      if (hay.indexOf(q) === -1) return false;
-    }
-    return true;
-  }
-
-  function renderDashboard() {
+  // ============ HOME ============
+  function renderHome() {
     var totalDue = 0, totalPaid_ = 0, lateCount = 0;
     tenants.forEach(function (t) {
       var c = computeTenant(t);
@@ -699,7 +775,21 @@
       '<div class="stat danger"><div class="label">En retard</div><div class="value">' + lateCount + '</div></div>' +
       '<div class="stat"><div class="label">Total encaissé</div><div class="value">' + fmtMoney(totalPaid_) + '</div></div>' +
       '<div class="stat ' + (totalOutstanding > 0.5 ? "danger" : "ok") + '"><div class="label">Reste dû (global)</div><div class="value">' + fmtMoney(totalOutstanding) + '</div></div>';
+  }
 
+  // ============ LOCATAIRES (list) ============
+  function matchesFilters(t, c) {
+    var q = document.getElementById("search").value.trim().toLowerCase();
+    var st = document.getElementById("filterStatus").value;
+    if (st !== "all" && c.status !== st) return false;
+    if (q) {
+      var hay = (t.name + " " + (t.property || "")).toLowerCase();
+      if (hay.indexOf(q) === -1) return false;
+    }
+    return true;
+  }
+
+  function renderLocataires() {
     var tbody = document.getElementById("tbody");
     tbody.innerHTML = "";
     var visible = 0;
@@ -728,8 +818,8 @@
       tbody.appendChild(tr2);
     }
   }
-  document.getElementById("search").addEventListener("input", function () { if (!document.getElementById("dashboardView").hidden) renderDashboard(); });
-  document.getElementById("filterStatus").addEventListener("change", function () { if (!document.getElementById("dashboardView").hidden) renderDashboard(); });
+  document.getElementById("search").addEventListener("input", function () { if (!document.getElementById("locatairesView").hidden) renderLocataires(); });
+  document.getElementById("filterStatus").addEventListener("change", function () { if (!document.getElementById("locatairesView").hidden) renderLocataires(); });
 
   // ============ TENANT DETAIL PAGE ============
   var currentTenantId = null;
@@ -811,7 +901,7 @@
       await api("/api/tenants/" + t.id, { method: "DELETE" });
       tenants = tenants.filter(function (x) { return x.id !== t.id; });
       payments = payments.filter(function (x) { return x.tenantId !== t.id; });
-      location.hash = "#/";
+      location.hash = "#/locataires";
     } catch (e) {
       showBanner(e.message);
     }
@@ -976,6 +1066,18 @@
     });
   }
 
+  var addUserModal = document.getElementById("addUserModal");
+  function openAddUserModal() {
+    document.getElementById("newUserEmail").value = "";
+    document.getElementById("newUserPassword").value = "";
+    addUserModal.hidden = false;
+    document.getElementById("newUserEmail").focus();
+  }
+  function closeAddUserModal() { addUserModal.hidden = true; }
+  document.getElementById("btnAddUser").addEventListener("click", openAddUserModal);
+  document.getElementById("addUserCancel").addEventListener("click", closeAddUserModal);
+  addUserModal.addEventListener("click", function (e) { if (e.target === addUserModal) closeAddUserModal(); });
+
   document.getElementById("addUserSave").addEventListener("click", async function () {
     var email = document.getElementById("newUserEmail").value.trim();
     var password = document.getElementById("newUserPassword").value;
@@ -985,8 +1087,7 @@
     btn.disabled = true;
     try {
       await api("/api/users", { method: "POST", body: { email: email, password: password } });
-      document.getElementById("newUserEmail").value = "";
-      document.getElementById("newUserPassword").value = "";
+      closeAddUserModal();
       renderUsersPage();
     } catch (e) {
       showBanner(e.message);
