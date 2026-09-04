@@ -3,242 +3,169 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gestion des loyers</title>
+<title>Gestion Locative</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon.svg">
 <meta name="theme-color" content="#0f6e63">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Loyers">
+<meta name="apple-mobile-web-app-title" content="Locative">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <style>
   :root {
-    --bg: #f4f6f4;
-    --card: #ffffff;
-    --border: #dfe4e0;
-    --border-soft: #eaeeec;
-    --text: #14201c;
-    --text-muted: #5c6b64;
-    --primary: #0f6e63;
-    --primary-hover: #0b564d;
-    --primary-text: #ffffff;
-    --accent-soft: #e4f2ef;
-    --danger: #c23b32;
-    --danger-bg: #fbeceb;
-    --ok: #227a4f;
-    --ok-bg: #e9f6ee;
-    --warn: #b56a17;
-    --warn-bg: #fdf1e2;
-    --radius: 12px;
-    --shadow: 0 1px 2px rgba(20, 32, 28, 0.04), 0 1px 12px rgba(20, 32, 28, 0.04);
+    --bg: #f4f6f4; --card: #ffffff; --border: #dfe4e0; --border-soft: #eaeeec;
+    --text: #14201c; --text-muted: #5c6b64;
+    --primary: #0f6e63; --primary-hover: #0b564d; --primary-text: #ffffff; --accent-soft: #e4f2ef;
+    --danger: #c23b32; --danger-bg: #fbeceb;
+    --ok: #227a4f; --ok-bg: #e9f6ee;
+    --warn: #b56a17; --warn-bg: #fdf1e2;
+    --info: #2f5f9e; --info-bg: #eaf1fb;
+    --radius: 12px; --shadow: 0 1px 2px rgba(20,32,28,.04), 0 1px 12px rgba(20,32,28,.04);
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #101613;
-      --card: #182420;
-      --border: #2b3a34;
-      --border-soft: #22302b;
-      --text: #eef3f0;
-      --text-muted: #9db2a9;
-      --primary: #55d6c5;
-      --primary-hover: #79e2d4;
-      --primary-text: #06211d;
-      --accent-soft: #1b332e;
-      --danger: #ff8b80;
-      --danger-bg: #3a201d;
-      --ok: #6bdb9e;
-      --ok-bg: #163527;
-      --warn: #f2b463;
-      --warn-bg: #3a2a12;
-      --shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 1px 12px rgba(0, 0, 0, 0.2);
+      --bg: #101613; --card: #182420; --border: #2b3a34; --border-soft: #22302b;
+      --text: #eef3f0; --text-muted: #9db2a9;
+      --primary: #55d6c5; --primary-hover: #79e2d4; --primary-text: #06211d; --accent-soft: #1b332e;
+      --danger: #ff8b80; --danger-bg: #3a201d;
+      --ok: #6bdb9e; --ok-bg: #163527;
+      --warn: #f2b463; --warn-bg: #3a2a12;
+      --info: #8fb4e6; --info-bg: #1a2b3f;
+      --shadow: 0 1px 2px rgba(0,0,0,.2), 0 1px 12px rgba(0,0,0,.2);
     }
   }
   :root[data-theme="dark"] {
-    --bg: #101613;
-    --card: #182420;
-    --border: #2b3a34;
-    --border-soft: #22302b;
-    --text: #eef3f0;
-    --text-muted: #9db2a9;
-    --primary: #55d6c5;
-    --primary-hover: #79e2d4;
-    --primary-text: #06211d;
-    --accent-soft: #1b332e;
-    --danger: #ff8b80;
-    --danger-bg: #3a201d;
-    --ok: #6bdb9e;
-    --ok-bg: #163527;
-    --warn: #f2b463;
-    --warn-bg: #3a2a12;
-    --shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 1px 12px rgba(0, 0, 0, 0.2);
+    --bg: #101613; --card: #182420; --border: #2b3a34; --border-soft: #22302b;
+    --text: #eef3f0; --text-muted: #9db2a9;
+    --primary: #55d6c5; --primary-hover: #79e2d4; --primary-text: #06211d; --accent-soft: #1b332e;
+    --danger: #ff8b80; --danger-bg: #3a201d;
+    --ok: #6bdb9e; --ok-bg: #163527;
+    --warn: #f2b463; --warn-bg: #3a2a12;
+    --info: #8fb4e6; --info-bg: #1a2b3f;
+    --shadow: 0 1px 2px rgba(0,0,0,.2), 0 1px 12px rgba(0,0,0,.2);
   }
   * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
   .brand { font-family: "Fraunces", Georgia, serif; font-weight: 600; }
   h1, h2, h3 { font-family: "Fraunces", Georgia, serif; font-weight: 600; text-wrap: balance; }
 
-  /* ---- Login screen ---- */
   .login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
-  .login-card {
-    background: var(--card); border: 1px solid var(--border); border-radius: 16px;
-    box-shadow: var(--shadow); padding: 36px 32px; width: 100%; max-width: 380px;
-  }
-  .login-logo {
-    width: 44px; height: 44px; border-radius: 10px;
-    background: var(--primary); color: var(--primary-text);
-    display: flex; align-items: center; justify-content: center;
-    font-family: "Fraunces", serif; font-weight: 700; font-size: 1.3rem;
-    margin-bottom: 16px;
-  }
-  .login-card h1 { font-size: 1.5rem; margin: 0 0 4px; }
+  .login-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow); padding: 36px 32px; width: 100%; max-width: 380px; }
+  .login-logo { width: 44px; height: 44px; border-radius: 10px; background: var(--primary); color: var(--primary-text); display: flex; align-items: center; justify-content: center; font-family: "Fraunces", serif; font-weight: 700; font-size: 1.3rem; margin-bottom: 16px; }
+  .login-card h1 { font-size: 1.4rem; margin: 0 0 4px; }
   .login-card .subtitle { color: var(--text-muted); font-size: 0.88rem; margin: 0 0 24px; }
-  .login-error {
-    background: var(--danger-bg); color: var(--danger); font-size: 0.85rem;
-    padding: 10px 12px; border-radius: 8px; margin-bottom: 16px;
-  }
+  .login-error { background: var(--danger-bg); color: var(--danger); font-size: 0.85rem; padding: 10px 12px; border-radius: 8px; margin-bottom: 16px; }
 
-  /* ---- App shell ---- */
-  .topbar {
-    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
-    padding: 14px 24px; border-bottom: 1px solid var(--border); background: var(--card);
-  }
-  .topbar .wordmark { display: flex; align-items: center; gap: 10px; cursor: pointer; }
-  .topbar .wordmark .mark {
-    width: 30px; height: 30px; border-radius: 8px;
-    background: var(--primary); color: var(--primary-text);
-    display: flex; align-items: center; justify-content: center;
-    font-family: "Fraunces", serif; font-weight: 700; font-size: 0.95rem;
-  }
-  .topbar .wordmark h1 { font-size: 1.15rem; margin: 0; }
+  .topbar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 12px 20px; border-bottom: 1px solid var(--border); background: var(--card); }
+  .topbar .wordmark { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+  .topbar .wordmark .mark { width: 28px; height: 28px; border-radius: 8px; background: var(--primary); color: var(--primary-text); display: flex; align-items: center; justify-content: center; font-family: "Fraunces", serif; font-weight: 700; font-size: 0.9rem; }
+  .topbar .wordmark h1 { font-size: 1.05rem; margin: 0; }
   .topbar .spacer { flex: 1; }
-  .topbar .user-email { font-size: 0.82rem; color: var(--text-muted); }
+  .topbar .user-email { font-size: 0.78rem; color: var(--text-muted); }
+  .topbar-nav { display: flex; gap: 2px; flex-wrap: wrap; }
+  .topbar-nav a { font-size: 0.78rem; padding: 6px 9px; border-radius: 7px; color: var(--text-muted); text-decoration: none; white-space: nowrap; }
+  .topbar-nav a:hover, .topbar-nav a.active { background: var(--accent-soft); color: var(--primary); }
+  .role-badge { font-size: 0.65rem; text-transform: uppercase; letter-spacing: .04em; padding: 2px 7px; border-radius: 999px; background: var(--accent-soft); color: var(--primary); font-weight: 700; }
 
-  .wrap { max-width: 1180px; margin: 0 auto; padding: 24px 20px 40px; }
-  .subtitle { color: var(--text-muted); font-size: 0.88rem; margin: 0 0 22px; }
-  .back-link {
-    display: inline-flex; align-items: center; gap: 6px; margin-bottom: 16px;
-    color: var(--text-muted); font-size: 0.85rem; font-weight: 500;
-  }
+  .wrap { max-width: 1220px; margin: 0 auto; padding: 22px 20px 40px; }
+  .subtitle { color: var(--text-muted); font-size: 0.88rem; margin: 0 0 20px; }
+  .page-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; flex-wrap: wrap; margin-bottom: 18px; }
+  .page-head h2 { margin: 0 0 4px; font-size: 1.4rem; }
+  .back-link { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 14px; color: var(--text-muted); font-size: 0.85rem; font-weight: 500; text-decoration: none; }
 
-  .banner {
-    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-    padding: 11px 14px; border-radius: var(--radius); margin-bottom: 18px;
-    background: var(--danger-bg); color: var(--danger); font-size: 0.85rem;
-  }
+  .banner { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 11px 14px; border-radius: var(--radius); margin: 0 0 18px; background: var(--danger-bg); color: var(--danger); font-size: 0.85rem; }
   .banner button { margin-left: auto; }
+  .alert-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+  .alert-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; font-size: 0.86rem; background: var(--info-bg); color: var(--info); }
+  .alert-item.danger { background: var(--danger-bg); color: var(--danger); }
+  .alert-item.warn { background: var(--warn-bg); color: var(--warn); }
 
-  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 22px; }
-  .stat { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 14px 16px; }
-  .stat .label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .04em; }
-  .stat .value { font-size: 1.5rem; font-weight: 600; margin-top: 6px; font-variant-numeric: tabular-nums; font-family: "Fraunces", serif; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 22px; }
+  .stat { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 13px 15px; }
+  .stat .label { font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .04em; }
+  .stat .value { font-size: 1.3rem; font-weight: 600; margin-top: 5px; font-variant-numeric: tabular-nums; font-family: "Fraunces", serif; }
   .stat.danger .value { color: var(--danger); }
   .stat.ok .value { color: var(--ok); }
+  .stat.warn .value { color: var(--warn); }
 
-  .toolbar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; align-items: center; }
+  .nav-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+  .nav-card { display: flex; flex-direction: column; gap: 3px; text-decoration: none; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px 18px; }
+  .nav-card:hover { border-color: var(--primary); }
+  .nav-card-icon { font-size: 1.4rem; }
+  .nav-card-title { font-family: "Fraunces", serif; font-weight: 600; font-size: 1rem; margin-top: 4px; }
+  .nav-card-desc { color: var(--text-muted); font-size: 0.8rem; }
+
+  .toolbar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; align-items: center; }
   .toolbar .spacer { flex: 1; }
-  input, select {
-    font: inherit; padding: 9px 11px; border: 1px solid var(--border); border-radius: 8px;
-    background: var(--card); color: var(--text);
-  }
-  input:focus-visible, select:focus-visible, button:focus-visible { outline: 2px solid var(--primary); outline-offset: 1px; }
-  button {
-    font: inherit; padding: 9px 15px; border-radius: 8px; border: 1px solid var(--border);
-    background: var(--card); color: var(--text); cursor: pointer;
-  }
+  .tabs { display: flex; gap: 4px; margin-bottom: 14px; flex-wrap: wrap; }
+  .tabs button { border-radius: 999px; padding: 6px 14px; font-size: 0.82rem; }
+  .tabs button.active { background: var(--primary); color: var(--primary-text); border-color: var(--primary); }
+
+  input, select, textarea { font: inherit; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--card); color: var(--text); }
+  textarea { resize: vertical; min-height: 60px; }
+  input:focus-visible, select:focus-visible, button:focus-visible, textarea:focus-visible { outline: 2px solid var(--primary); outline-offset: 1px; }
+  button { font: inherit; padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--text); cursor: pointer; }
   button:hover { filter: brightness(0.97); }
-  button:disabled { opacity: 0.55; cursor: default; }
+  button:disabled { opacity: 0.5; cursor: default; }
   button.primary { background: var(--primary); color: var(--primary-text); border-color: var(--primary); font-weight: 600; }
   button.primary:hover { background: var(--primary-hover); border-color: var(--primary-hover); }
   button.danger { color: var(--danger); }
   button.danger:hover { background: var(--danger-bg); }
-  button.small { padding: 5px 10px; font-size: 0.8rem; }
+  button.small { padding: 4px 9px; font-size: 0.78rem; }
   button.ghost { border-color: transparent; background: transparent; }
   button.ghost:hover { background: var(--border-soft); }
   button.block { width: 100%; }
 
-  .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; margin-bottom: 18px; }
-  .card-pad { padding: 18px 20px; }
-  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
-  th, td { padding: 11px 13px; text-align: left; border-bottom: 1px solid var(--border-soft); white-space: nowrap; font-variant-numeric: tabular-nums; }
-  th { background: var(--accent-soft); font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: .04em; font-variant-numeric: normal; font-weight: 600; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; margin-bottom: 16px; }
+  .card-pad { padding: 16px 18px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th, td { padding: 9px 12px; text-align: left; border-bottom: 1px solid var(--border-soft); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  th { background: var(--accent-soft); font-size: 0.68rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: .04em; font-variant-numeric: normal; font-weight: 600; }
   tr:last-child td { border-bottom: none; }
+  tr.clickable { cursor: pointer; }
+  tr.clickable:hover td { background: var(--accent-soft); }
   .table-scroll { overflow-x: auto; }
 
-  .badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
+  .badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: 999px; font-size: 0.72rem; font-weight: 600; white-space: nowrap; }
   .badge.ok { background: var(--ok-bg); color: var(--ok); }
   .badge.danger { background: var(--danger-bg); color: var(--danger); }
   .badge.warn { background: var(--warn-bg); color: var(--warn); }
+  .badge.info { background: var(--info-bg); color: var(--info); }
+  .badge.neutral { background: var(--border-soft); color: var(--text-muted); }
 
   .row-actions { display: flex; gap: 6px; flex-wrap: wrap; }
-  .empty { color: var(--text-muted); font-style: italic; padding: 22px; text-align: center; }
-  .month-cell { font-weight: 600; text-transform: capitalize; }
-  .section-title { margin: 0 0 12px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: .04em; color: var(--text-muted); font-family: "Inter", sans-serif; font-weight: 600; }
+  .empty { color: var(--text-muted); font-style: italic; padding: 20px; text-align: center; }
+  .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; }
+  .info-grid .item .label { font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .04em; }
+  .info-grid .item .value { font-size: 0.95rem; font-weight: 500; margin-top: 3px; }
+  .section-title { margin: 0 0 10px; font-size: 0.76rem; text-transform: uppercase; letter-spacing: .04em; color: var(--text-muted); font-weight: 600; }
 
-  .tenant-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
-  .tenant-header h2 { margin: 0 0 4px; font-size: 1.6rem; }
-  .tenant-header .prop { color: var(--text-muted); font-size: 0.92rem; }
-  .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; }
-  .info-grid .item .label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .04em; }
-  .info-grid .item .value { font-size: 1rem; font-weight: 500; margin-top: 4px; }
+  .modal-backdrop { position: fixed; inset: 0; background: rgba(10,16,14,.45); display: flex; align-items: center; justify-content: center; z-index: 50; padding: 16px; overflow-y: auto; }
+  .modal { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 22px; width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow); margin: auto; }
+  .modal h3 { margin-top: 0; font-size: 1.1rem; }
+  .modal p.hint { font-size: 0.78rem; color: var(--text-muted); margin-top: -6px; }
+  .field { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; }
+  .field label { font-size: 0.76rem; color: var(--text-muted); font-weight: 500; }
+  .field input, .field select, .field textarea { width: 100%; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
 
-  .modal-backdrop {
-    position: fixed; inset: 0; background: rgba(10, 16, 14, .45);
-    display: flex; align-items: center; justify-content: center; z-index: 50; padding: 16px;
-  }
-  .modal {
-    background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 22px;
-    width: 100%; max-width: 440px; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow);
-  }
-  .modal h3 { margin-top: 0; font-size: 1.15rem; }
-  .modal p.hint { font-size: 0.8rem; color: var(--text-muted); margin-top: -6px; }
-  .field { display: flex; flex-direction: column; gap: 4px; margin-bottom: 13px; }
-  .field label { font-size: 0.78rem; color: var(--text-muted); font-weight: 500; }
-  .field input, .field select { width: 100%; }
-  .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px; }
+  .listrow { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 14px; border: 1px solid var(--border-soft); border-radius: 8px; font-size: 0.88rem; }
+  .listrow + .listrow { margin-top: 8px; }
 
-  .userslist { list-style: none; margin: 0 0 8px; padding: 0; display: flex; flex-direction: column; gap: 8px; max-width: 480px; }
-  .userslist li { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 14px; border: 1px solid var(--border-soft); border-radius: 8px; font-size: 0.9rem; }
-
-  .nav-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
-  .nav-card {
-    display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: var(--text);
-    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
-    box-shadow: var(--shadow); padding: 20px; transition: transform .1s ease;
-  }
-  .nav-card:hover { border-color: var(--primary); }
-  .nav-card-icon { font-size: 1.6rem; }
-  .nav-card-title { font-family: "Fraunces", serif; font-weight: 600; font-size: 1.05rem; margin-top: 6px; }
-  .nav-card-desc { color: var(--text-muted); font-size: 0.85rem; }
-
-  .topbar-nav { display: flex; gap: 6px; }
-
-  .bottom-nav {
-    display: none;
-    position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
-    background: var(--card); border-top: 1px solid var(--border);
-    padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
-  }
-  .bottom-nav .bn-item {
-    flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px;
-    text-decoration: none; color: var(--text-muted); font-size: 0.68rem; font-weight: 600;
-    padding: 6px 4px; border-radius: 10px;
-  }
-  .bottom-nav .bn-icon { font-size: 1.25rem; line-height: 1; }
+  .bottom-nav { display: none; position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; background: var(--card); border-top: 1px solid var(--border); padding: 6px 4px calc(6px + env(safe-area-inset-bottom)); }
+  .bottom-nav .bn-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; text-decoration: none; color: var(--text-muted); font-size: 0.62rem; font-weight: 600; padding: 6px 2px; border-radius: 10px; background: none; border: none; }
+  .bottom-nav .bn-icon { font-size: 1.15rem; line-height: 1; }
   .bottom-nav .bn-item.active { color: var(--primary); }
 
-  @media (max-width: 720px) {
+  @media (max-width: 860px) {
     .topbar-nav { display: none; }
     .bottom-nav { display: flex; }
-    body { padding-bottom: 66px; }
+    body { padding-bottom: 64px; }
     .topbar .user-email { display: none; }
   }
 
@@ -253,873 +180,251 @@
 <div class="login-wrap" id="loginView">
   <div class="login-card">
     <div class="login-logo">L</div>
-    <h1>Gestion des loyers</h1>
-    <p class="subtitle">Connecte-toi pour accéder à tes locataires et paiements.</p>
+    <h1>Gestion Locative</h1>
+    <p class="subtitle">Connecte-toi pour accéder à l'application.</p>
     <div class="login-error" id="loginError" hidden></div>
-    <div class="field">
-      <label>Email</label>
-      <input type="email" id="loginEmail" autocomplete="username" placeholder="toi@exemple.com">
-    </div>
-    <div class="field">
-      <label>Mot de passe</label>
-      <input type="password" id="loginPassword" autocomplete="current-password" placeholder="••••••••">
-    </div>
+    <div class="field"><label>Email</label><input type="email" id="loginEmail" autocomplete="username" placeholder="toi@exemple.com"></div>
+    <div class="field"><label>Mot de passe</label><input type="password" id="loginPassword" autocomplete="current-password" placeholder="••••••••"></div>
     <button class="primary block" id="loginSubmit">Se connecter</button>
   </div>
 </div>
 
 <div id="appView" hidden>
   <div class="topbar">
-    <div class="wordmark" id="btnHome">
-      <div class="mark">L</div>
-      <h1 class="brand">Loyers</h1>
+    <div class="wordmark" id="btnHome"><div class="mark">L</div><h1 class="brand">Gestion Locative</h1></div>
+    <div class="topbar-nav" id="topbarNav">
+      <a href="#/">Tableau de bord</a>
+      <a href="#/proprietaires">Propriétaires</a>
+      <a href="#/maisons">Biens</a>
+      <a href="#/locataires">Locataires</a>
+      <a href="#/contrats">Contrats</a>
+      <a href="#/paiements">Paiements</a>
+      <a href="#/impayes">Impayés</a>
+      <a href="#/echeances">Échéances</a>
+      <a href="#/finances">Finances</a>
+      <a href="#/rapports">Rapports</a>
+      <a href="#/utilisateurs" id="navUsersLink">Utilisateurs</a>
     </div>
     <div class="spacer"></div>
+    <span class="role-badge" id="topbarRole"></span>
     <span class="user-email" id="topbarEmail"></span>
-    <div class="topbar-nav">
-      <button class="ghost small" id="btnLocatairesTop">👥 Locataires</button>
-      <button class="ghost small" id="btnUsers">👤 Utilisateurs</button>
-    </div>
     <button class="ghost small" id="btnLogout">Se déconnecter</button>
   </div>
 
   <div class="wrap" style="padding-bottom:0;">
-    <div class="banner" id="banner" hidden>
-      <span id="bannerText"></span>
-      <button class="small" id="btnBannerRetry">Réessayer</button>
-    </div>
+    <div class="banner" id="banner" hidden><span id="bannerText"></span><button class="small" id="btnBannerRetry">Réessayer</button></div>
   </div>
 
-  <!-- ---- Home / overview ---- -->
-  <div class="wrap" id="dashboardView">
-    <p class="subtitle">Vue d'ensemble de tes loyers</p>
-    <div class="stats" id="stats"></div>
-    <div class="nav-cards">
-      <a href="#/locataires" class="nav-card">
-        <span class="nav-card-icon">👥</span>
-        <span class="nav-card-title">Locataires</span>
-        <span class="nav-card-desc">Voir la liste, ajouter un locataire</span>
-      </a>
-      <a href="#/utilisateurs" class="nav-card">
-        <span class="nav-card-icon">👤</span>
-        <span class="nav-card-title">Utilisateurs</span>
-        <span class="nav-card-desc">Gérer les comptes ayant accès</span>
-      </a>
-    </div>
-  </div>
-
-  <!-- ---- Locataires (list) ---- -->
-  <div class="wrap" id="locatairesView" hidden>
-    <a href="#/" class="back-link">← Retour</a>
-    <h2>Locataires</h2>
-    <div class="toolbar">
-      <input type="text" id="search" placeholder="Rechercher un locataire ou un bien...">
-      <select id="filterStatus">
-        <option value="all">Tous les statuts</option>
-        <option value="late">En retard</option>
-        <option value="ok">À jour</option>
-        <option value="credit">Payé d'avance</option>
-      </select>
-      <div class="spacer"></div>
-      <button class="primary" id="btnNewTenant">+ Nouveau locataire</button>
-    </div>
-
-    <div class="card">
-      <div class="table-scroll">
-        <table>
-          <thead>
-            <tr>
-              <th>Locataire</th>
-              <th>Bien</th>
-              <th>Loyer mensuel</th>
-              <th>Depuis le</th>
-              <th>Total dû</th>
-              <th>Total payé</th>
-              <th>Solde</th>
-              <th>Statut</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody id="tbody"></tbody>
-        </table>
-        <div class="empty" id="emptyMsg" hidden>Aucun locataire pour le moment. Cliquez sur « + Nouveau locataire » pour commencer.</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ---- Tenant detail page ---- -->
-  <div class="wrap" id="tenantView" hidden>
-    <a href="#/locataires" class="back-link">← Retour</a>
-    <div class="tenant-header">
-      <div>
-        <h2 id="tdName"></h2>
-        <p class="prop" id="tdProperty"></p>
-      </div>
-      <div class="row-actions">
-        <button class="primary" id="tdPayBtn">+ Paiement</button>
-        <button class="ghost" id="tdEditBtn">Modifier</button>
-        <button class="danger ghost" id="tdDeleteBtn">Supprimer</button>
-      </div>
-    </div>
-
-    <div class="card card-pad">
-      <div class="info-grid" id="tdInfoGrid"></div>
-    </div>
-
-    <div class="stats" id="tdStats"></div>
-
-    <div class="card">
-      <div class="card-pad" style="padding-bottom:0;"><p class="section-title">Suivi mois par mois</p></div>
-      <div class="table-scroll">
-        <table>
-          <thead><tr><th>Mois</th><th>Loyer dû</th><th>Payé</th><th>Solde</th><th>Statut</th><th></th></tr></thead>
-          <tbody id="tdMonthBody"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-pad" style="padding-bottom:0;"><p class="section-title">Historique des paiements</p></div>
-      <div class="table-scroll">
-        <table>
-          <thead><tr><th>Mois</th><th>Payé le</th><th>Montant</th><th>Moyen</th><th>Note</th><th></th></tr></thead>
-          <tbody id="tdHistoryBody"></tbody>
-        </table>
-      </div>
-      <p class="empty" id="tdHistoryEmpty" hidden>Aucun paiement enregistré.</p>
-    </div>
-  </div>
-
-  <!-- ---- Users page ---- -->
-  <div class="wrap" id="usersView" hidden>
-    <a href="#/" class="back-link">← Retour</a>
-    <div class="tenant-header">
-      <div>
-        <h2>Comptes utilisateurs</h2>
-        <p class="prop subtitle" style="margin:0;">Toute personne avec un compte peut se connecter et gérer l'application.</p>
-      </div>
-      <button class="primary" id="btnAddUser">+ Ajouter un utilisateur</button>
-    </div>
-    <div class="card card-pad">
-      <ul class="userslist" id="usersList"></ul>
-    </div>
-  </div>
+  <div id="pageContent" class="wrap"></div>
 </div>
 
 <nav class="bottom-nav" id="bottomNav">
   <a href="#/" class="bn-item" data-section="home"><span class="bn-icon">🏠</span><span>Accueil</span></a>
+  <a href="#/maisons" class="bn-item" data-section="maisons"><span class="bn-icon">🏢</span><span>Biens</span></a>
   <a href="#/locataires" class="bn-item" data-section="locataires"><span class="bn-icon">👥</span><span>Locataires</span></a>
-  <a href="#/utilisateurs" class="bn-item" data-section="utilisateurs"><span class="bn-icon">👤</span><span>Utilisateurs</span></a>
+  <a href="#/contrats" class="bn-item" data-section="contrats"><span class="bn-icon">📄</span><span>Contrats</span></a>
+  <a href="#/plus" class="bn-item" data-section="plus"><span class="bn-icon">☰</span><span>Plus</span></a>
 </nav>
+
+<!-- ================= MODALS ================= -->
+
+<div class="modal-backdrop" id="moreModal" hidden>
+  <div class="modal">
+    <h3>Plus</h3>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <a href="#/proprietaires"><button class="block">👤 Propriétaires</button></a>
+      <a href="#/paiements"><button class="block">💵 Paiements</button></a>
+      <a href="#/impayes"><button class="block">⚠️ Impayés</button></a>
+      <a href="#/echeances"><button class="block">📅 Échéances</button></a>
+      <a href="#/finances"><button class="block">📊 Finances</button></a>
+      <a href="#/rapports"><button class="block">📑 Rapports</button></a>
+      <a href="#/utilisateurs" id="navUsersLinkMobile"><button class="block">🔑 Utilisateurs</button></a>
+    </div>
+    <div class="modal-actions"><button id="moreClose">Fermer</button></div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="ownerModal" hidden>
+  <div class="modal">
+    <h3 id="ownerModalTitle">Nouveau propriétaire</h3>
+    <input type="hidden" id="ownerId">
+    <div class="field"><label>Nom *</label><input type="text" id="ownerNom" placeholder="Ex: Jean Dupont"></div>
+    <div class="field"><label>Téléphone</label><input type="text" id="ownerTelephone"></div>
+    <div class="field"><label>Adresse</label><input type="text" id="ownerAdresse"></div>
+    <div class="field"><label>Email</label><input type="email" id="ownerEmail"></div>
+    <div class="field"><label>Note</label><textarea id="ownerNote"></textarea></div>
+    <div class="field"><label>Statut</label>
+      <select id="ownerStatut"><option value="actif">Actif</option><option value="inactif">Inactif</option></select>
+    </div>
+    <div class="modal-actions"><button id="ownerCancel">Annuler</button><button class="primary" id="ownerSave">Enregistrer</button></div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="propertyModal" hidden>
+  <div class="modal">
+    <h3 id="propertyModalTitle">Nouvelle maison</h3>
+    <input type="hidden" id="propertyId">
+    <div class="field"><label>Nom / désignation *</label><input type="text" id="propertyNom" placeholder="Ex: Maison M-001"></div>
+    <div class="field"><label>Propriétaire *</label><select id="propertyOwner"></select></div>
+    <div class="field-row">
+      <div class="field"><label>Référence</label><input type="text" id="propertyReference"></div>
+      <div class="field"><label>Ville / quartier</label><input type="text" id="propertyVille"></div>
+    </div>
+    <div class="field"><label>Adresse</label><input type="text" id="propertyAdresse"></div>
+    <div class="field"><label>Description</label><textarea id="propertyDescription"></textarea></div>
+    <div class="field"><label>Statut</label>
+      <select id="propertyStatut"><option value="actif">Actif</option><option value="inactif">Inactif</option></select>
+    </div>
+    <div class="modal-actions"><button id="propertyCancel">Annuler</button><button class="primary" id="propertySave">Enregistrer</button></div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="unitModal" hidden>
+  <div class="modal">
+    <h3 id="unitModalTitle">Nouveau logement</h3>
+    <input type="hidden" id="unitId">
+    <input type="hidden" id="unitPropertyId">
+    <div class="field-row">
+      <div class="field"><label>Numéro *</label><input type="text" id="unitNumero" placeholder="Ex: A01"></div>
+      <div class="field"><label>Type</label><input type="text" id="unitType" placeholder="Chambre, Appartement..."></div>
+    </div>
+    <div class="field"><label>Description</label><textarea id="unitDescription"></textarea></div>
+    <div class="field-row">
+      <div class="field"><label>Loyer mensuel (FCFA) *</label><input type="number" id="unitRent" min="0" step="1"></div>
+      <div class="field"><label>Caution (FCFA)</label><input type="number" id="unitCaution" min="0" step="1"></div>
+    </div>
+    <div class="field"><label>Statut</label>
+      <select id="unitStatut">
+        <option value="disponible">Disponible</option>
+        <option value="occupe">Occupé</option>
+        <option value="maintenance">En maintenance</option>
+        <option value="reserve">Réservé</option>
+      </select>
+    </div>
+    <div class="modal-actions"><button id="unitCancel">Annuler</button><button class="primary" id="unitSave">Enregistrer</button></div>
+  </div>
+</div>
 
 <div class="modal-backdrop" id="tenantModal" hidden>
   <div class="modal">
     <h3 id="tenantModalTitle">Nouveau locataire</h3>
     <input type="hidden" id="tenantId">
-    <div class="field">
-      <label>Nom du locataire *</label>
-      <input type="text" id="tenantName" placeholder="Ex: Jean Dupont">
+    <div class="field-row">
+      <div class="field"><label>Nom *</label><input type="text" id="tenantNom"></div>
+      <div class="field"><label>Prénom</label><input type="text" id="tenantPrenom"></div>
     </div>
-    <div class="field">
-      <label>Bien / logement</label>
-      <input type="text" id="tenantProperty" placeholder="Ex: Appartement 3B">
+    <div class="field-row">
+      <div class="field"><label>Téléphone</label><input type="text" id="tenantTelephone"></div>
+      <div class="field"><label>Email</label><input type="email" id="tenantEmail"></div>
     </div>
-    <div class="field">
-      <label>Loyer mensuel en FCFA (charges comprises) *</label>
-      <input type="number" id="tenantRent" min="0" step="1" placeholder="Ex: 50000">
+    <div class="field"><label>Adresse</label><input type="text" id="tenantAdresse"></div>
+    <div class="field-row">
+      <div class="field"><label>Pièce d'identité</label><input type="text" id="tenantPieceType" placeholder="CNI, Passeport..."></div>
+      <div class="field"><label>Numéro de pièce</label><input type="text" id="tenantPieceNumero"></div>
     </div>
-    <div class="field">
-      <label>Locataire depuis le (date d'entrée) *</label>
-      <input type="date" id="tenantStart">
+    <div class="field"><label>Date de naissance</label><input type="date" id="tenantNaissance"></div>
+    <div class="field-row">
+      <div class="field"><label>Contact d'urgence — nom</label><input type="text" id="tenantUrgenceNom"></div>
+      <div class="field"><label>Contact d'urgence — téléphone</label><input type="text" id="tenantUrgenceTel"></div>
     </div>
-    <div class="field">
-      <label>Note (optionnel)</label>
-      <input type="text" id="tenantNote" placeholder="Téléphone, remarque...">
+    <div class="modal-actions"><button id="tenantCancel">Annuler</button><button class="primary" id="tenantSave">Enregistrer</button></div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="leaseModal" hidden>
+  <div class="modal">
+    <h3 id="leaseModalTitle">Nouveau contrat</h3>
+    <input type="hidden" id="leaseId">
+    <div class="field"><label>Maison</label><select id="leasePropertyPicker"></select></div>
+    <div class="field"><label>Logement *</label><select id="leaseUnit"></select></div>
+    <div class="field"><label>Locataire *</label><select id="leaseTenant"></select></div>
+    <div class="field-row">
+      <div class="field"><label>Date de début *</label><input type="date" id="leaseDateDebut"></div>
+      <div class="field"><label>Date de fin</label><input type="date" id="leaseDateFin"></div>
     </div>
-    <div class="modal-actions">
-      <button id="tenantCancel">Annuler</button>
-      <button class="primary" id="tenantSave">Enregistrer</button>
+    <div class="field-row">
+      <div class="field"><label>Loyer mensuel (FCFA) *</label><input type="number" id="leaseRent" min="0" step="1"></div>
+      <div class="field"><label>Caution (FCFA)</label><input type="number" id="leaseCaution" min="0" step="1"></div>
     </div>
+    <div class="field-row">
+      <div class="field"><label>Jour de paiement prévu</label><input type="number" id="leaseJourPaiement" min="1" max="28"></div>
+      <div class="field"><label>Statut</label>
+        <select id="leaseStatut">
+          <option value="actif">Actif</option>
+          <option value="en_attente">En attente</option>
+          <option value="termine">Terminé</option>
+          <option value="resilie">Résilié</option>
+        </select>
+      </div>
+    </div>
+    <div class="field"><label>Conditions particulières</label><textarea id="leaseConditions"></textarea></div>
+    <div class="modal-actions"><button id="leaseCancel">Annuler</button><button class="primary" id="leaseSave">Enregistrer</button></div>
   </div>
 </div>
 
 <div class="modal-backdrop" id="paymentModal" hidden>
   <div class="modal">
     <h3>Enregistrer un paiement</h3>
-    <p class="hint" id="paymentTenantName"></p>
-    <input type="hidden" id="payTenantId">
-    <div class="field">
-      <label>Mois concerné *</label>
-      <select id="payPeriod"></select>
-      <p class="hint" id="payRemainingHint"></p>
-    </div>
-    <div class="field">
-      <label>Montant (FCFA) *</label>
-      <input type="number" id="payAmount" min="0" step="1">
-    </div>
-    <div class="field">
-      <label>Date du paiement *</label>
-      <input type="date" id="payDate">
-    </div>
-    <div class="field">
-      <label>Moyen</label>
+    <p class="hint" id="paymentLeaseInfo"></p>
+    <input type="hidden" id="payLeaseId">
+    <div class="field"><label>Mois concerné *</label><select id="payPeriod"></select><p class="hint" id="payRemainingHint"></p></div>
+    <div class="field"><label>Montant (FCFA) *</label><input type="number" id="payAmount" min="0" step="1"></div>
+    <div class="field"><label>Date du paiement *</label><input type="date" id="payDate"></div>
+    <div class="field"><label>Mode de paiement</label>
       <select id="payMethod">
-        <option value="Virement">Virement</option>
         <option value="Espèces">Espèces</option>
-        <option value="Mobile money">Mobile money</option>
+        <option value="Mobile Money">Mobile Money</option>
+        <option value="Virement bancaire">Virement bancaire</option>
         <option value="Chèque">Chèque</option>
         <option value="Autre">Autre</option>
       </select>
     </div>
-    <div class="field">
-      <label>Note (optionnel)</label>
-      <input type="text" id="payNote">
-    </div>
-    <div class="modal-actions">
-      <button id="paymentCancel">Annuler</button>
-      <button class="primary" id="paymentSave">Enregistrer</button>
-    </div>
+    <div class="field"><label>Référence de transaction</label><input type="text" id="payReference"></div>
+    <div class="field"><label>Commentaire</label><input type="text" id="payNote"></div>
+    <div class="modal-actions"><button id="paymentCancel">Annuler</button><button class="primary" id="paymentSave">Enregistrer</button></div>
   </div>
 </div>
 
-<div class="modal-backdrop" id="addUserModal" hidden>
+<div class="modal-backdrop" id="pickLeaseModal" hidden>
   <div class="modal">
-    <h3>Ajouter un utilisateur</h3>
-    <div class="field">
-      <label>Email</label>
-      <input type="email" id="newUserEmail" placeholder="quelqu.un@exemple.com">
-    </div>
-    <div class="field">
-      <label>Mot de passe (6 caractères minimum)</label>
-      <input type="password" id="newUserPassword">
-    </div>
-    <div class="modal-actions">
-      <button id="addUserCancel">Annuler</button>
-      <button class="primary" id="addUserSave">Ajouter</button>
-    </div>
+    <h3>Choisir un contrat</h3>
+    <p class="hint">Sélectionne le contrat actif concerné par ce paiement.</p>
+    <div class="field"><input type="text" id="pickLeaseSearch" placeholder="Rechercher un locataire, un logement..."></div>
+    <div id="pickLeaseList" style="max-height:320px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;"></div>
+    <div class="modal-actions"><button id="pickLeaseCancel">Annuler</button></div>
   </div>
 </div>
 
-<script>
-(function () {
-  "use strict";
+<div class="modal-backdrop" id="userModal" hidden>
+  <div class="modal">
+    <h3 id="userModalTitle">Nouvel utilisateur</h3>
+    <input type="hidden" id="userId">
+    <div class="field-row">
+      <div class="field"><label>Nom</label><input type="text" id="userNom"></div>
+      <div class="field"><label>Prénom</label><input type="text" id="userPrenom"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Téléphone</label><input type="text" id="userTelephone"></div>
+      <div class="field"><label>Nom d'utilisateur</label><input type="text" id="userUsername"></div>
+    </div>
+    <div class="field"><label>Email *</label><input type="email" id="userEmail"></div>
+    <div class="field"><label id="userPasswordLabel">Mot de passe (6 caractères min.) *</label><input type="password" id="userPassword"></div>
+    <div class="field-row">
+      <div class="field"><label>Rôle</label>
+        <select id="userRole">
+          <option value="administrateur">Administrateur</option>
+          <option value="gestionnaire">Gestionnaire</option>
+          <option value="comptable">Comptable</option>
+        </select>
+      </div>
+      <div class="field"><label>Statut</label>
+        <select id="userStatut"><option value="actif">Actif</option><option value="inactif">Inactif</option></select>
+      </div>
+    </div>
+    <div class="modal-actions"><button id="userCancel">Annuler</button><button class="primary" id="userSave">Enregistrer</button></div>
+  </div>
+</div>
 
-  var LS_AUTH = "immo_auth";
-
-  function loadAuth() {
-    try {
-      var raw = localStorage.getItem(LS_AUTH);
-      return raw ? JSON.parse(raw) : null;
-    } catch (e) { return null; }
-  }
-  function saveAuth(a) {
-    if (a) localStorage.setItem(LS_AUTH, JSON.stringify(a));
-    else localStorage.removeItem(LS_AUTH);
-  }
-
-  var auth = loadAuth();
-  var tenants = [];
-  var payments = [];
-  var users = [];
-  var loaded = false;
-
-  function fmtMoney(n) {
-    return Math.round(n).toLocaleString("fr-FR") + " FCFA";
-  }
-  function fmtDate(iso) {
-    if (!iso) return "";
-    var d = new Date(iso + "T00:00:00");
-    return d.toLocaleDateString("fr-FR");
-  }
-  function todayISO() { return new Date().toISOString().slice(0, 10); }
-  function currentPeriod() { return todayISO().slice(0, 7); }
-  function fmtPeriod(p) {
-    var d = new Date(p + "-01T00:00:00");
-    return d.toLocaleDateString("fr-FR", { month: "long", year: "numeric" });
-  }
-  function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
-
-  function monthsDue(startISO, asOfISO) {
-    var start = new Date(startISO + "T00:00:00");
-    var asOf = new Date(asOfISO + "T00:00:00");
-    if (asOf < start) return 0;
-    var months = (asOf.getFullYear() - start.getFullYear()) * 12 + (asOf.getMonth() - start.getMonth());
-    if (asOf.getDate() >= start.getDate()) months += 1;
-    return Math.max(0, months);
-  }
-
-  // Every "YYYY-MM" from a tenant's start month through the later of
-  // today's month or the furthest month they have a payment logged for,
-  // most recent first.
-  function periodRange(startISO, extraThroughPeriod) {
-    var start = startISO.slice(0, 7);
-    var through = currentPeriod();
-    if (extraThroughPeriod && extraThroughPeriod > through) through = extraThroughPeriod;
-    var out = [];
-    var y = parseInt(start.slice(0, 4), 10), m = parseInt(start.slice(5, 7), 10);
-    var ty = parseInt(through.slice(0, 4), 10), tm = parseInt(through.slice(5, 7), 10);
-    while (y < ty || (y === ty && m <= tm)) {
-      out.push(y + "-" + String(m).padStart(2, "0"));
-      m++;
-      if (m > 12) { m = 1; y++; }
-    }
-    return out.reverse();
-  }
-  function nextPeriods(fromPeriod, count) {
-    var y = parseInt(fromPeriod.slice(0, 4), 10), m = parseInt(fromPeriod.slice(5, 7), 10);
-    var out = [];
-    for (var i = 0; i < count; i++) {
-      m++;
-      if (m > 12) { m = 1; y++; }
-      out.push(y + "-" + String(m).padStart(2, "0"));
-    }
-    return out;
-  }
-
-  async function api(path, options) {
-    options = options || {};
-    var headers = { "Content-Type": "application/json" };
-    if (auth && auth.token) headers["Authorization"] = "Bearer " + auth.token;
-    var res;
-    try {
-      res = await fetch(path, {
-        method: options.method || "GET",
-        headers: headers,
-        body: options.body ? JSON.stringify(options.body) : undefined,
-        cache: "no-store",
-      });
-    } catch (e) {
-      throw new Error("Impossible de contacter le serveur. Vérifie ta connexion internet.");
-    }
-    if (res.status === 401 && path !== "/api/auth/login") {
-      forceLogout();
-      throw new Error("Session expirée, merci de te reconnecter.");
-    }
-    var data = null;
-    try { data = await res.json(); } catch (e) {}
-    if (!res.ok) throw new Error((data && data.error) || ("Erreur serveur (" + res.status + ")"));
-    return data;
-  }
-
-  function showBanner(message) {
-    document.getElementById("bannerText").textContent = message;
-    document.getElementById("banner").hidden = false;
-  }
-  function hideBanner() { document.getElementById("banner").hidden = true; }
-
-  // ---- Auth screens ----
-  function showLogin() {
-    document.getElementById("loginView").hidden = false;
-    document.getElementById("appView").hidden = true;
-  }
-  function showApp() {
-    document.getElementById("loginView").hidden = true;
-    document.getElementById("appView").hidden = false;
-    document.getElementById("topbarEmail").textContent = auth ? auth.email : "";
-  }
-  function forceLogout() {
-    auth = null;
-    saveAuth(null);
-    showLogin();
-  }
-
-  document.getElementById("loginSubmit").addEventListener("click", async function () {
-    var email = document.getElementById("loginEmail").value.trim();
-    var password = document.getElementById("loginPassword").value;
-    var errEl = document.getElementById("loginError");
-    errEl.hidden = true;
-    if (!email || !password) {
-      errEl.textContent = "Merci de renseigner email et mot de passe.";
-      errEl.hidden = false;
-      return;
-    }
-    var btn = document.getElementById("loginSubmit");
-    btn.disabled = true;
-    try {
-      var res = await api("/api/auth/login", { method: "POST", body: { email: email, password: password } });
-      auth = { token: res.token, email: res.email };
-      saveAuth(auth);
-      showApp();
-      loadData();
-    } catch (e) {
-      errEl.textContent = e.message;
-      errEl.hidden = false;
-    } finally {
-      btn.disabled = false;
-    }
-  });
-  document.getElementById("loginPassword").addEventListener("keydown", function (e) {
-    if (e.key === "Enter") document.getElementById("loginSubmit").click();
-  });
-
-  document.getElementById("btnLogout").addEventListener("click", async function () {
-    try { await api("/api/auth/logout", { method: "POST" }); } catch (e) {}
-    forceLogout();
-  });
-  document.getElementById("btnHome").addEventListener("click", function () { location.hash = "#/"; });
-  document.getElementById("btnUsers").addEventListener("click", function () { location.hash = "#/utilisateurs"; });
-  document.getElementById("btnLocatairesTop").addEventListener("click", function () { location.hash = "#/locataires"; });
-
-  // ---- Data loading ----
-  async function loadData() {
-    try {
-      var data = await api("/api/data");
-      tenants = data.tenants || [];
-      payments = data.payments || [];
-      loaded = true;
-      hideBanner();
-      route();
-    } catch (e) {
-      showBanner(e.message);
-    }
-  }
-
-  function paymentsForTenant(tenantId) {
-    return payments.filter(function (p) { return p.tenantId === tenantId; });
-  }
-  function paymentsForTenantSorted(tenantId) {
-    return paymentsForTenant(tenantId).slice().sort(function (a, b) {
-      return (b.period + b.date).localeCompare(a.period + a.date);
-    });
-  }
-  function totalPaid(tenantId) {
-    return paymentsForTenant(tenantId).reduce(function (sum, p) { return sum + p.amount; }, 0);
-  }
-  function paidForPeriod(tenantId, period) {
-    return paymentsForTenant(tenantId)
-      .filter(function (p) { return p.period === period; })
-      .reduce(function (sum, p) { return sum + p.amount; }, 0);
-  }
-
-  function computeTenant(t) {
-    var months = monthsDue(t.start, todayISO());
-    var due = months * t.rent;
-    var paid = totalPaid(t.id);
-    var balance = due - paid;
-    var status = balance > 0.5 ? "late" : (balance < -0.5 ? "credit" : "ok");
-    return { months: months, due: due, paid: paid, balance: balance, status: status };
-  }
-
-  function badge(status) {
-    if (status === "late") return '<span class="badge danger">En retard</span>';
-    if (status === "credit") return '<span class="badge warn">Avance</span>';
-    return '<span class="badge ok">À jour</span>';
-  }
-  function monthBadge(paid, due) {
-    if (paid <= 0.5) return '<span class="badge danger">Impayé</span>';
-    if (paid + 0.5 < due) return '<span class="badge warn">Partiel</span>';
-    if (paid > due + 0.5) return '<span class="badge ok">Payé (+' + fmtMoney(paid - due) + ')</span>';
-    return '<span class="badge ok">Payé</span>';
-  }
-  function amountClass(status) {
-    if (status === "late") return "amount-due";
-    if (status === "credit") return "amount-credit";
-    return "amount-ok";
-  }
-  function escapeHtml(s) {
-    return String(s).replace(/[&<>"']/g, function (c) {
-      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
-    });
-  }
-
-  // ============ ROUTER ============
-  function setBottomNavActive(section) {
-    document.querySelectorAll(".bottom-nav .bn-item").forEach(function (el) {
-      el.classList.toggle("active", el.getAttribute("data-section") === section);
-    });
-  }
-
-  function route() {
-    if (!loaded) return;
-    var hash = location.hash || "#/";
-    document.getElementById("dashboardView").hidden = true;
-    document.getElementById("locatairesView").hidden = true;
-    document.getElementById("tenantView").hidden = true;
-    document.getElementById("usersView").hidden = true;
-
-    var m = hash.match(/^#\/locataire\/(.+)$/);
-    if (m) {
-      var t = tenants.find(function (x) { return x.id === decodeURIComponent(m[1]); });
-      if (!t) { location.hash = "#/locataires"; return; }
-      document.getElementById("tenantView").hidden = false;
-      renderTenantDetail(t);
-      setBottomNavActive("locataires");
-    } else if (hash === "#/locataires") {
-      document.getElementById("locatairesView").hidden = false;
-      renderLocataires();
-      setBottomNavActive("locataires");
-    } else if (hash === "#/utilisateurs") {
-      document.getElementById("usersView").hidden = false;
-      renderUsersPage();
-      setBottomNavActive("utilisateurs");
-    } else {
-      document.getElementById("dashboardView").hidden = false;
-      renderHome();
-      setBottomNavActive("home");
-    }
-  }
-  window.addEventListener("hashchange", route);
-
-  // ============ HOME ============
-  function renderHome() {
-    var totalDue = 0, totalPaid_ = 0, lateCount = 0;
-    tenants.forEach(function (t) {
-      var c = computeTenant(t);
-      totalDue += c.due;
-      totalPaid_ += c.paid;
-      if (c.status === "late") lateCount++;
-    });
-    var totalOutstanding = totalDue - totalPaid_;
-    document.getElementById("stats").innerHTML =
-      '<div class="stat"><div class="label">Locataires</div><div class="value">' + tenants.length + '</div></div>' +
-      '<div class="stat danger"><div class="label">En retard</div><div class="value">' + lateCount + '</div></div>' +
-      '<div class="stat"><div class="label">Total encaissé</div><div class="value">' + fmtMoney(totalPaid_) + '</div></div>' +
-      '<div class="stat ' + (totalOutstanding > 0.5 ? "danger" : "ok") + '"><div class="label">Reste dû (global)</div><div class="value">' + fmtMoney(totalOutstanding) + '</div></div>';
-  }
-
-  // ============ LOCATAIRES (list) ============
-  function matchesFilters(t, c) {
-    var q = document.getElementById("search").value.trim().toLowerCase();
-    var st = document.getElementById("filterStatus").value;
-    if (st !== "all" && c.status !== st) return false;
-    if (q) {
-      var hay = (t.name + " " + (t.property || "")).toLowerCase();
-      if (hay.indexOf(q) === -1) return false;
-    }
-    return true;
-  }
-
-  function renderLocataires() {
-    var tbody = document.getElementById("tbody");
-    tbody.innerHTML = "";
-    var visible = 0;
-    tenants.slice().sort(function (a, b) { return a.name.localeCompare(b.name, "fr"); }).forEach(function (t) {
-      var c = computeTenant(t);
-      if (!matchesFilters(t, c)) return;
-      visible++;
-      var balanceLabel = c.status === "credit" ? fmtMoney(Math.abs(c.balance)) + " d'avance" : fmtMoney(c.balance);
-      var tr = document.createElement("tr");
-      tr.innerHTML =
-        '<td>' + escapeHtml(t.name) + '</td>' +
-        '<td>' + escapeHtml(t.property || "—") + '</td>' +
-        '<td>' + fmtMoney(t.rent) + '</td>' +
-        '<td>' + fmtDate(t.start) + '</td>' +
-        '<td>' + fmtMoney(c.due) + '</td>' +
-        '<td>' + fmtMoney(c.paid) + '</td>' +
-        '<td class="' + amountClass(c.status) + '">' + balanceLabel + '</td>' +
-        '<td>' + badge(c.status) + '</td>' +
-        '<td><a href="#/locataire/' + encodeURIComponent(t.id) + '"><button class="small">Détails</button></a></td>';
-      tbody.appendChild(tr);
-    });
-    document.getElementById("emptyMsg").hidden = tenants.length > 0;
-    if (tenants.length > 0 && visible === 0) {
-      var tr2 = document.createElement("tr");
-      tr2.innerHTML = '<td colspan="9" class="empty">Aucun résultat pour ce filtre.</td>';
-      tbody.appendChild(tr2);
-    }
-  }
-  document.getElementById("search").addEventListener("input", function () { if (!document.getElementById("locatairesView").hidden) renderLocataires(); });
-  document.getElementById("filterStatus").addEventListener("change", function () { if (!document.getElementById("locatairesView").hidden) renderLocataires(); });
-
-  // ============ TENANT DETAIL PAGE ============
-  var currentTenantId = null;
-
-  function renderTenantDetail(t) {
-    currentTenantId = t.id;
-    var c = computeTenant(t);
-
-    document.getElementById("tdName").textContent = t.name;
-    document.getElementById("tdProperty").textContent = t.property || "";
-
-    document.getElementById("tdInfoGrid").innerHTML =
-      '<div class="item"><div class="label">Loyer mensuel</div><div class="value">' + fmtMoney(t.rent) + '</div></div>' +
-      '<div class="item"><div class="label">Locataire depuis le</div><div class="value">' + fmtDate(t.start) + '</div></div>' +
-      '<div class="item"><div class="label">Mois échus</div><div class="value">' + c.months + '</div></div>' +
-      '<div class="item"><div class="label">Note</div><div class="value">' + (t.note ? escapeHtml(t.note) : "—") + '</div></div>';
-
-    var balanceLabel = c.status === "credit" ? fmtMoney(Math.abs(c.balance)) + " d'avance" : fmtMoney(c.balance);
-    document.getElementById("tdStats").innerHTML =
-      '<div class="stat"><div class="label">Total dû</div><div class="value">' + fmtMoney(c.due) + '</div></div>' +
-      '<div class="stat"><div class="label">Total payé</div><div class="value">' + fmtMoney(c.paid) + '</div></div>' +
-      '<div class="stat ' + (c.status === "late" ? "danger" : "ok") + '"><div class="label">Solde</div><div class="value">' + balanceLabel + '</div></div>' +
-      '<div class="stat"><div class="label">Statut</div><div class="value">' + badge(c.status) + '</div></div>';
-
-    var list = paymentsForTenantSorted(t.id);
-    var latestPeriod = list.reduce(function (max, p) { return p.period > max ? p.period : max; }, "");
-    var months = periodRange(t.start, latestPeriod);
-    document.getElementById("tdMonthBody").innerHTML = months.map(function (p) {
-      var paid = paidForPeriod(t.id, p);
-      return '<tr>' +
-        '<td class="month-cell">' + capitalize(fmtPeriod(p)) + '</td>' +
-        '<td>' + fmtMoney(t.rent) + '</td>' +
-        '<td>' + fmtMoney(paid) + '</td>' +
-        '<td>' + fmtMoney(Math.max(0, t.rent - paid)) + '</td>' +
-        '<td>' + monthBadge(paid, t.rent) + '</td>' +
-        '<td>' + (paid + 0.5 < t.rent ? '<button class="small" data-pay-period="' + p + '">+ Paiement</button>' : '') + '</td>' +
-        '</tr>';
-    }).join("");
-
-    var historyBody = document.getElementById("tdHistoryBody");
-    historyBody.innerHTML = list.map(function (p) {
-      return '<tr>' +
-        '<td class="month-cell">' + capitalize(fmtPeriod(p.period)) + '</td>' +
-        '<td>' + fmtDate(p.date) + '</td>' +
-        '<td>' + fmtMoney(p.amount) + '</td>' +
-        '<td>' + escapeHtml(p.method || "—") + '</td>' +
-        '<td>' + escapeHtml(p.note || "") + '</td>' +
-        '<td><button class="small danger ghost" data-delpay="' + p.id + '">Suppr.</button></td>' +
-        '</tr>';
-    }).join("");
-    document.getElementById("tdHistoryEmpty").hidden = list.length > 0;
-
-    document.querySelectorAll("[data-pay-period]").forEach(function (btn) {
-      btn.addEventListener("click", function () { openPaymentModal(t.id, btn.getAttribute("data-pay-period")); });
-    });
-    historyBody.querySelectorAll("[data-delpay]").forEach(function (btn) {
-      btn.addEventListener("click", async function () {
-        var pid = btn.getAttribute("data-delpay");
-        if (!confirm("Supprimer ce paiement ?")) return;
-        btn.disabled = true;
-        try {
-          await api("/api/payments/" + pid, { method: "DELETE" });
-          payments = payments.filter(function (p) { return p.id !== pid; });
-          renderTenantDetail(tenants.find(function (x) { return x.id === t.id; }));
-        } catch (e) {
-          showBanner(e.message);
-          btn.disabled = false;
-        }
-      });
-    });
-  }
-
-  document.getElementById("tdPayBtn").addEventListener("click", function () { openPaymentModal(currentTenantId, null); });
-  document.getElementById("tdEditBtn").addEventListener("click", function () { openTenantModal(currentTenantId); });
-  document.getElementById("tdDeleteBtn").addEventListener("click", async function () {
-    var t = tenants.find(function (x) { return x.id === currentTenantId; });
-    if (!t || !confirm('Supprimer "' + t.name + '" et tout son historique de paiements ?')) return;
-    try {
-      await api("/api/tenants/" + t.id, { method: "DELETE" });
-      tenants = tenants.filter(function (x) { return x.id !== t.id; });
-      payments = payments.filter(function (x) { return x.tenantId !== t.id; });
-      location.hash = "#/locataires";
-    } catch (e) {
-      showBanner(e.message);
-    }
-  });
-
-  // ============ TENANT MODAL (add / edit) ============
-  var modal = document.getElementById("tenantModal");
-  function openTenantModal(id) {
-    var t = id ? tenants.find(function (x) { return x.id === id; }) : null;
-    document.getElementById("tenantModalTitle").textContent = t ? "Modifier le locataire" : "Nouveau locataire";
-    document.getElementById("tenantId").value = t ? t.id : "";
-    document.getElementById("tenantName").value = t ? t.name : "";
-    document.getElementById("tenantProperty").value = t ? (t.property || "") : "";
-    document.getElementById("tenantRent").value = t ? t.rent : "";
-    document.getElementById("tenantStart").value = t ? t.start : todayISO();
-    document.getElementById("tenantNote").value = t ? (t.note || "") : "";
-    modal.hidden = false;
-    document.getElementById("tenantName").focus();
-  }
-  function closeTenantModal() { modal.hidden = true; }
-
-  document.getElementById("btnNewTenant").addEventListener("click", function () { openTenantModal(null); });
-  document.getElementById("tenantCancel").addEventListener("click", closeTenantModal);
-  modal.addEventListener("click", function (e) { if (e.target === modal) closeTenantModal(); });
-
-  document.getElementById("tenantSave").addEventListener("click", async function () {
-    var id = document.getElementById("tenantId").value;
-    var name = document.getElementById("tenantName").value.trim();
-    var property = document.getElementById("tenantProperty").value.trim();
-    var rent = parseFloat(document.getElementById("tenantRent").value);
-    var start = document.getElementById("tenantStart").value;
-    var note = document.getElementById("tenantNote").value.trim();
-
-    if (!name) { alert("Le nom du locataire est obligatoire."); return; }
-    if (!rent || rent <= 0) { alert("Merci de saisir un loyer mensuel valide."); return; }
-    if (!start) { alert("Merci de saisir la date d'entrée."); return; }
-
-    var btn = document.getElementById("tenantSave");
-    btn.disabled = true;
-    try {
-      var body = { name: name, property: property, rent: rent, start: start, note: note };
-      if (id) {
-        var updated = await api("/api/tenants/" + id, { method: "PUT", body: body });
-        var idx = tenants.findIndex(function (x) { return x.id === id; });
-        if (idx !== -1) tenants[idx] = updated;
-      } else {
-        var created = await api("/api/tenants", { method: "POST", body: body });
-        tenants.push(created);
-      }
-      closeTenantModal();
-      route();
-    } catch (e) {
-      showBanner(e.message);
-    } finally {
-      btn.disabled = false;
-    }
-  });
-
-  // ============ PAYMENT MODAL ============
-  var paymentModal = document.getElementById("paymentModal");
-  function openPaymentModal(tenantId, presetPeriod) {
-    var t = tenants.find(function (x) { return x.id === tenantId; });
-    if (!t) return;
-    document.getElementById("payTenantId").value = tenantId;
-    document.getElementById("paymentTenantName").textContent = t.name + (t.property ? " — " + t.property : "");
-
-    var months = periodRange(t.start, currentPeriod());
-    // Only months not already fully paid, plus a couple of future months for advance payments.
-    var owedMonths = months.filter(function (p) { return paidForPeriod(tenantId, p) + 0.5 < t.rent; });
-    var futureMonths = nextPeriods(months[0] || currentPeriod(), 2);
-    var allPeriods = futureMonths.reverse().concat(owedMonths);
-
-    var defaultPeriod = presetPeriod || owedMonths[owedMonths.length - 1] || allPeriods[allPeriods.length - 1];
-
-    var sel = document.getElementById("payPeriod");
-    sel.innerHTML = allPeriods.map(function (p) {
-      return '<option value="' + p + '"' + (p === defaultPeriod ? " selected" : "") + '>' + capitalize(fmtPeriod(p)) + '</option>';
-    }).join("");
-
-    function applyPeriod(period) {
-      var remaining = Math.max(0, t.rent - paidForPeriod(tenantId, period));
-      var amountEl = document.getElementById("payAmount");
-      amountEl.value = remaining;
-      amountEl.max = remaining;
-      document.getElementById("payRemainingHint").textContent = "Solde dû pour ce mois : " + fmtMoney(remaining);
-    }
-    sel.onchange = function () { applyPeriod(sel.value); };
-    applyPeriod(defaultPeriod);
-
-    document.getElementById("payDate").value = todayISO();
-    document.getElementById("payMethod").value = "Virement";
-    document.getElementById("payNote").value = "";
-    paymentModal.hidden = false;
-  }
-  function closePaymentModal() { paymentModal.hidden = true; }
-
-  document.getElementById("paymentCancel").addEventListener("click", closePaymentModal);
-  paymentModal.addEventListener("click", function (e) { if (e.target === paymentModal) closePaymentModal(); });
-
-  document.getElementById("paymentSave").addEventListener("click", async function () {
-    var tenantId = document.getElementById("payTenantId").value;
-    var period = document.getElementById("payPeriod").value;
-    var amount = parseFloat(document.getElementById("payAmount").value);
-    var date = document.getElementById("payDate").value;
-    var method = document.getElementById("payMethod").value;
-    var note = document.getElementById("payNote").value.trim();
-    var t = tenants.find(function (x) { return x.id === tenantId; });
-
-    if (!amount || amount <= 0) { alert("Merci de saisir un montant valide."); return; }
-    if (!date) { alert("Merci de saisir une date."); return; }
-    var remaining = Math.max(0, t.rent - paidForPeriod(tenantId, period));
-    if (amount > remaining + 0.5) {
-      alert("Ce montant dépasse le solde dû pour ce mois (" + fmtMoney(remaining) + " restant).");
-      return;
-    }
-
-    var btn = document.getElementById("paymentSave");
-    btn.disabled = true;
-    try {
-      var created = await api("/api/payments", {
-        method: "POST",
-        body: { tenantId: tenantId, period: period, date: date, amount: amount, method: method, note: note },
-      });
-      payments.push(created);
-      closePaymentModal();
-      route();
-    } catch (e) {
-      showBanner(e.message);
-    } finally {
-      btn.disabled = false;
-    }
-  });
-
-  // ============ USERS PAGE ============
-  async function renderUsersPage() {
-    try {
-      var res = await api("/api/users");
-      users = res.users || [];
-    } catch (e) {
-      showBanner(e.message);
-      return;
-    }
-    var list = document.getElementById("usersList");
-    list.innerHTML = users.map(function (u) {
-      var isSelf = auth && u.email === auth.email;
-      return '<li><span>' + escapeHtml(u.email) + (isSelf ? " (toi)" : "") + '</span>' +
-        '<button class="small danger ghost" data-deluser="' + escapeHtml(u.email) + '"' + (users.length <= 1 ? " disabled" : "") + '>Suppr.</button></li>';
-    }).join("");
-    list.querySelectorAll("[data-deluser]").forEach(function (btn) {
-      btn.addEventListener("click", async function () {
-        var email = btn.getAttribute("data-deluser");
-        if (!confirm('Supprimer l\'accès de "' + email + '" ?')) return;
-        btn.disabled = true;
-        try {
-          await api("/api/users/" + encodeURIComponent(email), { method: "DELETE" });
-          renderUsersPage();
-        } catch (e) {
-          showBanner(e.message);
-          btn.disabled = false;
-        }
-      });
-    });
-  }
-
-  var addUserModal = document.getElementById("addUserModal");
-  function openAddUserModal() {
-    document.getElementById("newUserEmail").value = "";
-    document.getElementById("newUserPassword").value = "";
-    addUserModal.hidden = false;
-    document.getElementById("newUserEmail").focus();
-  }
-  function closeAddUserModal() { addUserModal.hidden = true; }
-  document.getElementById("btnAddUser").addEventListener("click", openAddUserModal);
-  document.getElementById("addUserCancel").addEventListener("click", closeAddUserModal);
-  addUserModal.addEventListener("click", function (e) { if (e.target === addUserModal) closeAddUserModal(); });
-
-  document.getElementById("addUserSave").addEventListener("click", async function () {
-    var email = document.getElementById("newUserEmail").value.trim();
-    var password = document.getElementById("newUserPassword").value;
-    if (!email) { alert("Merci de saisir un email."); return; }
-    if (!password || password.length < 6) { alert("Le mot de passe doit faire au moins 6 caractères."); return; }
-    var btn = document.getElementById("addUserSave");
-    btn.disabled = true;
-    try {
-      await api("/api/users", { method: "POST", body: { email: email, password: password } });
-      closeAddUserModal();
-      renderUsersPage();
-    } catch (e) {
-      showBanner(e.message);
-    } finally {
-      btn.disabled = false;
-    }
-  });
-
-  document.getElementById("btnBannerRetry").addEventListener("click", loadData);
-
-  // ---- Boot ----
-  async function boot() {
-    if (auth && auth.token) {
-      try {
-        await api("/api/auth/me");
-        showApp();
-        loadData();
-        return;
-      } catch (e) {
-        // token invalid/expired, fall through to login
-      }
-    }
-    showLogin();
-  }
-  boot();
-
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", function () {
-      navigator.serviceWorker.register("sw.js").catch(function () {});
-    });
-  }
-})();
-</script>
+<script src="app.js"></script>
 </body>
 </html>

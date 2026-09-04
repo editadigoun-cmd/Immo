@@ -1,6 +1,20 @@
--- Schéma complet — Gestion Locative Immobilière
--- Hiérarchie : owners (propriétaires) -> properties (maisons) -> units (logements)
---              -> leases (contrats) -> tenants (locataires) -> payments (paiements)
+-- Migration v3 : passage au modèle complet du cahier des charges
+-- (Propriétaires -> Maisons -> Logements -> Contrats -> Locataires -> Paiements,
+--  rôles utilisateurs, historique des opérations).
+--
+-- Les tables v1/v2 (tenants/payments/users/sessions simplifiées) sont
+-- remplacées : il n'y avait que des données de test dedans, rien à
+-- préserver. Exécuter une seule fois dans la Console D1 de "immo-loyers".
+
+DROP TABLE IF EXISTS sessions;
+DROP TABLE IF EXISTS payments;
+DROP TABLE IF EXISTS leases;
+DROP TABLE IF EXISTS tenants;
+DROP TABLE IF EXISTS units;
+DROP TABLE IF EXISTS properties;
+DROP TABLE IF EXISTS owners;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS activity_logs;
 
 CREATE TABLE users (
   id TEXT PRIMARY KEY,
@@ -10,8 +24,8 @@ CREATE TABLE users (
   email TEXT NOT NULL UNIQUE,
   username TEXT,
   password_hash TEXT NOT NULL,
-  role TEXT NOT NULL DEFAULT 'administrateur', -- administrateur | gestionnaire | comptable
-  statut TEXT NOT NULL DEFAULT 'actif',        -- actif | inactif
+  role TEXT NOT NULL DEFAULT 'administrateur',
+  statut TEXT NOT NULL DEFAULT 'actif',
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
@@ -29,7 +43,7 @@ CREATE TABLE owners (
   adresse TEXT,
   email TEXT,
   note TEXT,
-  statut TEXT NOT NULL DEFAULT 'actif', -- actif | inactif
+  statut TEXT NOT NULL DEFAULT 'actif',
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
@@ -54,7 +68,7 @@ CREATE TABLE units (
   description TEXT,
   rent REAL NOT NULL,
   caution REAL,
-  statut TEXT NOT NULL DEFAULT 'disponible', -- disponible | occupe | maintenance | reserve
+  statut TEXT NOT NULL DEFAULT 'disponible',
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
@@ -84,16 +98,16 @@ CREATE TABLE leases (
   caution REAL,
   jour_paiement INTEGER,
   conditions TEXT,
-  statut TEXT NOT NULL DEFAULT 'actif', -- actif | termine | resilie | en_attente
+  statut TEXT NOT NULL DEFAULT 'actif',
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
 CREATE TABLE payments (
   id TEXT PRIMARY KEY,
   lease_id TEXT NOT NULL REFERENCES leases(id) ON DELETE CASCADE,
-  period TEXT NOT NULL,   -- mois concerné, format AAAA-MM
+  period TEXT NOT NULL,
   amount REAL NOT NULL,
-  date TEXT NOT NULL,     -- date du paiement
+  date TEXT NOT NULL,
   method TEXT,
   reference TEXT,
   note TEXT,
@@ -105,7 +119,7 @@ CREATE TABLE activity_logs (
   id TEXT PRIMARY KEY,
   user_email TEXT,
   action TEXT NOT NULL,
-  details TEXT, -- JSON libre
+  details TEXT,
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
@@ -116,3 +130,13 @@ CREATE INDEX idx_leases_unit ON leases(unit_id);
 CREATE INDEX idx_payments_lease ON payments(lease_id);
 CREATE INDEX idx_payments_period ON payments(period);
 CREATE INDEX idx_activity_created ON activity_logs(created_at);
+
+-- Compte administrateur initial : editadigoun@gmail.com / fanati09
+-- (mot de passe stocké hashé PBKDF2, jamais en clair)
+INSERT INTO users (id, email, password_hash, role, statut) VALUES (
+  '1b6ca784-f6bd-4c52-9cd3-2e637adbdb35',
+  'editadigoun@gmail.com',
+  'pbkdf2$100000$HNj40yuXXWa8099cglHNmA==$MpIfRZVAwFDesAzR6Pclbqbji7TXgW2LaVmR8ZaQHWo=',
+  'administrateur',
+  'actif'
+);

@@ -25,14 +25,16 @@ npx wrangler login       # ouvre le navigateur pour te connecter à ton compte C
 npx wrangler deploy
 ```
 
-## Migration v2 (connexion utilisateurs + paiements par mois)
+## Migration v3 (modèle complet du cahier des charges)
 
-L'app demande maintenant de se connecter, et les paiements ciblent un mois
-précis. Ça ajoute les tables `users`/`sessions` et une colonne `period` sur
-`payments`. **À faire une seule fois**, dans le dashboard Cloudflare → D1 →
+Passage à la hiérarchie complète Propriétaires → Maisons → Logements →
+Contrats → Locataires → Paiements, avec rôles utilisateurs (administrateur /
+gestionnaire / comptable) et historique des opérations. Elle remplace les
+tables v1/v2. **À faire une seule fois**, dans le dashboard Cloudflare → D1 →
 `immo-loyers` → onglet **Console**, colle et exécute le contenu de
-`migration_v2.sql` (crée aussi le premier compte : editadigoun@gmail.com,
-mot de passe déjà hashé dans le script — jamais stocké en clair).
+`migration_v3.sql` (crée aussi le premier compte administrateur :
+editadigoun@gmail.com, mot de passe déjà hashé dans le script — jamais
+stocké en clair).
 
 ## (Optionnel) Protéger l'accès avec une clé
 
@@ -44,8 +46,9 @@ npx wrangler secret put API_KEY
 # entre une valeur secrète quand demandé
 ```
 
-Puis dans l'application, renseigne la même valeur dans le champ « Clé API »
-des Paramètres.
+L'app elle-même n'a plus d'écran « Paramètres » pour saisir cette clé (elle
+appelle son API sur le même domaine) — n'active `API_KEY` que si tu adaptes
+`app.js` en conséquence.
 
 ## Redéployer après une modification
 
@@ -55,10 +58,15 @@ npx wrangler deploy
 
 ## Structure de la base
 
-- `tenants` : locataires (nom, bien, loyer mensuel, date d'entrée, note)
-- `payments` : paiements reçus (locataire, **mois concerné**, date de paiement, montant, moyen, note)
-- `users` : comptes pouvant se connecter (email, mot de passe hashé PBKDF2)
+- `owners` : propriétaires
+- `properties` : maisons / immeubles (rattachées à un propriétaire)
+- `units` : logements / chambres (rattachés à une maison ; loyer, caution, statut)
+- `tenants` : locataires
+- `leases` : contrats de location (locataire + logement, dates, loyer, caution, statut)
+- `payments` : paiements reçus (contrat, **mois concerné**, date, montant, mode, référence)
+- `users` : comptes pouvant se connecter (rôle administrateur / gestionnaire / comptable)
 - `sessions` : jetons de connexion actifs (30 jours)
+- `activity_logs` : historique des opérations importantes
 
 Le schéma (`schema.sql`) a déjà été appliqué à la base distante. Pour le
 reproduire en local (tests) :
