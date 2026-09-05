@@ -1,6 +1,21 @@
 (function () {
   "use strict";
 
+  var SVG_OPEN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">';
+  var ICONS = {
+    home: SVG_OPEN + '<path d="M4 11.5 12 4l8 7.5"/><path d="M6 10v9.5a1 1 0 0 0 1 1h3.5v-6h3v6H17a1 1 0 0 0 1-1V10"/></svg>',
+    user: SVG_OPEN + '<circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c.8-3.8 4-6 7.5-6s6.7 2.2 7.5 6"/></svg>',
+    users: SVG_OPEN + '<circle cx="9" cy="8" r="3"/><path d="M2.5 19.5c.6-3.2 3.2-5 6.5-5s5.9 1.8 6.5 5"/><circle cx="17.5" cy="9" r="2.3"/><path d="M15.8 14.7c2.3.4 4 2 4.5 4.8"/></svg>',
+    building: SVG_OPEN + '<rect x="4" y="3" width="16" height="18" rx="1"/><path d="M9 8h1.2M13.8 8H15M9 12h1.2M13.8 12H15M9 16h1.2M13.8 16H15"/></svg>',
+    file: SVG_OPEN + '<path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M9.5 13h5M9.5 17h5"/></svg>',
+    cash: SVG_OPEN + '<rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/></svg>',
+    alert: SVG_OPEN + '<path d="M12 3.5 21 19H3z"/><path d="M12 9.5v4.2"/><path d="M12 17v.01"/></svg>',
+    calendar: SVG_OPEN + '<rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>',
+    chart: SVG_OPEN + '<path d="M4 20V11M12 20V4M20 20v-6.5"/></svg>',
+    report: SVG_OPEN + '<rect x="6" y="4" width="12" height="17" rx="2"/><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M9 11.5h6M9 15.5h6"/></svg>',
+    menu: SVG_OPEN + '<path d="M4 7h16M4 12h16M4 17h16"/></svg>',
+  };
+
   var LS_AUTH = "immo_auth";
   function loadAuth() { try { var r = localStorage.getItem(LS_AUTH); return r ? JSON.parse(r) : null; } catch (e) { return null; } }
   function saveAuth(a) { if (a) localStorage.setItem(LS_AUTH, JSON.stringify(a)); else localStorage.removeItem(LS_AUTH); }
@@ -94,11 +109,14 @@
     finally { btn.disabled = false; }
   });
   document.getElementById("loginPassword").addEventListener("keydown", function (e) { if (e.key === "Enter") document.getElementById("loginSubmit").click(); });
-  document.getElementById("btnLogout").addEventListener("click", async function () {
+  async function doLogout() {
     try { await api("/api/auth/logout", { method: "POST" }); } catch (e) {}
     forceLogout();
-  });
+  }
+  document.getElementById("btnLogout").addEventListener("click", doLogout);
+  document.getElementById("btnLogoutMobile").addEventListener("click", doLogout);
   document.getElementById("btnHome").addEventListener("click", function () { location.hash = "#/"; });
+  document.getElementById("btnHomeMobile").addEventListener("click", function () { location.hash = "#/"; });
 
   // ---------------- Data load ----------------
   async function loadData() {
@@ -182,7 +200,7 @@
     document.querySelectorAll(".bottom-nav .bn-item").forEach(function (el) { el.classList.toggle("active", el.getAttribute("data-section") === section); });
   }
   function setTopNavActive(hashPrefix) {
-    document.querySelectorAll(".topbar-nav a").forEach(function (a) {
+    document.querySelectorAll(".sidebar-nav a").forEach(function (a) {
       var h = a.getAttribute("href");
       a.classList.toggle("active", h === hashPrefix || (hashPrefix !== "#/" && h !== "#/" && (hashPrefix || "").indexOf(h) === 0));
     });
@@ -252,22 +270,22 @@
         stat("Impayés (contrats actifs)", fmtMoney(impayeMontant), impayeMontant > 0.5 ? "danger" : "ok") +
       '</div>' +
       '<div class="nav-cards">' +
-        navCard("#/proprietaires", "👤", "Propriétaires", "Gérer les propriétaires") +
-        navCard("#/maisons", "🏢", "Biens", "Maisons et logements") +
-        navCard("#/locataires", "👥", "Locataires", "Fiches locataires") +
-        navCard("#/contrats", "📄", "Contrats", "Locations en cours") +
-        navCard("#/paiements", "💵", "Paiements", "Enregistrer, historique") +
-        navCard("#/impayes", "⚠️", "Impayés", "Loyers non réglés") +
-        navCard("#/echeances", "📅", "Échéances", "Prochains loyers à payer") +
-        navCard("#/finances", "📊", "Finances", "Revenus, situation propriétaires") +
-        navCard("#/rapports", "📑", "Rapports", "Exports et historique") +
+        navCard("#/proprietaires", "user", "Propriétaires", "Gérer les propriétaires") +
+        navCard("#/maisons", "building", "Biens", "Maisons et logements") +
+        navCard("#/locataires", "users", "Locataires", "Fiches locataires") +
+        navCard("#/contrats", "file", "Contrats", "Locations en cours") +
+        navCard("#/paiements", "cash", "Paiements", "Enregistrer, historique") +
+        navCard("#/impayes", "alert", "Impayés", "Loyers non réglés") +
+        navCard("#/echeances", "calendar", "Échéances", "Prochains loyers à payer") +
+        navCard("#/finances", "chart", "Finances", "Revenus, situation propriétaires") +
+        navCard("#/rapports", "report", "Rapports", "Exports et historique") +
       '</div>';
   }
   function stat(label, value, cls) {
     return '<div class="stat ' + (cls || "") + '"><div class="label">' + label + '</div><div class="value">' + value + '</div></div>';
   }
-  function navCard(href, icon, title, desc) {
-    return '<a href="' + href + '" class="nav-card"><span class="nav-card-icon">' + icon + '</span><span class="nav-card-title">' + title + '</span><span class="nav-card-desc">' + desc + '</span></a>';
+  function navCard(href, iconName, title, desc) {
+    return '<a href="' + href + '" class="nav-card"><span class="nav-card-icon">' + ICONS[iconName] + '</span><span class="nav-card-title">' + title + '</span><span class="nav-card-desc">' + desc + '</span></a>';
   }
 
   // ============ PROPRIÉTAIRES ============
@@ -986,17 +1004,17 @@
       '<a href="#/" class="back-link">← Retour</a>' +
       '<div class="page-head"><div><h2>Rapports</h2><p class="subtitle" style="margin:0;">Exports CSV (compatibles Excel)</p></div></div>' +
       '<div class="nav-cards" style="margin-bottom:20px;">' +
-        cardBtn("rptLoyers", "💵", "Rapport des loyers", "Encaissés, impayés, attendus") +
-        cardBtn("rptLogements", "🏢", "Rapport des logements", "Occupés, disponibles, maintenance") +
-        cardBtn("rptProprietaires", "👤", "Rapport des propriétaires", "Biens, revenus, impayés") +
-        cardBtn("rptLocataires", "👥", "Rapport des locataires", "Actifs, sortis, historique paiements") +
+        cardBtn("rptLoyers", "cash", "Rapport des loyers", "Encaissés, impayés, attendus") +
+        cardBtn("rptLogements", "building", "Rapport des logements", "Occupés, disponibles, maintenance") +
+        cardBtn("rptProprietaires", "user", "Rapport des propriétaires", "Biens, revenus, impayés") +
+        cardBtn("rptLocataires", "users", "Rapport des locataires", "Actifs, sortis, historique paiements") +
       '</div>' +
       '<div class="card"><div class="card-pad" style="padding-bottom:0;"><p class="section-title">Historique des opérations</p></div><div class="table-scroll"><table><thead><tr><th>Date</th><th>Utilisateur</th><th>Action</th></tr></thead><tbody>' +
         (activity.length ? activity.map(function (a) { return '<tr><td>' + fmtDateTime(a.created_at) + '</td><td>' + escapeHtml(a.user_email || "—") + '</td><td>' + escapeHtml(a.action.replace(/_/g, " ")) + '</td></tr>'; }).join("") : '<tr><td colspan="3" class="empty">Aucune opération enregistrée.</td></tr>') +
       '</tbody></table></div></div>';
 
-    function cardBtn(id, icon, title, desc) {
-      return '<button id="' + id + '" class="nav-card" style="text-align:left;"><span class="nav-card-icon">' + icon + '</span><span class="nav-card-title">' + title + '</span><span class="nav-card-desc">' + desc + '</span></button>';
+    function cardBtn(id, iconName, title, desc) {
+      return '<button id="' + id + '" class="nav-card" style="text-align:left;"><span class="nav-card-icon">' + ICONS[iconName] + '</span><span class="nav-card-title">' + title + '</span><span class="nav-card-desc">' + desc + '</span></button>';
     }
     document.getElementById("rptLoyers").addEventListener("click", function () {
       var rows = [["Date", "Mois", "Locataire", "Logement", "Montant", "Mode"]];

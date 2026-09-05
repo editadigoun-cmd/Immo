@@ -60,16 +60,27 @@
   .login-card .subtitle { color: var(--text-muted); font-size: 0.88rem; margin: 0 0 24px; }
   .login-error { background: var(--danger-bg); color: var(--danger); font-size: 0.85rem; padding: 10px 12px; border-radius: 8px; margin-bottom: 16px; }
 
-  .topbar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 12px 20px; border-bottom: 1px solid var(--border); background: var(--card); }
-  .topbar .wordmark { display: flex; align-items: center; gap: 8px; cursor: pointer; }
-  .topbar .wordmark .mark { width: 28px; height: 28px; border-radius: 8px; background: var(--primary); color: var(--primary-text); display: flex; align-items: center; justify-content: center; font-family: "Fraunces", serif; font-weight: 700; font-size: 0.9rem; }
-  .topbar .wordmark h1 { font-size: 1.05rem; margin: 0; }
-  .topbar .spacer { flex: 1; }
-  .topbar .user-email { font-size: 0.78rem; color: var(--text-muted); }
-  .topbar-nav { display: flex; gap: 2px; flex-wrap: wrap; }
-  .topbar-nav a { font-size: 0.78rem; padding: 6px 9px; border-radius: 7px; color: var(--text-muted); text-decoration: none; white-space: nowrap; }
-  .topbar-nav a:hover, .topbar-nav a.active { background: var(--accent-soft); color: var(--primary); }
-  .role-badge { font-size: 0.65rem; text-transform: uppercase; letter-spacing: .04em; padding: 2px 7px; border-radius: 999px; background: var(--accent-soft); color: var(--primary); font-weight: 700; }
+  .app-shell { display: flex; min-height: 100vh; align-items: stretch; }
+  .sidebar { width: 240px; flex-shrink: 0; background: var(--card); border-right: 1px solid var(--border); display: flex; flex-direction: column; position: sticky; top: 0; height: 100vh; }
+  .sidebar-brand { display: flex; align-items: center; gap: 8px; padding: 18px 18px 14px; cursor: pointer; }
+  .sidebar-brand .mark { width: 28px; height: 28px; border-radius: 8px; background: var(--primary); color: var(--primary-text); display: flex; align-items: center; justify-content: center; font-family: "Fraunces", serif; font-weight: 700; font-size: 0.9rem; flex-shrink: 0; }
+  .sidebar-brand h1 { font-size: 1rem; margin: 0; }
+  .sidebar-nav { flex: 1; overflow-y: auto; padding: 6px 12px; display: flex; flex-direction: column; gap: 2px; }
+  .sidebar-nav a { display: flex; align-items: center; gap: 11px; padding: 9px 11px; border-radius: 8px; color: var(--text-muted); text-decoration: none; font-size: 0.86rem; font-weight: 500; }
+  .sidebar-nav a svg { width: 18px; height: 18px; flex-shrink: 0; color: var(--text-muted); }
+  .sidebar-nav a:hover { background: var(--border-soft); color: var(--text); }
+  .sidebar-nav a:hover svg { color: var(--text); }
+  .sidebar-nav a.active { background: var(--accent-soft); color: var(--primary); }
+  .sidebar-nav a.active svg { color: var(--primary); }
+  .sidebar-footer { padding: 12px 18px 16px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; }
+  .sidebar-footer .user-email { font-size: 0.78rem; color: var(--text-muted); overflow-wrap: anywhere; }
+  .main-area { flex: 1; min-width: 0; }
+  .role-badge { align-self: flex-start; font-size: 0.65rem; text-transform: uppercase; letter-spacing: .04em; padding: 2px 7px; border-radius: 999px; background: var(--accent-soft); color: var(--primary); font-weight: 700; }
+  .mobile-topbar { display: none; align-items: center; gap: 10px; padding: 12px 20px; border-bottom: 1px solid var(--border); background: var(--card); }
+  .mobile-topbar .wordmark { display: flex; align-items: center; gap: 8px; }
+  .mobile-topbar .wordmark .mark { width: 28px; height: 28px; border-radius: 8px; background: var(--primary); color: var(--primary-text); display: flex; align-items: center; justify-content: center; font-family: "Fraunces", serif; font-weight: 700; font-size: 0.9rem; }
+  .mobile-topbar .wordmark h1 { font-size: 1.05rem; margin: 0; }
+  .mobile-topbar .spacer { flex: 1; }
 
   .wrap { max-width: 1220px; margin: 0 auto; padding: 22px 20px 40px; }
   .subtitle { color: var(--text-muted); font-size: 0.88rem; margin: 0 0 20px; }
@@ -95,8 +106,9 @@
   .nav-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
   .nav-card { display: flex; flex-direction: column; gap: 3px; text-decoration: none; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px 18px; }
   .nav-card:hover { border-color: var(--primary); }
-  .nav-card-icon { font-size: 1.4rem; }
-  .nav-card-title { font-family: "Fraunces", serif; font-weight: 600; font-size: 1rem; margin-top: 4px; }
+  .nav-card-icon { width: 38px; height: 38px; border-radius: 10px; background: var(--accent-soft); color: var(--primary); display: flex; align-items: center; justify-content: center; }
+  .nav-card-icon svg { width: 19px; height: 19px; }
+  .nav-card-title { font-family: "Fraunces", serif; font-weight: 600; font-size: 1rem; margin-top: 6px; }
   .nav-card-desc { color: var(--text-muted); font-size: 0.8rem; }
 
   .toolbar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; align-items: center; }
@@ -159,14 +171,17 @@
 
   .bottom-nav { display: none; position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; background: var(--card); border-top: 1px solid var(--border); padding: 6px 4px calc(6px + env(safe-area-inset-bottom)); }
   .bottom-nav .bn-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; text-decoration: none; color: var(--text-muted); font-size: 0.62rem; font-weight: 600; padding: 6px 2px; border-radius: 10px; background: none; border: none; }
-  .bottom-nav .bn-icon { font-size: 1.15rem; line-height: 1; }
+  .bottom-nav .bn-item svg { width: 20px; height: 20px; }
   .bottom-nav .bn-item.active { color: var(--primary); }
 
+  .more-btn { display: flex; align-items: center; gap: 10px; justify-content: flex-start; }
+  .more-btn svg { width: 18px; height: 18px; color: var(--primary); flex-shrink: 0; }
+
   @media (max-width: 860px) {
-    .topbar-nav { display: none; }
+    .sidebar { display: none; }
+    .mobile-topbar { display: flex; }
     .bottom-nav { display: flex; }
     body { padding-bottom: 64px; }
-    .topbar .user-email { display: none; }
   }
 
   [hidden] { display: none !important; }
@@ -190,40 +205,51 @@
 </div>
 
 <div id="appView" hidden>
-  <div class="topbar">
-    <div class="wordmark" id="btnHome"><div class="mark">L</div><h1 class="brand">Gestion Locative</h1></div>
-    <div class="topbar-nav" id="topbarNav">
-      <a href="#/">Tableau de bord</a>
-      <a href="#/proprietaires">Propriétaires</a>
-      <a href="#/maisons">Biens</a>
-      <a href="#/locataires">Locataires</a>
-      <a href="#/contrats">Contrats</a>
-      <a href="#/paiements">Paiements</a>
-      <a href="#/impayes">Impayés</a>
-      <a href="#/echeances">Échéances</a>
-      <a href="#/finances">Finances</a>
-      <a href="#/rapports">Rapports</a>
-      <a href="#/utilisateurs" id="navUsersLink">Utilisateurs</a>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-brand" id="btnHome"><div class="mark">L</div><h1 class="brand">Gestion Locative</h1></div>
+      <nav class="sidebar-nav" id="sidebarNav">
+        <a href="#/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11.5 12 4l8 7.5"/><path d="M6 10v9.5a1 1 0 0 0 1 1h3.5v-6h3v6H17a1 1 0 0 0 1-1V10"/></svg><span>Tableau de bord</span></a>
+        <a href="#/proprietaires"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c.8-3.8 4-6 7.5-6s6.7 2.2 7.5 6"/></svg><span>Propriétaires</span></a>
+        <a href="#/maisons"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M9 8h1.2M13.8 8H15M9 12h1.2M13.8 12H15M9 16h1.2M13.8 16H15"/></svg><span>Biens</span></a>
+        <a href="#/locataires"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2.5 19.5c.6-3.2 3.2-5 6.5-5s5.9 1.8 6.5 5"/><circle cx="17.5" cy="9" r="2.3"/><path d="M15.8 14.7c2.3.4 4 2 4.5 4.8"/></svg><span>Locataires</span></a>
+        <a href="#/contrats"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M9.5 13h5M9.5 17h5"/></svg><span>Contrats</span></a>
+        <a href="#/paiements"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/></svg><span>Paiements</span></a>
+        <a href="#/impayes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5 21 19H3z"/><path d="M12 9.5v4.2"/><path d="M12 17v.01"/></svg><span>Impayés</span></a>
+        <a href="#/echeances"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg><span>Échéances</span></a>
+        <a href="#/finances"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V11M12 20V4M20 20v-6.5"/></svg><span>Finances</span></a>
+        <a href="#/rapports"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="17" rx="2"/><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M9 11.5h6M9 15.5h6"/></svg><span>Rapports</span></a>
+        <a href="#/utilisateurs" id="navUsersLink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c.8-3.8 4-6 7.5-6s6.7 2.2 7.5 6"/></svg><span>Utilisateurs</span></a>
+      </nav>
+      <div class="sidebar-footer">
+        <span class="role-badge" id="topbarRole"></span>
+        <div class="user-email" id="topbarEmail"></div>
+        <button class="ghost small block" id="btnLogout">Se déconnecter</button>
+      </div>
+    </aside>
+
+    <div class="main-area">
+      <div class="mobile-topbar">
+        <div class="wordmark" id="btnHomeMobile"><div class="mark">L</div><h1 class="brand">Gestion Locative</h1></div>
+        <div class="spacer"></div>
+        <button class="ghost small" id="btnLogoutMobile">Se déconnecter</button>
+      </div>
+
+      <div class="wrap" style="padding-bottom:0;">
+        <div class="banner" id="banner" hidden><span id="bannerText"></span><button class="small" id="btnBannerRetry">Réessayer</button></div>
+      </div>
+
+      <div id="pageContent" class="wrap"></div>
     </div>
-    <div class="spacer"></div>
-    <span class="role-badge" id="topbarRole"></span>
-    <span class="user-email" id="topbarEmail"></span>
-    <button class="ghost small" id="btnLogout">Se déconnecter</button>
   </div>
-
-  <div class="wrap" style="padding-bottom:0;">
-    <div class="banner" id="banner" hidden><span id="bannerText"></span><button class="small" id="btnBannerRetry">Réessayer</button></div>
-  </div>
-
-  <div id="pageContent" class="wrap"></div>
 </div>
 
 <nav class="bottom-nav" id="bottomNav">
-  <a href="#/" class="bn-item" data-section="home"><span class="bn-icon">🏠</span><span>Accueil</span></a>
-  <a href="#/maisons" class="bn-item" data-section="maisons"><span class="bn-icon">🏢</span><span>Biens</span></a>
-  <a href="#/locataires" class="bn-item" data-section="locataires"><span class="bn-icon">👥</span><span>Locataires</span></a>
-  <a href="#/contrats" class="bn-item" data-section="contrats"><span class="bn-icon">📄</span><span>Contrats</span></a>
-  <a href="#/plus" class="bn-item" data-section="plus"><span class="bn-icon">☰</span><span>Plus</span></a>
+  <a href="#/" class="bn-item" data-section="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11.5 12 4l8 7.5"/><path d="M6 10v9.5a1 1 0 0 0 1 1h3.5v-6h3v6H17a1 1 0 0 0 1-1V10"/></svg><span>Accueil</span></a>
+  <a href="#/maisons" class="bn-item" data-section="maisons"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M9 8h1.2M13.8 8H15M9 12h1.2M13.8 12H15M9 16h1.2M13.8 16H15"/></svg><span>Biens</span></a>
+  <a href="#/locataires" class="bn-item" data-section="locataires"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2.5 19.5c.6-3.2 3.2-5 6.5-5s5.9 1.8 6.5 5"/><circle cx="17.5" cy="9" r="2.3"/><path d="M15.8 14.7c2.3.4 4 2 4.5 4.8"/></svg><span>Locataires</span></a>
+  <a href="#/contrats" class="bn-item" data-section="contrats"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M9.5 13h5M9.5 17h5"/></svg><span>Contrats</span></a>
+  <a href="#/plus" class="bn-item" data-section="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>Plus</span></a>
 </nav>
 
 <!-- ================= MODALS ================= -->
@@ -232,13 +258,13 @@
   <div class="modal">
     <h3>Plus</h3>
     <div style="display:flex;flex-direction:column;gap:8px;">
-      <a href="#/proprietaires"><button class="block">👤 Propriétaires</button></a>
-      <a href="#/paiements"><button class="block">💵 Paiements</button></a>
-      <a href="#/impayes"><button class="block">⚠️ Impayés</button></a>
-      <a href="#/echeances"><button class="block">📅 Échéances</button></a>
-      <a href="#/finances"><button class="block">📊 Finances</button></a>
-      <a href="#/rapports"><button class="block">📑 Rapports</button></a>
-      <a href="#/utilisateurs" id="navUsersLinkMobile"><button class="block">🔑 Utilisateurs</button></a>
+      <a href="#/proprietaires"><button class="block more-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c.8-3.8 4-6 7.5-6s6.7 2.2 7.5 6"/></svg><span>Propriétaires</span></button></a>
+      <a href="#/paiements"><button class="block more-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/></svg><span>Paiements</span></button></a>
+      <a href="#/impayes"><button class="block more-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5 21 19H3z"/><path d="M12 9.5v4.2"/><path d="M12 17v.01"/></svg><span>Impayés</span></button></a>
+      <a href="#/echeances"><button class="block more-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg><span>Échéances</span></button></a>
+      <a href="#/finances"><button class="block more-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V11M12 20V4M20 20v-6.5"/></svg><span>Finances</span></button></a>
+      <a href="#/rapports"><button class="block more-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="17" rx="2"/><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M9 11.5h6M9 15.5h6"/></svg><span>Rapports</span></button></a>
+      <a href="#/utilisateurs" id="navUsersLinkMobile"><button class="block more-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c.8-3.8 4-6 7.5-6s6.7 2.2 7.5 6"/></svg><span>Utilisateurs</span></button></a>
     </div>
     <div class="modal-actions"><button id="moreClose">Fermer</button></div>
   </div>
