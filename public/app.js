@@ -81,10 +81,11 @@
   }
   function roleLabel(r) { return { administrateur: "Administrateur", gestionnaire: "Gestionnaire", comptable: "Comptable" }[r] || r; }
 
-  function showLogin() { document.getElementById("loginView").hidden = false; document.getElementById("appView").hidden = true; }
+  function showLogin() { document.getElementById("loginView").hidden = false; document.getElementById("appView").hidden = true; document.getElementById("bottomNav").hidden = true; }
   function showApp() {
     document.getElementById("loginView").hidden = true;
     document.getElementById("appView").hidden = false;
+    document.getElementById("bottomNav").hidden = false;
     document.getElementById("topbarEmail").textContent = auth.user.email;
     document.getElementById("topbarRole").textContent = roleLabel(auth.user.role);
     document.getElementById("navUsersLink").style.display = isAdmin() ? "" : "none";
