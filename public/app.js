@@ -14,6 +14,7 @@
     chart: SVG_OPEN + '<path d="M4 20V11M12 20V4M20 20v-6.5"/></svg>',
     report: SVG_OPEN + '<rect x="6" y="4" width="12" height="17" rx="2"/><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M9 11.5h6M9 15.5h6"/></svg>',
     menu: SVG_OPEN + '<path d="M4 7h16M4 12h16M4 17h16"/></svg>',
+    history: SVG_OPEN + '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/><path d="M4 5v4h4"/><path d="M4.3 9a8.5 8.5 0 1 1-.5 4.5"/></svg>',
   };
 
   var LS_AUTH = "immo_auth";
@@ -227,6 +228,7 @@
     else if (hash === "#/echeances") { renderEcheancesPage(); setBottomNavActive("plus"); setTopNavActive(hash); }
     else if (hash === "#/finances") { renderFinancesPage(); setBottomNavActive("plus"); setTopNavActive(hash); }
     else if (hash === "#/rapports") { renderRapportsPage(); setBottomNavActive("plus"); setTopNavActive(hash); }
+    else if (hash === "#/historique") { renderHistoriquePage(); setBottomNavActive("plus"); setTopNavActive(hash); }
     else if (hash === "#/utilisateurs") {
       if (!isAdmin()) { location.hash = "#/"; return; }
       renderUsersPage(); setBottomNavActive("plus"); setTopNavActive(hash);
@@ -278,7 +280,8 @@
         navCard("#/impayes", "alert", "Impayés", "Loyers non réglés") +
         navCard("#/echeances", "calendar", "Échéances", "Prochains loyers à payer") +
         navCard("#/finances", "chart", "Finances", "Revenus, situation propriétaires") +
-        navCard("#/rapports", "report", "Rapports", "Exports et historique") +
+        navCard("#/rapports", "report", "Rapports", "Exports CSV") +
+        navCard("#/historique", "history", "Historique", "Journal des opérations") +
       '</div>';
   }
   function stat(label, value, cls) {
@@ -1008,10 +1011,7 @@
         cardBtn("rptLogements", "building", "Rapport des logements", "Occupés, disponibles, maintenance") +
         cardBtn("rptProprietaires", "user", "Rapport des propriétaires", "Biens, revenus, impayés") +
         cardBtn("rptLocataires", "users", "Rapport des locataires", "Actifs, sortis, historique paiements") +
-      '</div>' +
-      '<div class="card"><div class="card-pad" style="padding-bottom:0;"><p class="section-title">Historique des opérations</p></div><div class="table-scroll"><table><thead><tr><th>Date</th><th>Utilisateur</th><th>Action</th></tr></thead><tbody>' +
-        (activity.length ? activity.map(function (a) { return '<tr><td>' + fmtDateTime(a.created_at) + '</td><td>' + escapeHtml(a.user_email || "—") + '</td><td>' + escapeHtml(a.action.replace(/_/g, " ")) + '</td></tr>'; }).join("") : '<tr><td colspan="3" class="empty">Aucune opération enregistrée.</td></tr>') +
-      '</tbody></table></div></div>';
+      '</div>';
 
     function cardBtn(id, iconName, title, desc) {
       return '<button id="' + id + '" class="nav-card" style="text-align:left;"><span class="nav-card-icon">' + ICONS[iconName] + '</span><span class="nav-card-title">' + title + '</span><span class="nav-card-desc">' + desc + '</span></button>';
@@ -1045,6 +1045,16 @@
       });
       downloadCsv("rapport-locataires.csv", rows);
     });
+  }
+
+  // ============ HISTORIQUE ============
+  function renderHistoriquePage() {
+    CONTENT.innerHTML =
+      '<a href="#/" class="back-link">← Retour</a>' +
+      '<div class="page-head"><div><h2>Historique</h2><p class="subtitle" style="margin:0;">Historique des opérations effectuées dans l\'application</p></div></div>' +
+      '<div class="card"><div class="table-scroll"><table><thead><tr><th>Date</th><th>Utilisateur</th><th>Action</th></tr></thead><tbody>' +
+        (activity.length ? activity.map(function (a) { return '<tr><td>' + fmtDateTime(a.created_at) + '</td><td>' + escapeHtml(a.user_email || "—") + '</td><td>' + escapeHtml(a.action.replace(/_/g, " ")) + '</td></tr>'; }).join("") : '<tr><td colspan="3" class="empty">Aucune opération enregistrée.</td></tr>') +
+      '</tbody></table></div></div>';
   }
 
   // ============ UTILISATEURS ============
